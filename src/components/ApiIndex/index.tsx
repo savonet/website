@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from '@docusaurus/Link';
+import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
 // Index of one API reference (core, extras or deprecated) for a single version. The data
@@ -51,16 +52,21 @@ export default function ApiIndex({ src }: { src: string }): React.ReactElement {
   const [failed, setFailed] = useState(false);
   const [query, setQuery] = useState('');
 
+  // `src` and `Index.base` are site-absolute paths baked into committed markdown, so they
+  // cannot know about a subpath deploy. <Link to> applies baseUrl itself, but raw fetch()
+  // and location.replace() do not.
+  const { withBaseUrl } = useBaseUrlUtils();
+
   useEffect(() => {
     let live = true;
-    fetch(src)
+    fetch(withBaseUrl(src))
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
       .then((data) => live && setIndex(data))
       .catch(() => live && setFailed(true));
     return () => {
       live = false;
     };
-  }, [src]);
+  }, [src, withBaseUrl]);
 
   // This page is served at the URL the old single-page reference used, so inbound links
   // like /doc-2.4.5/reference.html#output.icecast still arrive here. Forward them to the
@@ -70,8 +76,8 @@ export default function ApiIndex({ src }: { src: string }): React.ReactElement {
     const anchor = decodeURIComponent(window.location.hash.slice(1));
     if (!anchor) return;
     const page = index.anchors[anchor];
-    if (page) window.location.replace(`${index.base}/${page}#${anchor}`);
-  }, [index]);
+    if (page) window.location.replace(withBaseUrl(`${index.base}/${page}#${anchor}`));
+  }, [index, withBaseUrl]);
 
   const results = useMemo(() => {
     if (!index) return [];
