@@ -1,0 +1,59 @@
+name: Deploy preview to GitHub Pages
+
+# Publishes this repository's own Pages site. Because savonet.github.io carries the
+# www.liquidsoap.info custom domain, a project page for savonet/website is served at
+# https://www.liquidsoap.info/website/ -- which is why the build runs under that subpath.
+#
+# This is the review target, not production. Production still comes from the existing
+# pipeline until the cutover, at which point the build output goes to savonet.github.io
+# instead and BASE_URL becomes '/'.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; queue instead of cancelling so main always lands.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Documentation for released versions is committed under versioned_docs, so the
+      # build needs no docker image and no network beyond npm.
+      - name: Build
+        env:
+          BASE_URL: /${{ github.event.repository.name }}/
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

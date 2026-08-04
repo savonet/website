@@ -1,0 +1,11 @@
+node_modules/
+.docusaurus/
+build/
+
+# Generated per build for the in-development version.
+docs/
+static/doc-dev/
+
+# Fetched from the liquidsoap CI artifact.
+static/try/
+sidebars.dev.json

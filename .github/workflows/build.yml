@@ -1,0 +1,29 @@
+name: Build
+
+# Pull requests build but never publish. The build is also where the site's own checks
+# run: postBuild fails if the landing page links to a missing page, or if the favicon or
+# share image named in the config was never emitted.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+
+      - name: Build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: npm run build
