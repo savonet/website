@@ -133,6 +133,12 @@ const USERS = [
     img: 'assets/img/users/lahmacun.png',
   },
   {
+    name: 'Radiotomate',
+    what: 'Broadcast automation for community radios',
+    href: 'https://radiotomate.org/',
+    img: 'assets/img/users/radiotomate.svg',
+  },
+  {
     name: 'Datafruits.fm',
     what: 'Netradio and netlabel',
     href: 'https://datafruits.fm/',
@@ -244,14 +250,10 @@ export default function Home(): React.ReactElement {
             ,{' '}
             <a href="https://centova.com/en/cast" target="_blank" rel="noopener noreferrer">
               Centova Cast
-            </a>
-            ,{' '}
-            <a href="https://dtcooper.github.io/crazyarms" target="_blank" rel="noopener noreferrer">
-              Crazy Arms
             </a>{' '}
             and{' '}
-            <a href="https://github.com/martinkirch/showergel" target="_blank" rel="noopener noreferrer">
-              Showergel
+            <a href="https://dtcooper.github.io/crazyarms" target="_blank" rel="noopener noreferrer">
+              Crazy Arms
             </a>
             . Many of them have talked about it at the{' '}
             <a href="https://www.liquidsoap.info/liquidshop/" target="_blank" rel="noopener noreferrer">
