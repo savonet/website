@@ -44,6 +44,12 @@ const config: Config = {
   organizationName: 'savonet',
   projectName: 'website',
 
+  // A subpath build is a preview, not the canonical site. Without this it publishes
+  // self-referential canonicals and a sitemap for all of its URLs, which makes it a
+  // duplicate of production on the same domain. robots.txt cannot help: crawlers only
+  // read it at the domain root, and a preview never owns that.
+  noIndex: baseUrl !== '/',
+
   // Emits /doc-2.4.5/clocks.html rather than /doc-2.4.5/clocks/index.html.
   trailingSlash: false,
   onBrokenLinks: 'warn',
