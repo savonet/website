@@ -56,19 +56,19 @@ a typical `npm` package:
 ```liquidsoap
 # Content of package.json is:
 # {
-#  "name": "my_package",
-#  "version": "1.0.0",
-#  "scripts": {
-#    "test": "echo \"Error: no test specified\" && exit 1"
-#  },
-#  ...
+# "name": "my_package",
+# "version": "1.0.0",
+# "scripts": {
+# "test": "echo \"Error: no test specified\" && exit 1"
+# },
+# ...
 let json.parse package = file.contents("/path/to/package.json")
 
 name = package.name
 version = package.version
 test = package.scripts.test
 
-print("This is package " ^  name ^ ", version " ^ version ^ " with test script: " ^ test)
+print("This is package " ^ name ^ ", version " ^ version ^ " with test script: " ^ test)
 ```
 
 And we get:
@@ -81,14 +81,14 @@ This can even be combined with _patterns_:
 
 ```liquidsoap
 let json.parse {
-  name,
-  version,
-  scripts = {
-    test
-  }
+ name,
+ version,
+ scripts = {
+ test
+ }
 } = file.contents("/path/to/package.json")
 
-print("This is package " ^  name ^ ", version " ^ version ^ " with test script: " ^ test)
+print("This is package " ^ name ^ ", version " ^ version ^ " with test script: " ^ test)
 ```
 
 Now, this is looking nice!
@@ -101,11 +101,11 @@ Let's try a slight variation of the previous script now:
 
 ```liquidsoap
 let json.parse {
-  name,
-  version,
-  scripts = {
-    test
-  }
+ name,
+ version,
+ scripts = {
+ test
+ }
 } = file.contents("/path/to/package.json")
 
 print("This is package #{name}, version #{version} with test script: #{test}")
@@ -117,7 +117,7 @@ This returns:
 This is package null, version null with test script: null
 ```
 
-What? 🤔
+What?
 
 This is because, in this script, we only use `name`, `version`, etc.. through the interpolation syntax `#{...}`. However, interpolated
 variables can be anything so this does not leave enough information to the typing system to know what type those variables should be and,
@@ -128,17 +128,17 @@ to explicitly state what kind of data you are expecting. Let's add one here:
 
 ```liquidsoap
 let json.parse ({
-  name,
-  version,
-  scripts = {
-    test
-  }
+ name,
+ version,
+ scripts = {
+ test
+ }
 } : {
-  name: string,
-  version: string,
-  scripts: {
-    test: string
-  }
+ name: string,
+ version: string,
+ scripts: {
+ test: string
+ }
 }) = file.contents("/path/to/package.json")
 
 print("This is package #{name}, version #{version} with test script: #{test}")
@@ -169,15 +169,15 @@ For instance, some `npm` packages do not have a `scripts` entry or a `test` entr
 
 ```liquidsoap
 let json.parse ({
-  name,
-  version,
-  scripts,
+ name,
+ version,
+ scripts,
 } : {
-  name: string,
-  version: string,
-  scripts: {
-    test: string?
-  }?
+ name: string,
+ version: string,
+ scripts: {
+ test: string?
+ }?
 }) = file.contents("/path/to/package.json")
 ```
 
@@ -186,11 +186,11 @@ And, later, inspect the returned value to see if it is in fact present. You can 
 ```liquidsoap
 # Check if the value is defined:
 test =
-  if null.defined(scripts) then
-    null.get(scripts.test)
-  else
-    null ()
-  end
+ if null.defined(scripts) then
+ null.get(scripts.test)
+ else
+ null ()
+ end
 
 # Use the ?? syntax:
 test = (scripts ?? { test = null() }).test
@@ -231,21 +231,21 @@ When parsing fails, a `error.json` is raised which can be caught at runtime:
 
 ```liquidsoap
 try
-   let json.parse ({
-      status,
-      data = {
-        track
-      }
-    } : {
-      status: string,
-      data: {
-        track: string
-      }
-    }) = res
+ let json.parse ({
+ status,
+ data = {
+ track
+ }
+ } : {
+ status: string,
+ data: {
+ track: string
+ }
+ }) = res
 
-    # Do something on success here..
+ # Do something on success here..
 catch err: [error.json] do
-  # Do something on parse errors here..
+ # Do something on parse errors here..
 end
 ```
 
@@ -254,47 +254,47 @@ end
 Here's a full example. Feel free to refer to `tests/language/json.liq` in the source code for more of them.
 
 ```liquidsoap
-  data = '{
-    "foo": 34.24,
-    "gni gno": true,
-    "nested": {
-       "tuple": [123, 3.14, false],
-       "list":  [44.0, 55, 66.12],
-       "nullable_list": [12.33, 23, "aabb"],
-       "object_as_list": {
-         "foo": 123,
-         "gni": 456.0,
-         "gno": 3.14
-       },
-       "arbitrary object key ✨": true
-     },
-     "extra": "ignored"
-  }'
+ data = '{
+ "foo": 34.24,
+ "gni gno": true,
+ "nested": {
+ "tuple": [123, 3.14, false],
+ "list": [44.0, 55, 66.12],
+ "nullable_list": [12.33, 23, "aabb"],
+ "object_as_list": {
+ "foo": 123,
+ "gni": 456.0,
+ "gno": 3.14
+ },
+ "arbitrary object key ": true
+ },
+ "extra": "ignored"
+ }'
 
-  let json.parse ( x : {
-    foo: float,
-    "gni gno" as gni_gno: bool,
-    nested: {
-      tuple: (_ * float),
-      list: [float],
-      nullable_list: [int?],
-      object_as_list: [(string * float)] as json.object,
-      "arbitrary object key ✨" as arbitrary_object_key: bool,
-      not_present: bool?
-    }
-  }) = data
-  - x : {
-    foo = 34.24,
-    gni_gno = true,
-    nested = {
-      tuple = (null, 3.14),
-      list = [44., 55., 66.12],
-      nullable_list = [null, 23, null],
-      object_as_list = [("foo", 123.), ("gni", 456.0), ("gno", 3.14)],
-      arbitrary_object_key = true,
-      not_present = null
-    }
-  }
+ let json.parse ( x : {
+ foo: float,
+ "gni gno" as gni_gno: bool,
+ nested: {
+ tuple: (_ * float),
+ list: [float],
+ nullable_list: [int?],
+ object_as_list: [(string * float)] as json.object,
+ "arbitrary object key " as arbitrary_object_key: bool,
+ not_present: bool?
+ }
+ }) = data
+ - x : {
+ foo = 34.24,
+ gni_gno = true,
+ nested = {
+ tuple = (null, 3.14),
+ list = [44., 55., 66.12],
+ nullable_list = [null, 23, null],
+ object_as_list = [("foo", 123.), ("gni", 456.0), ("gno", 3.14)],
+ arbitrary_object_key = true,
+ not_present = null
+ }
+ }
 ```
 
 ### JSON5 extension {#json5-extension}

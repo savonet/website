@@ -34,21 +34,21 @@ s = playlist("/path/to/music")
 
 # The server seeking function
 def seek(t) =
-  t = float_of_string(default=0., t)
-  log(
-    "Seeking #{t} sec"
-  )
-  ret = source.seek(s, t)
-  "Seeked #{ret} seconds."
+ t = float_of_string(default=0., t)
+ log(
+ "Seeking #{t} sec"
+ )
+ ret = source.seek(s, t)
+ "Seeked #{ret} seconds."
 end
 
 # Register the function
 server.register(
-  namespace=source.id(s),
-  description="Seek to a relative position in source #{source.id(s)}",
-  usage="seek <duration>",
-  "seek",
-  seek
+ namespace=source.id(s),
+ description="Seek to a relative position in source #{source.id(s)}",
+ usage="seek <duration>",
+ "seek",
+ seek
 )
 ```
 
@@ -61,7 +61,7 @@ source will cue-in at 10 seconds and cue-out at 45 seconds on all its tracks:
 
 ```liquidsoap
 s = playlist(prefix="annotate:liq_cue_in=\"10.\",liq_cue_out=\"45\":",
-             "/path/to/music")
+ "/path/to/music")
 ```
 
 As in the above example, you may use the `annotate` protocol to pass custom cue

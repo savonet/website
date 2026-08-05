@@ -77,9 +77,9 @@ s = rotate(weights=[1,3], [jingles, songs])
 # We output the stream to an icecast
 # server, in ogg/vorbis format.
 output.icecast(%vorbis,id="icecast",
-               fallible=true,mount="my_radio.ogg",
-               host="my_server", password="hack_me_not",
-               s)
+ fallible=true,mount="my_radio.ogg",
+ host="my_server", password="hack_me_not",
+ s)
 ```
 
 For now, `library.liq` does not contain any code so we only do:
@@ -119,9 +119,9 @@ Thus, we add the following in `library.liq`:
 # a new metadata block is passed in
 # the stream.
 def apply_metadata(m) =
-  title = m["title"]
-  artist = m["artist"]
-  print("Now playing: #{title} by #{artist}")
+ title = m["title"]
+ artist = m["artist"]
+ print("Now playing: #{title} by #{artist}")
 end
 ```
 
@@ -196,10 +196,10 @@ And, we add in `library.liq`:
 ```liquidsoap
 # Our custom request function
 def get_request() =
-  # Get the URI
-  uri = list.hd(default="",get_process_lines("cat /tmp/request"))
-  # Create a request
-  [request.create(uri)]
+ # Get the URI
+ uri = list.hd(default="",get_process_lines("cat /tmp/request"))
+ # Create a request
+ [request.create(uri)]
 end
 ```
 
@@ -251,18 +251,18 @@ Then, in `library.liq`, we add the following function:
 # This function updates the title metadata with
 # the content of "/tmp/metadata"
 def update_title(m) =
-  # The title metadata
-  title = m["title"]
-  # Our addition
-  content = list.hd(get_process_lines("cat /tmp/metadata"))
+ # The title metadata
+ title = m["title"]
+ # Our addition
+ content = list.hd(get_process_lines("cat /tmp/metadata"))
 
-  # If title is empty
-  if title == "" then
-    [("title",content)]
-  # Otherwise
-  else
-    [("title","#{title} on #{content}")]
-  end
+ # If title is empty
+ if title == "" then
+ [("title",content)]
+ # Otherwise
+ else
+ [("title","#{title} on #{content}")]
+ end
 end
 ```
 
@@ -302,19 +302,19 @@ First, we add the following in `library.liq`
 # by playing a static single when
 # the original song is not available
 def my_safe(s) =
-  # We assume that festival is installed and
-  # functional in liquidsoap
-  security = single("say:Hello, this is radio FOO! \
-                     We are currently having some \
-                     technical difficulties but we'll \
-                     be back soon so stay tuned!")
+ # We assume that festival is installed and
+ # functional in liquidsoap
+ security = single("say:Hello, this is radio FOO! \
+ We are currently having some \
+ technical difficulties but we'll \
+ be back soon so stay tuned!")
 
-  # We return a fallback where the original
-  # source has priority over the security
-  # single. We set track_sensitive to false
-  # to return immediately to the original source
-  # when it becomes available again.
-  fallback(track_sensitive=false,[s,security])
+ # We return a fallback where the original
+ # source has priority over the security
+ # single. We set track_sensitive to false
+ # to return immediately to the original source
+ # when it becomes available again.
+ fallback(track_sensitive=false,[s,security])
 end
 ```
 
@@ -350,28 +350,28 @@ We add the following in `library.liq`:
 # A function that contains all the output
 # we want to create with the final stream
 def outputs(s) =
-  # First, we partially apply output.icecast
-  # with common parameters. The resulting function
-  # is stored in a new definition of output.icecast,
-  # but this could be my_icecast or anything.
-  output.icecast = output.icecast(host="my_server",
-                                  password="hack_me_not")
+ # First, we partially apply output.icecast
+ # with common parameters. The resulting function
+ # is stored in a new definition of output.icecast,
+ # but this could be my_icecast or anything.
+ output.icecast = output.icecast(host="my_server",
+ password="hack_me_not")
 
-  # An output in ogg/vorbis to the "my_radio.ogg"
-  # mountpoint:
-  output.icecast(%vorbis, mount="my_radio.ogg",s)
+ # An output in ogg/vorbis to the "my_radio.ogg"
+ # mountpoint:
+ output.icecast(%vorbis, mount="my_radio.ogg",s)
 
-  # An output in mp3 at 128kbits to the "my_radio"
-  # mountpoint:
-  output.icecast(%mp3(bitrate=128), mount="my_radio",s)
+ # An output in mp3 at 128kbits to the "my_radio"
+ # mountpoint:
+ output.icecast(%mp3(bitrate=128), mount="my_radio",s)
 
-  # An output in ogg/flac to the "my_radio-flac.ogg"
-  # mountpoint:
-  output.icecast(%ogg(%flac), mount="my_radio-flac.ogg",s)
+ # An output in ogg/flac to the "my_radio-flac.ogg"
+ # mountpoint:
+ output.icecast(%ogg(%flac), mount="my_radio-flac.ogg",s)
 
-  # An output in AAC+ at 32 kbits to the "my_radio.aac"
-  # mountpoint
-  output.icecast(%fdkaac(bitrate=32), mount="my_radio.aac",s)
+ # An output in AAC+ at 32 kbits to the "my_radio.aac"
+ # mountpoint
+ output.icecast(%fdkaac(bitrate=32), mount="my_radio.aac",s)
 end
 ```
 
@@ -450,21 +450,21 @@ with the value `"song"`. Thus, we add the following function in `library.liq`:
 # and add the replay_gain metadata in
 # this case
 def add_replaygain(m) =
-  # Get the type
-  type = m["type"]
-  # The replaygain script is located there
-  script = "#{configure.bindir}/extract-replaygain"
-  # The file name is contained in this value
-  filename = m["filename"]
+ # Get the type
+ type = m["type"]
+ # The replaygain script is located there
+ script = "#{configure.bindir}/extract-replaygain"
+ # The file name is contained in this value
+ filename = m["filename"]
 
-  # If type = "song", proceed:
-  if type == "song" then
-    info = list.hd(get_process_lines("#{script} #{filename}"))
-    [("replay_gain",info)]
-  # Otherwise add nothing
-  else
-    []
-  end
+ # If type = "song", proceed:
+ if type == "song" then
+ info = list.hd(get_process_lines("#{script} #{filename}"))
+ [("replay_gain",info)]
+ # Otherwise add nothing
+ else
+ []
+ end
 end
 ```
 
@@ -531,15 +531,15 @@ Here, we add the following in `library.liq`:
 # Our custom crossfade that
 # only crossfade between tracks
 def my_crossfade(s) =
-  # Our transition function
-  def f(_,_, old_m, new_m, old, new) =
-    # If none of old and new have "type" metadata
-    # with value "jingles", we crossfade the source:
-    if old_m["type"] != "jingle" and new_m["type"] != "jingle" then
-      add([fade.initial(new), fade.final(old)])
-    else
-      sequence([old,new])
-    end
+ # Our transition function
+ def f(_,_, old_m, new_m, old, new) =
+ # If none of old and new have "type" metadata
+ # with value "jingles", we crossfade the source:
+ if old_m["type"] != "jingle" and new_m["type"] != "jingle" then
+ add([fade.initial(new), fade.final(old)])
+ else
+ sequence([old,new])
+ end
  end
  # Now, we apply smart_cross with this function:
  smart_cross(f,s)
@@ -745,23 +745,23 @@ First, we add the following code in `library.liq`:
 # old source, adds a single, and then
 # plays the new source
 def to_live(jingle,old,new) =
-  # Fade out old source
-  old = fade.final(old)
-  # Superpose the jingle
-  s = add([jingle,old])
-  # Compose this in sequence with
-  # the new source
-  sequence([s,new])
+ # Fade out old source
+ old = fade.final(old)
+ # Superpose the jingle
+ s = add([jingle,old])
+ # Compose this in sequence with
+ # the new source
+ sequence([s,new])
 end
 
 # A transition when switching back to files:
 def to_file(old,new) =
-  # We skip the file
-  # currently in new
-  # in order to being with
-  # a fresh file
-  source.skip(new)
-  sequence([old,new])
+ # We skip the file
+ # currently in new
+ # in order to being with
+ # a fresh file
+ source.skip(new)
+ sequence([old,new])
 end
 ```
 
@@ -785,8 +785,8 @@ to_live2 = to_live(jingle2)
 
 # Combine lives and files:
 s = fallback(track_sensitive=false,
-             transitions=[to_live1, to_live2, to_file],
-             [live1, live2, s])
+ transitions=[to_live1, to_live2, to_file],
+ [live1, live2, s])
 ```
 
 - Update your script
@@ -823,13 +823,13 @@ in `library.liq`:
 # icecast, it is "source" most of the time
 # thus, we discard it
 def harbor_auth(port,_,password) =
-  # Alice connects on port 9000 between 20h and 21h
-  # with password "rabbit"
-  (port == 9000 and 20h-21h and password == "rabbit")
-    or
-  # Bob connection on port 7000 between 18h and 20h
-  # with password "foo"
-  (port == 7000 and 18h-20h and password == "foo")
+ # Alice connects on port 9000 between 20h and 21h
+ # with password "rabbit"
+ (port == 9000 and 20h-21h and password == "rabbit")
+ or
+ # Bob connection on port 7000 between 18h and 20h
+ # with password "foo"
+ (port == 7000 and 18h-20h and password == "foo")
 end
 ```
 

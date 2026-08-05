@@ -8,7 +8,7 @@ When Liquidsoap plays a track, it doesn’t just _magically_ appear — it has t
 That’s where **protocols** come in.
 Protocols are little rules that tell Liquidsoap:
 
-> “If you see a request in the form `protocol:arguments`, here’s how to turn it into a real file or stream you can play.” 🎯
+> “If you see a request in the form `protocol:arguments`, here’s how to turn it into a real file or stream you can play.”
 
 For example:
 
@@ -22,7 +22,7 @@ In each case, the prefix before the `:` is the protocol, and the part after it i
 
 ## Built-in and custom protocols {#built-in-and-custom-protocols}
 
-Liquidsoap already ships with many ready-made protocols, written in the Liquidsoap scripting language. You can explore them in the [protocol reference](protocols.html). But the real power comes when you define your own.
+Liquidsoap already ships with many ready-made protocols, written in the Liquidsoap scripting language. You can explore them in the [protocol reference](./protocols.md). But the real power comes when you define your own.
 
 ## The anatomy of a protocol {#the-anatomy-of-a-protocol}
 
@@ -37,7 +37,7 @@ The function always gets two special variables:
 - **`~rlog`** → A logging function. Use it to write debug or info messages that stay attached to the request.
 - **`~maxtime`** → A UNIX timestamp after which your resolver should give up.
 
-## The `process.uri` helper 🛠️ {#the-process.uri-helper-}
+## The `process.uri` helper {#the-process.uri-helper-}
 
 Before diving into the examples, it’s important to understand **`process.uri`**, a convenient helper for creating URIs of the form:
 
@@ -52,24 +52,24 @@ If you provide a `uri` argument, Liquidsoap will first resolve that URI to a loc
 - **`$(input)`** → replaced with the local file resolved from the `uri` argument (only if `uri` is provided).
 - **`$(output)`** → replaced with the path to a temporary file whose extension is taken from the `extname` argument.
 
-⚠️ The output file is created **empty** before the command runs, to prevent race conditions on file ownership. This means your process must be able to overwrite it.
+ The output file is created **empty** before the command runs, to prevent race conditions on file ownership. This means your process must be able to overwrite it.
 
 By using `process.uri`, you can safely wrap external commands in a way that’s time-bound, predictable, and integrates smoothly into Liquidsoap’s request resolution chain.
 
-## Example 1 — Fetching from S3 ☁️ {#example-1-fetching-from-s3-}
+## Example 1 — Fetching from S3 {#example-1-fetching-from-s3-}
 
 Let’s say your files live on Amazon S3, and you want Liquidsoap to fetch them on demand:
 
 ```liquidsoap
 def s3_protocol(~rlog, ~maxtime, arg) =
-  extname = file.extension(leading_dot=false, dir_sep="/", arg)
-  process.uri(extname=extname,
-              "aws s3 cp s3:#{arg} $(output)")
+ extname = file.extension(leading_dot=false, dir_sep="/", arg)
+ process.uri(extname=extname,
+ "aws s3 cp s3:#{arg} $(output)")
 end
 
 protocol.add("s3", s3_protocol,
-             doc="Fetch files from S3 using the AWS CLI",
-             syntax="s3://bucket/path/to/file")
+ doc="Fetch files from S3 using the AWS CLI",
+ syntax="s3://bucket/path/to/file")
 ```
 
 Now a request like:
@@ -80,17 +80,17 @@ s3://my-bucket/song.mp3
 
 will be downloaded locally and returned as the playable URI.
 
-## Example 2 — Database lookup 📀 {#example-2-database-lookup-}
+## Example 2 — Database lookup {#example-2-database-lookup-}
 
 Protocols can also be dynamic. For instance, you might store file paths in a database keyed by track IDs:
 
 ```liquidsoap
 def db_lookup_protocol(~rlog, ~maxtime, arg) =
-  string.trim(process.read("psql -t -c 'SELECT path FROM tracks WHERE id=#{int_of_string(arg)};'"))
+ string.trim(process.read("psql -t -c 'SELECT path FROM tracks WHERE id=#{int_of_string(arg)};'"))
 end
 
 protocol.add("db_lookup", db_lookup_protocol,
-             doc="Fetch file path from database by track ID")
+ doc="Fetch file path from database by track ID")
 ```
 
 Now you can request:
@@ -107,13 +107,13 @@ Want to normalize audio before playing? Or apply a voice-over?
 
 ```liquidsoap
 def normalize_protocol(~rlog, ~maxtime, arg) =
-  process.uri(extname="wav",
-              uri=arg,
-              "normalize-audio $(input) $(output)")
+ process.uri(extname="wav",
+ uri=arg,
+ "normalize-audio $(input) $(output)")
 end
 
 protocol.add("normalize", normalize_protocol,
-             doc="Normalize audio levels before playback")
+ doc="Normalize audio levels before playback")
 ```
 
 You can chain protocols too:
@@ -132,18 +132,18 @@ The real beauty of protocols is chaining. Each protocol resolves to a single URI
 voiceover:normalize:db_lookup:1234
 ```
 
-💡 Here, `db_lookup` fetches a path, `normalize` evens out the audio, and `voiceover` mixes in an announcement.
+ Here, `db_lookup` fetches a path, `normalize` evens out the audio, and `voiceover` mixes in an announcement.
 
 ## Tips for writing robust protocols {#tips-for-writing-robust-protocols}
 
 - Always **respect `~maxtime`** to avoid long-hanging processes.
 - Use `~rlog` generously for debugging:
 
-  ```liquidsoap
-  rlog("Downloading from S3: #{arg}")
-  ```
+ ```liquidsoap
+ rlog("Downloading from S3: #{arg}")
+ ```
 
 - Keep your commands secure — if you interpolate `arg` into a shell command, validate or escape it.
 - Test each piece of the chain independently before combining them.
 
-By mastering protocols, you’re not just telling Liquidsoap where to find your content — you’re **designing the path it takes to get there**. That’s a superpower in streaming workflows, letting you pull from anywhere, process in any way, and still keep things flowing smoothly. 🚀
+By mastering protocols, you’re not just telling Liquidsoap where to find your content — you’re **designing the path it takes to get there**. That’s a superpower in streaming workflows, letting you pull from anywhere, process in any way, and still keep things flowing smoothly.

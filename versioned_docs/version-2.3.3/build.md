@@ -98,14 +98,14 @@ When compiling Liquidsoap from source, certain environment variables can be set 
 configuration. Here’s a brief overview of the relevant environment variables and their purposes:
 
 - `IS_SNAPSHOT`: Set this variable to indicate whether you are building a snapshot version of Liquidsoap. It affects the version suffix and
-  whether the Git commit is displayed.
+ whether the Git commit is displayed.
 - `LIQ_GIT_SHA`: Override Git commit hash (SHA) if the build system cannot automatically extract it from the repository.
 - `LIQ_VERSION`: Override the displayed version of Liquidsoap.
 - `LIQUIDSOAP_ENABLE_BUILD_CONFIG`: Determines whether the build configuration details are displayed during the build process.
 - `LIQUIDSOAP_BUILD_TARGET`: Controls the runtime lookup paths for Liquidsoap components.
-  - Set to `default`: Uses paths detected in the OPAM switch directory.
-  - Set to `standalone`: Uses paths relative to the binary location, ideal for self-contained deployments.
-  - Set to `posix`: Configures paths to standard system directories.
+ - Set to `default`: Uses paths detected in the OPAM switch directory.
+ - Set to `standalone`: Uses paths relative to the binary location, ideal for self-contained deployments.
+ - Set to `posix`: Configures paths to standard system directories.
 
 ## Compiling {#compiling}
 

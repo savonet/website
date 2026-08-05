@@ -31,12 +31,12 @@ s = single("/path/to/movie.mkv")
 
 # Copy first audio track and video:
 output.file(
-  %ffmpeg(
-    %audio.copy,
-    %video.copy
-  ),
-  "/path/to/copy.mkv",
-  s
+ %ffmpeg(
+ %audio.copy,
+ %video.copy
+ ),
+ "/path/to/copy.mkv",
+ s
 )
 ```
 
@@ -64,16 +64,16 @@ s = single("/path/to/movie.mkv")
 # Copy first audio track and video track
 # and re-encode second audio track:
 output.file(
-  %ffmpeg(
-    %audio.copy,
-    %audio_2(
-      channels=2,
-      codec="aac"
-    ),
-    %video.copy
-  ),
-  "/path/to/copy.mkv",
-  s
+ %ffmpeg(
+ %audio.copy,
+ %audio_2(
+ channels=2,
+ codec="aac"
+ ),
+ %video.copy
+ ),
+ "/path/to/copy.mkv",
+ s
 )
 ```
 
@@ -96,17 +96,17 @@ s = playlist("/path/to/playlist")
 # Copy first audio track and video track
 # and re-encode second audio track:
 output.file(
-  fallible=true,
-  %ffmpeg(
-    %audio.copy,
-    %audio_2(
-      channels=2,
-      codec="aac"
-    ),
-    %video.copy
-  ),
-  "/path/to/copy.mkv",
-  s
+ fallible=true,
+ %ffmpeg(
+ %audio.copy,
+ %audio_2(
+ channels=2,
+ codec="aac"
+ ),
+ %video.copy
+ ),
+ "/path/to/copy.mkv",
+ s
 )
 ```
 
@@ -122,17 +122,17 @@ s = playlist("/path/to/playlist")
 # Copy first audio track and video track
 # and re-encode second audio track:
 output.file(
-  fallible=true,
-  %ffmpeg(
-    %audio_fr.copy,
-    %audio_en(
-      channels=2,
-      codec="aac"
-    ),
-    %video.copy
-  ),
-  "/path/to/copy.mkv",
-  s
+ fallible=true,
+ %ffmpeg(
+ %audio_fr.copy,
+ %audio_en(
+ channels=2,
+ codec="aac"
+ ),
+ %video.copy
+ ),
+ "/path/to/copy.mkv",
+ s
 )
 ```
 
@@ -184,10 +184,10 @@ let {video = image_video} = source.tracks(image)
 
 # Mux the audio tracks with the image
 s = source({
-  audio=playlist_audio,
-  video=image_video,
-  metadata=metadata,
-  track_marks=track_marks
+ audio=playlist_audio,
+ video=image_video,
+ metadata=metadata,
+ track_marks=track_marks
 })
 ```
 
@@ -241,7 +241,7 @@ s = source(tracks)
 
 ## Track-level operators {#track-level-operators}
 
-Some, but not all, operators have been updated to operate at the track level. They are documented under the `Track` section in [the API documentation](reference.html). More operators might be converted in the future (feel free to file a feature request for those!).
+Some, but not all, operators have been updated to operate at the track level. They are documented under the `Track` section in [the API documentation](./reference/index.mdx). More operators might be converted in the future (feel free to file a feature request for those!).
 
 For instance, to convert an audio track to mono PCM audio, one can do:
 
@@ -264,9 +264,9 @@ s = playlist(...)
 let {audio, metadata, track_marks} = source.tracks(s)
 
 encoded = source({
-  audio       = track.ffmpeg.encode.audio(%ffmpeg(%audio(codec="aac")), audio),
-  metadata    = metadata,
-  track_marks = track_marks
+ audio = track.ffmpeg.encode.audio(%ffmpeg(%audio(codec="aac")), audio),
+ metadata = metadata,
+ track_marks = track_marks
 })
 ```
 
@@ -281,9 +281,9 @@ let {audio, metadata, track_marks} = source.tracks(s)
 encoded_audio = track.ffmpeg.encode.audio(%ffmpeg(%audio(codec="aac")), audio)
 
 encoded = source({
-  audio       = encoded_audio,
-  metadata    = track.metadata(encoded_audio),
-  track_marks = track_marks(encoded_audio)
+ audio = encoded_audio,
+ metadata = track.metadata(encoded_audio),
+ track_marks = track_marks(encoded_audio)
 })
 ```
 
@@ -312,13 +312,13 @@ For instance, imagine that you want to encode a source with a `fr` and `en` audi
 
 ```liquidsoap
 output.file(
-  %ffmpeg(
-    %en(codec="aac"),
-    %fr(codec="aac"),
-    %director_cut(codec="libx264")
-  ),
-  "/path/to/copy.mkv",
-  s
+ %ffmpeg(
+ %en(codec="aac"),
+ %fr(codec="aac"),
+ %director_cut(codec="libx264")
+ ),
+ "/path/to/copy.mkv",
+ s
 )
 ```
 
@@ -328,13 +328,13 @@ Now, imagine that you actually want to use a variable for the codec of the `en` 
 
 ```liquidsoap
 output.file(
-  %ffmpeg(
-    %en(audio_content, codec=audio_codec)
-    %fr(codec="aac"),
-    %director_cut(video_content, codec=video_codec)
-  ),
-  "/path/to/copy.mkv",
-  s
+ %ffmpeg(
+ %en(audio_content, codec=audio_codec)
+ %fr(codec="aac"),
+ %director_cut(video_content, codec=video_codec)
+ ),
+ "/path/to/copy.mkv",
+ s
 )
 ```
 
@@ -344,13 +344,13 @@ However, you might also opt for a more explicit track naming scheme. Something l
 
 ```liquidsoap
 output.file(
-  %ffmpeg(
-    %audio_en(codec=audio_codec),
-    %audio_fr(codec="aac"),
-    %director_cut_video(codec=video_codec)
-  ),
-  "/path/to/copy.mkv",
-  s
+ %ffmpeg(
+ %audio_en(codec=audio_codec),
+ %audio_fr(codec="aac"),
+ %director_cut_video(codec=video_codec)
+ ),
+ "/path/to/copy.mkv",
+ s
 )
 ```
 

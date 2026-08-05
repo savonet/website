@@ -22,12 +22,12 @@ print(profiler.stats.string())
 It will output something like
 
 ```
-function              self              total             calls
+function self total calls
 
-+                     0.359139919281    0.359139919281    302000
-list.add              0.324638843536    442.74707818      202000
-if                    0.242718935013    442.951756954     102002
-list.cons             0.230906486511    442.277146816     101000
++ 0.359139919281 0.359139919281 302000
+list.add 0.324638843536 442.74707818 202000
+if 0.242718935013 442.951756954 102002
+list.cons 0.230906486511 442.277146816 101000
 ```
 
 where each lines consists of a function, the time spent in the functions, the

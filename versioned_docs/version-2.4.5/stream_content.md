@@ -14,13 +14,13 @@ little about it.
 
 In liquidsoap script language, there are three sorts of objects
 that rely on stream types: sources, requests and encoding formats.
-A [source](sources.html) produces a stream,
+A [source](./sources.md) produces a stream,
 and it is important what kind of stream
 it produces when composing it with other sources.
-A [request](requests.html) is an abstract notion of file,
+A [request](./requests.md) is an abstract notion of file,
 often meant to be decoded, and it is useful to know into what
 kind of stream it is meant to be decoded.
-Finally, a [format](encoding_formats.html) describes how a stream
+Finally, a [format](./encoding_formats.md) describes how a stream
 should be encoded (_e.g._, before output in a file or via icecast),
 and the stream content is also useful here for the format
 to make sense.
@@ -48,7 +48,7 @@ For users concerned with memory consumption, we also support two additional audi
 `pcm_s16` and `pcm_f32` using, resp., signed 16-bit integers and 32-bit floating point numbers.
 These formats may increase CPU usage, however, as we do need to convert back and forth when
 using them in audio manipulation operators such as `amplify`, `crossfade` and etc. See [this
-link](memory.html#audio-data-format) for more details.
+link](./memory.md#audio-data-format) for more details.
 
 ### Opaque content {#opaque-content}
 
@@ -62,7 +62,7 @@ These type of content are consumed by FFmpeg specific operators and it is possib
 forth if you want to use them with our internal operators. However, their best use-case is to keep them as-is end-to-end
 to optimize for memory and/or CPU usage.
 
-See the [FFmpeg support](ffmpeg.html) doc for more information.
+See the [FFmpeg support](./ffmpeg.md) doc for more information.
 
 ## Global parameters {#global-parameters}
 
@@ -91,10 +91,10 @@ For example, if you try to send an ALSA input to a SDL input using
 
 ```
 At line 1, char 22-23:
-  this value has type
-    source(audio=pcm('a))
-  but it should be a subtype of
-    source(video=canvas)
+ this value has type
+ source(audio=pcm('a))
+ but it should be a subtype of
+ source(video=canvas)
 ```
 
 It means that a source with a video channel was expected
@@ -114,16 +114,16 @@ s = single("file.mp4")
 
 # Output video here
 output.file(
-  %ffmpeg(%video(codec="libx264"),
-  "/path/to/video.flv",
-  s
+ %ffmpeg(%video(codec="libx264"),
+ "/path/to/video.flv",
+ s
 )
 
 # Output audio here
 output.file(
-  %ffmpeg(%audio(codec="aac"))
-  "/path/to/video.aac",
-  s
+ %ffmpeg(%audio(codec="aac"))
+ "/path/to/video.aac",
+ s
 )
 ```
 
@@ -137,16 +137,16 @@ s = single("file.mp4")
 
 # Output video here
 output.file(
-  %ffmpeg(%video(codec="libx264"),
-  "/path/to/video.flv",
-  source.drop.audio(s)
+ %ffmpeg(%video(codec="libx264"),
+ "/path/to/video.flv",
+ source.drop.audio(s)
 )
 
 # Output audio here
 output.file(
-  %ffmpeg(%audio(codec="aac"))
-  "/path/to/video.aac",
-  source.drop.video(s)
+ %ffmpeg(%audio(codec="aac"))
+ "/path/to/video.aac",
+ source.drop.video(s)
 )
 ```
 
@@ -189,7 +189,7 @@ First, liquidsoap guesses as much as possible
 script.
 Usually, the outputs pretty much determine what sources should contain.
 A critical ingredient here is often the
-[encoding format](encoding_formats.html). For example, in
+[encoding format](./encoding_formats.md). For example, in
 
 ```liquidsoap
 output.icecast(%vorbis,mount="some.ogg",s)

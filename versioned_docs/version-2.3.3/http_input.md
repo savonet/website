@@ -15,4 +15,4 @@ source = input.http(url)
 This operator will pull regularly the given location for its data, so it should be used for
 locations that are assumed to be available most of the time. If not, it might generate unnecessary
 traffic and pollute the logs. In this case, it is perhaps better to inverse the paradigm and
-use the [input.harbor](harbor.html) operator.
+use the [input.harbor](./harbor.md) operator.

@@ -3,20 +3,20 @@ title: "Importing/exporting YAML values"
 description: "Support for YAML parsing and rendering was first added in liquidsoap 2.2.0. This support follows the same pattern as JSON parsing/rendering but using…"
 sidebar_label: "YAML import/export"
 ---
-Support for YAML parsing and rendering was first added in liquidsoap `2.2.0`. This support follows the same pattern as [JSON parsing/rendering](json.html) but using
+Support for YAML parsing and rendering was first added in liquidsoap `2.2.0`. This support follows the same pattern as [JSON parsing/rendering](./json.md) but using
 yaml-based syntax, i.e.:
 
 ```liquidsoap
 let yaml.parse ({
-  name,
-  version,
-  scripts,
+ name,
+ version,
+ scripts,
 } : {
-  name: string,
-  version: string,
-  scripts: {
-    test: string?
-  }?
+ name: string,
+ version: string,
+ scripts: {
+ test: string?
+ }?
 }) = file.contents("/path/to/file.yaml")
 ```
 
@@ -29,4 +29,4 @@ print(yaml.stringify(r))
 
 The only major difference being that, in YAML, all numbers are parsed and rendered as _floats_.
 
-Please refer to the [JSON parsing and rendering](json.html) documentation for more details.
+Please refer to the [JSON parsing and rendering](./json.md) documentation for more details.

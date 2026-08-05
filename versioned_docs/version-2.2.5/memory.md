@@ -42,8 +42,8 @@ Typically, to change the garbage collector parameters, one can do:
 # This results in a slightly increased
 # CPU usage and reduced memory usage.
 runtime.gc.set(runtime.gc.get().{
-  space_overhead = 20,
-  allocation_policy = 2
+ space_overhead = 20,
+ allocation_policy = 2
 })
 ```
 
@@ -54,7 +54,7 @@ These parameters and functions make it possible to experiment and see if you can
 Not all the memory in the application is allocated by the OCaml garbage collector. External libraries such as `ffmpeg`, `libmp3lame`
 and etc. need to allocate their own memory. This is usually referred to as _C memory allocations_ though it does not have
 to be allocated by a program written in `C`.. Another, more technically appropriate is _heap memory_ though, dynamically memory allocated
-by the OCaml garbage collector also lives in the program's heap.. 😅
+by the OCaml garbage collector also lives in the program's heap..
 
 This type of memory is also cleaned up by the OCaml garbage collector. To do so, a _custom block_ is passed to the OCaml program with
 a reference to a C memory pointer and how to clean it up. When the OCaml program detects that this custom block is no longer
@@ -92,10 +92,10 @@ amount of memory per number.
 If you are concerned with reducing your audio memory footprint, for instance if your applications has a lot of audio sources with buffers, you can
 do a couple of things:
 
-1. Use the [ffmpeg raw content](ffmpeg.html).
+1. Use the [ffmpeg raw content](./ffmpeg.md).
 
 This means storing all the audio content as ffmpeg audio frames. This is an opaque format that works very well if your script can use ffmpeg end-to-end, for instance processing
-audio using [ffmpeg filters](ffmpeg_filters.html)..
+audio using [ffmpeg filters](./ffmpeg_filters.md)..
 
 2. Use one of the `pcm_f32` or `pcm_s16` audio format.
 

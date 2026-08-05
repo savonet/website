@@ -20,16 +20,16 @@ file. This is more constraining, which allows one to restrict the use of the
 socket to some privileged users.
 
 You can find more details on how to configure the server in the
-[documentation](help.html#settings) of the settings key `server`, in particular
+[documentation](./help.md#settings) of the settings key `server`, in particular
 `server.telnet` for the TCP interface and `server.socket` for the Unix
-interface. Liquidsoap also embeds some [documentation](help.html#server) about
+interface. Liquidsoap also embeds some [documentation](./help.md#server) about
 the available server commands.
 
 ### Using telnet {#using-telnet}
 
 Now, we shall simply enable the Telnet interface to the server, by setting
 `settings.server.telnet := true` or simply passing the `-t` option on the
-command-line. In a [complete case analysis](complete_case.html) we set up a
+command-line. In a [complete case analysis](./complete_case.md) we set up a
 `request.queue()` instance to play user requests. It had the identifier
 `"queue"`. We are now going to interact via the server to push requests into
 that queue:
@@ -199,11 +199,11 @@ content:
 #!/bin/sh
 # We test if the file is a socket, readable and writable.
 if [ -S /path/to/socket ] && [ -w /path/to/socket ] && \
-   [ -r /path/to/socket ]; then
-  socat /path/to/socket -
+ [ -r /path/to/socket ]; then
+ socat /path/to/socket -
 else
 # If not, we exit..
-  exit 1
+ exit 1
 fi
 ```
 
@@ -231,7 +231,7 @@ individual files in /usr/share/doc/*/copyright.
 
 Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
-Last login: Tue Oct  5 11:26:52 2010 from localhost
+Last login: Tue Oct 5 11:26:52 2010 from localhost
 help
 Available commands:
 (...)

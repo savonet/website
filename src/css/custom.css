@@ -1,30 +1,31 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * Infima variables only -- no custom framework. The palette is built around the magenta
+ * in the Liquidsoap logo (#a01371); the darker end is used in light mode so that body
+ * links clear WCAG AA against white.
  */
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #8f1064;
+  --ifm-color-primary-dark: #810e5a;
+  --ifm-color-primary-darker: #7a0e55;
+  --ifm-color-primary-darkest: #640b46;
+  --ifm-color-primary-light: #9d126e;
+  --ifm-color-primary-lighter: #a41373;
+  --ifm-color-primary-lightest: #f7e3ef;
+
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  /* Lightened so it stays legible on a dark surface. */
+  --ifm-color-primary: #e879bd;
+  --ifm-color-primary-dark: #e15fb0;
+  --ifm-color-primary-darker: #dd52a9;
+  --ifm-color-primary-darkest: #c72f8e;
+  --ifm-color-primary-light: #ef93ca;
+  --ifm-color-primary-lighter: #f3a0d1;
+  --ifm-color-primary-lightest: #4a0834;
+
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }

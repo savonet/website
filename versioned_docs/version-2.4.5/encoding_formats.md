@@ -1,5 +1,5 @@
 ---
-title: "Encoding Formats in Liquidsoap 🎙️"
+title: "Encoding Formats in Liquidsoap"
 description: "When you're ready to send audio (or video!) out into the world—whether to Icecast, a file, or another system—you'll need to encode it into a suitable…"
 sidebar_label: "Encoding formats"
 ---
@@ -7,7 +7,7 @@ When you're ready to send audio (or video!) out into the world—whether to Icec
 
 At the heart of this process are **encoders**—special values that you pass to output operators to define the desired stream format.
 
-This page introduces how encoders work in Liquidsoap, how they influence your pipeline, and what formats and options are available. Don’t worry if it feels abstract at first—it’s a central concept, and it will click as you explore more! 🚀
+This page introduces how encoders work in Liquidsoap, how they influence your pipeline, and what formats and options are available. Don’t worry if it feels abstract at first—it’s a central concept, and it will click as you explore more!
 
 ## Encoders: More Than Just Compression {#encoders-more-than-just-compression}
 
@@ -23,7 +23,7 @@ You might think: “I want to encode this playlist as MP3.” But under the hood
 
 So your `playlist("songs")` must produce that exact kind of data—PCM audio, stereo. If it doesn’t, Liquidsoap may try to convert it. But it can’t always.
 
-🧠 **Important:** The encoder drives the output type. You must feed it a compatible source.
+ **Important:** The encoder drives the output type. You must feed it a compatible source.
 
 For instance:
 
@@ -52,7 +52,7 @@ output.icecast(%mp3, my_source)
 
 Parameters are optional (unless noted) and can be reordered. You can also write `mono=true` or `channels=1`; both are equivalent.
 
-## ⚠️ Format Availability {#format-availability}
+## Format Availability {#format-availability}
 
 Not all encoders are always available in every Liquidsoap build. Some require optional libraries.
 
@@ -67,7 +67,7 @@ In this case, you might need to enable an external dependency (if you are instal
 
 On our Windows build, only `%ffmpeg` is included due to linking limitations. Luckily, `%ffmpeg` supports many common formats.
 
-## 🔍 Format Reference {#format-reference}
+## Format Reference {#format-reference}
 
 ### MP3 {#mp3}
 
@@ -134,7 +134,7 @@ care about the WAV length header then you should use the `duration` parameter.
 
 ### FFmpeg {#ffmpeg}
 
-See detailed [ffmpeg encoders](ffmpeg_encoder.html) article.
+See detailed [ffmpeg encoders](./ffmpeg_encoder.md) article.
 
 ### Ogg {#ogg}
 
@@ -186,12 +186,12 @@ their meanings and values.
 
 ```liquidsoap
 %theora(quality=40,width=640,height=480,
-        picture_width=255,picture_height=255,
-        picture_x=0, picture_y=0,
-        aspect_numerator=1, aspect_denominator=1,
-        keyframe_frequency=64, vp3_compatible=false,
-        soft_target=false, buffer_delay=5,
-        speed=0)
+ picture_width=255,picture_height=255,
+ picture_x=0, picture_y=0,
+ aspect_numerator=1, aspect_denominator=1,
+ keyframe_frequency=64, vp3_compatible=false,
+ soft_target=false, buffer_delay=5,
+ speed=0)
 ```
 
 You can also pass `bitrate=x` explicitly instead of a quality.
@@ -202,9 +202,9 @@ from the settings `frame.video.height/width`.
 
 ```liquidsoap
 %speex(stereo=false, samplerate=44100, quality=7,
-       mode=wideband, # One of: wideband|narrowband|ultra-wideband
-       frames_per_packet=1,
-       complexity=5)
+ mode=wideband, # One of: wideband|narrowband|ultra-wideband
+ frames_per_packet=1,
+ complexity=5)
 ```
 
 You can also control quality using `abr=x` or `vbr=y`.
@@ -220,9 +220,9 @@ The parameters are:
 
 ```liquidsoap
 %flac(samplerate=44100,
-      channels=2,
-      compression=5,
-      bits_per_sample=16)
+ channels=2,
+ compression=5,
+ bits_per_sample=16)
 ```
 
 `compression` ranges from 0 to 8 and `bits_per_sample` should be one of: `8`, `16`, `24` or `32`.

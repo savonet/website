@@ -16,10 +16,10 @@ Ffmpeg support includes 3 types of content:
 
 - **Internal content**, that is content available to all liquidsoap operators: `PCM` audio and `YUV420p` video
 - **Raw content**, that is decoded content but stored as ffmpeg internal frame.
-  This type of content is only available to ffmpeg filters and raw encoders. It can be used to avoid data copies back and forth between liquidsoap and ffmpeg.
+ This type of content is only available to ffmpeg filters and raw encoders. It can be used to avoid data copies back and forth between liquidsoap and ffmpeg.
 - **Copy content**, that is encoded content stored as ffmpeg internal packets.
-  This type of content is only available to ffmpeg copy encoder and bitstream filters and requires a fairly good understanding of media codecs and containers.
-  Copy contents can be used to avoid transcoding and pass encoded data end-to-end inside liquidsoap scripts.
+ This type of content is only available to ffmpeg copy encoder and bitstream filters and requires a fairly good understanding of media codecs and containers.
+ Copy contents can be used to avoid transcoding and pass encoded data end-to-end inside liquidsoap scripts.
 
 ## Enabling ffmpeg support {#enabling-ffmpeg-support}
 
@@ -111,12 +111,12 @@ Sender:
 
 ```liquidsoap
 enc = %ffmpeg(
-  format="s16le",
-  %audio(
-    codec="pcm_s16le",
-    ac=2,
-    ar=48000
-  )
+ format="s16le",
+ %audio(
+ codec="pcm_s16le",
+ ac=2,
+ ar=48000
+ )
 )
 
 output.srt(enc, s)
@@ -126,7 +126,7 @@ Receiver:
 
 ```liquidsoap
 s = input.srt(
-  content_type="application/ffmpeg;format=s16le,ch_layout=stereo,sample_rate=48000"
+ content_type="application/ffmpeg;format=s16le,ch_layout=stereo,sample_rate=48000"
 )
 ```
 
@@ -141,11 +141,11 @@ This could also be done in a `playlist` or `request.dynamic` and etc.
 
 ## Encoders {#encoders}
 
-See detailed [ffmpeg encoders](ffmpeg_encoder.html) article.
+See detailed [ffmpeg encoders](./ffmpeg_encoder.md) article.
 
 ## Filters {#filters}
 
-See detailed [ffmpeg filters](ffmpeg_filters.html) article.
+See detailed [ffmpeg filters](./ffmpeg_filters.md) article.
 
 ## Bitstream filters {#bitstream-filters}
 
@@ -154,7 +154,7 @@ media codecs and containers to make them fit some specific use, for instance a r
 when dealing with live switches of encoded content (see [Examples](#examples) section).
 
 The list of all bitstream filters is documented on [FFmpeg](https://www.ffmpeg.org/ffmpeg-bitstream-filters.html) online doc and
-our [extra API reference](reference-extras.html). Here's one such filter:
+our [extra API reference](./reference-extras/index.mdx). Here's one such filter:
 
 ```liquidsoap
 % liquidsoap -h ffmpeg.filter.bitstream.h264_mp4toannexb
@@ -170,7 +170,7 @@ Category: Source / FFmpeg filter
 Arguments:
 
  * id : string?
-     Force the value of the source ID.
+ Force the value of the source ID.
 
  * (unlabeled) : source(video=ffmpeg.copy('a), 'b)
 
@@ -210,37 +210,37 @@ video_source = single(image)
 stream = source.mux.video(video=video_source, audio_source)
 
 stream = ffmpeg.encode.audio_video(
-    %ffmpeg(
-        %audio(codec="aac", b="128k"),
-        %video(codec="libx264", b="4000k")
-    ),
-    stream
+ %ffmpeg(
+ %audio(codec="aac", b="128k"),
+ %video(codec="libx264", b="4000k")
+ ),
+ stream
 )
 
 flv = %ffmpeg(
-    format="flv",
-    %audio.copy,
-    %video.copy,
+ format="flv",
+ %audio.copy,
+ %video.copy,
 )
 
 # Send to one youtube output:
 output.youtube.live.rtmp(
-    encoder = flv,
-    stream,
-    ...
+ encoder = flv,
+ stream,
+ ...
 )
 
 mpegts = %ffmpeg(
-    format="mpegts",
-    %audio.copy,
-    %video.copy,
+ format="mpegts",
+ %audio.copy,
+ %video.copy,
 )
 
 # And to a hls one:
 output.file.hls(
-  ["mpegts", mpegts],
-  stream,
-  ...
+ ["mpegts", mpegts],
+ stream,
+ ...
 )
 ```
 
@@ -251,9 +251,9 @@ When working with a single encoder such as:
 
 ```liquidsoap
 %ffmpeg(
-  format="flv",
-  %audio(codec="aac", b="128k"),
-  %video(codec="libx264", b="4000k")
+ format="flv",
+ %audio(codec="aac", b="128k"),
+ %video(codec="libx264", b="4000k")
 )
 ```
 
@@ -268,11 +268,11 @@ If you know that all the containers will be okay with global header, you can ena
 
 ```liquidsoap
 stream = ffmpeg.encode.audio_video(
-    %ffmpeg(
-        %audio(codec="aac", b="128k", flags="+global_header"),
-        %video(codec="libx264", b="4000k", flags="+global_header")
-    ),
-    stream
+ %ffmpeg(
+ %audio(codec="aac", b="128k", flags="+global_header"),
+ %video(codec="libx264", b="4000k", flags="+global_header")
+ ),
+ stream
 )
 ```
 
@@ -286,42 +286,42 @@ video_source = single(image)
 stream = source.mux.video(video=video_source, audio_source)
 
 stream = ffmpeg.encode.audio_video(
-    %ffmpeg(
-        %audio(codec="aac", b="128k"),
-        %video(codec="libx264", b="4000k")
-    ),
-    stream
+ %ffmpeg(
+ %audio(codec="aac", b="128k"),
+ %video(codec="libx264", b="4000k")
+ ),
+ stream
 )
 
 flv = %ffmpeg(
-    format="flv",
-    %audio.copy,
-    %video.copy,
+ format="flv",
+ %audio.copy,
+ %video.copy,
 )
 
 flv_stream = ffmpeg.filter.bitstream.extract_extradata(stream)
 
 # Send to one youtube output:
 output.youtube.live.rtmp(
-    encoder = flv,
-    flv_stream,
-    ...
+ encoder = flv,
+ flv_stream,
+ ...
 )
 
 mpegts = %ffmpeg(
-    format="mpegts",
-    %audio.copy,
-    %video.copy,
+ format="mpegts",
+ %audio.copy,
+ %video.copy,
 )
 
 # And to a hls one:
 output.file.hls(
-  ["mpegts", mpegts],
-  stream,
-  ...
+ ["mpegts", mpegts],
+ stream,
+ ...
 )
 ```
 
 ## Examples {#examples}
 
-See detailed [ffmpeg cookbook](ffmpeg_cookbook.html) article.
+See detailed [ffmpeg cookbook](./ffmpeg_cookbook.md) article.

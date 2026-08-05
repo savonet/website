@@ -3,7 +3,7 @@ title: "Liquidsoap's scripting language"
 description: "The following is adapted from the Liquidsoap book. The reader is avised to check out the whole chapter in the book for more details about the…"
 sidebar_label: "Script language"
 ---
-_The following is adapted from the [Liquidsoap book](book.html). The reader is avised to check out the whole
+_The following is adapted from the [Liquidsoap book](./book.md). The reader is avised to check out the whole
 chapter in the book for more details about the liquidsoap language_
 
 ## General features {#general-features}
@@ -107,7 +107,7 @@ actually inserting newlines in the strings. For instance, the script
 
 ```liquidsoap
 print("His name is \
-       Romain.")
+ Romain.")
 ```
 
 will actually print
@@ -151,24 +151,24 @@ Liquidsoap strings follow the most common lexical conventions from `C` and `java
 
 The following sequences are recognized:
 
-| Escape sequence | Hex value in ASCII | Character represented                                                                 |
+| Escape sequence | Hex value in ASCII | Character represented |
 | --------------- | ------------------ | ------------------------------------------------------------------------------------- |
-| `\a`            | `\x07`             | Alert (Beep, Bell)                                                                    |
-| `\b`            | `\x08`             | Backspace                                                                             |
-| `\e`            | `\x1B`             | Escape character                                                                      |
-| `\f`            | `\x0C`             | Formfeed, Page Break                                                                  |
-| `\n`            | `\x0A`             | Newline (Line Feed)                                                                   |
-| `\r`            | `\x0D`             | Carriage Return                                                                       |
-| `\t`            | `\x09`             | Horizontal Tab                                                                        |
-| `\v`            | `\x0B`             | Vertical Tab                                                                          |
-| `\\`            | `\x5C`             | Backslash                                                                             |
-| `\/`            | `\x2f`             | Forward slash                                                                         |
-| `\'`            | `\x27`             | Apostrophe or single quotation mark                                                   |
-| `\"`            | `\x22`             | Double quotation mark                                                                 |
-| `\?`            | `\x3F`             | Question mark (used to avoid Digraphs and trigraphs)                                  |
-| `\nnn`          | any                | The byte whose numerical value is given by _nnn_ interpreted as an _octal_ number     |
-| `\xhh`          | any                | The byte whose numerical value is given by _hh_ interpreted as a _hexadecimal_ number |
-| `\uhhhh`        | none               | UTF8-8 code point given by _hhhh_ interpreted as an _hexadecimal_ number              |
+| `\a` | `\x07` | Alert (Beep, Bell) |
+| `\b` | `\x08` | Backspace |
+| `\e` | `\x1B` | Escape character |
+| `\f` | `\x0C` | Formfeed, Page Break |
+| `\n` | `\x0A` | Newline (Line Feed) |
+| `\r` | `\x0D` | Carriage Return |
+| `\t` | `\x09` | Horizontal Tab |
+| `\v` | `\x0B` | Vertical Tab |
+| `\\` | `\x5C` | Backslash |
+| `\/` | `\x2f` | Forward slash |
+| `\'` | `\x27` | Apostrophe or single quotation mark |
+| `\"` | `\x22` | Double quotation mark |
+| `\?` | `\x3F` | Question mark (used to avoid Digraphs and trigraphs) |
+| `\nnn` | any | The byte whose numerical value is given by _nnn_ interpreted as an _octal_ number |
+| `\xhh` | any | The byte whose numerical value is given by _hh_ interpreted as a _hexadecimal_ number |
+| `\uhhhh` | none | UTF8-8 code point given by _hhhh_ interpreted as an _hexadecimal_ number |
 
 This convention has been decided to follow the most common practices. In particular, `\nnn` is an _octal_ escape sequence in most languages
 including C, Ruby, Javascript, Python and more. This differs from OCaml where `\nnn` is considered a _digital_ escape sequence.
@@ -219,13 +219,13 @@ Regular expressions have the following methods:
 r/(foo)(?<gno>gni)?/g.exec("foogni")
 - : [int * string].{groups : [string * string]} =
 [
-    (2, "gni"),
-    (1, "foo"),
-    (0, "foogni")
+ (2, "gni"),
+ (1, "foo"),
+ (0, "foogni")
 ].{
-    groups = [
-      ("gno", "gni")
-    ]
+ groups = [
+ ("gno", "gni")
+ ]
 }
 ```
 
@@ -257,9 +257,9 @@ or not. For instance, the code
 
 ```liquidsoap
 if (1 <= x and x <= 12) or (not 10h-15h) then
-  print("The condition is satisfied")
+ print("The condition is satisfied")
 else
-  print("The condition ain't satisfied")
+ print("The condition ain't satisfied")
 end
 ```
 
@@ -303,9 +303,9 @@ in the following example, which assigns 0, 1, 2 or 3 to `s` depending on whether
 
 ```liquidsoap
 s = if x == "a" then 0
-    elsif x == "b" then 1
-    elsif x == "c" then 2
-    else 3 end
+ elsif x == "b" then 1
+ elsif x == "c" then 2
+ else 3 end
 ```
 
 This is equivalent (but shorter to write) to the following sequence of
@@ -313,13 +313,13 @@ imbricated conditional branchings:
 
 ```liquidsoap
 s = if x == "a" then 0
-    else
-      if x == "b" then 1
-      else
-        if x == "c" then 2
-        else 3 end
-      end
-    end
+ else
+ if x == "b" then 1
+ else
+ if x == "c" then 2
+ else 3 end
+ end
+ end
 ```
 
 Finally, we should mention that the notation `c?a:b` is also available as a
@@ -477,7 +477,7 @@ There is an alternative syntax for declaring variables which is
 
 ```liquidsoap
 def x =
-  e
+ e
 end
 ```
 
@@ -508,28 +508,28 @@ meaning that its a memory cell containing integers. On such a reference, two
 operations are available.
 
 - One can obtain the value of the reference by applying the reference to `()`,
-  so that `r()` denotes the value contained in the reference `r`, for instance
+ so that `r()` denotes the value contained in the reference `r`, for instance
 
-  ```liquidsoap
-  x = r() + 4
-  ```
+ ```liquidsoap
+ x = r() + 4
+ ```
 
-  declares the variable `x` as being 9 (which is 5+4).
+ declares the variable `x` as being 9 (which is 5+4).
 
 - One can change the value of the reference by using the `:=` keyword, e.g.
 
-  ```liquidsoap
-  r := 2
-  ```
+ ```liquidsoap
+ r := 2
+ ```
 
-  will assign the value 2 to `r`. Internally, this is done by calling the `set`
-  method of the reference, so that the above is equivalent to writing
+ will assign the value 2 to `r`. Internally, this is done by calling the `set`
+ method of the reference, so that the above is equivalent to writing
 
-  ```liquidsoap
-  r.set(2)
-  ```
+ ```liquidsoap
+ r.set(2)
+ ```
 
-  which used to be the syntax for some reference manipulations.
+ which used to be the syntax for some reference manipulations.
 
 ### Loops {#loops}
 
@@ -541,7 +541,7 @@ successively taken by the variable `i`:
 
 ```liquidsoap
 for i = 1 to 5 do
-  print(i)
+ print(i)
 end
 ```
 
@@ -556,7 +556,7 @@ reference `n` as long as its value is below `10`:
 ```liquidsoap
 n = ref(1)
 while n() < 10 do
-  n := n() * 2
+ n := n() * 2
 end
 print(n())
 ```
@@ -582,8 +582,8 @@ prints the first and returns the result of adding twice the first to the second:
 
 ```liquidsoap
 def f(x, y)
-  print(x)
-  2*x+y
+ print(x)
+ 2*x+y
 end
 ```
 
@@ -704,7 +704,7 @@ make this become the value for the `duration` parameter:
 
 ```liquidsoap title="samplerate3.liq"
 def samplerate(~samples, ~duration=2.5) =
-  samples / duration
+ samples / duration
 end
 
 ```
@@ -746,7 +746,7 @@ so that we can use it to have a radio consisting of a microphone input amplified
 by a factor 1.2 by
 
 ```liquidsoap
-mic   = input.alsa()
+mic = input.alsa()
 radio = amplify(1.2, mic)
 ```
 
@@ -776,8 +776,8 @@ the value. For instance, we can define a float getter by
 ```liquidsoap
 n = ref(0.)
 def f ()
-  n := n() + 1.
-  n()
+ n := n() + 1.
+ n()
 end
 ```
 
@@ -826,7 +826,7 @@ functions:
 - `getter`, of type `({'a}) -> {'a}`, creates a getter,
 - `getter.get`, of type `({'a}) -> 'a`, retrieves the current value of a getter,
 - `getter.function`, of type `({'a}) -> () -> 'a`, creates a function from a
-  getter.
+ getter.
 
 ### Recursive functions {#recursive-functions}
 
@@ -841,8 +841,8 @@ factorial:
 
 ```liquidsoap
 def rec fact(n) =
-  if n == 0 then 1
-  else n * fact(n-1) end
+ if n == 0 then 1
+ else n * fact(n-1) end
 end
 ```
 
@@ -852,8 +852,8 @@ list, can be programmed in the following way in Liquidsoap:
 
 ```liquidsoap
 def rec length(l)
-  if l == [] then 0
-  else 1 + length(list.tl(l)) end
+ if l == [] then 0
+ else 1 + length(list.tl(l)) end
 end
 ```
 
@@ -922,7 +922,7 @@ fields in record. For instance, the definition
 
 ```liquidsoap
 def list.last(l)
-  list.nth(l, list.length(l)-1)
+ list.nth(l, list.length(l)-1)
 end
 ```
 
@@ -1009,7 +1009,7 @@ Here's an example:
 # This functions adds 1 to x unless options has a
 # add field in which case it adds this value
 def f(x, options) =
-  x + (options.add ?? 1)
+ x + (options.add ?? 1)
 end
 ```
 
@@ -1171,9 +1171,9 @@ In order to avoid this, one can _catch_ exceptions with the syntax
 
 ```liquidsoap
 try
-  code
+ code
 catch err do
-  handler
+ handler
 end
 ```
 
@@ -1191,11 +1191,11 @@ we could equivalently write
 ```liquidsoap
 l = []
 x =
-  try
-    list.hd(l)
-  catch err do
-    0
-  end
+ try
+ list.hd(l)
+ catch err do
+ 0
+ end
 ```
 
 The name and message associated to an error can respectively be retrieved using
@@ -1203,10 +1203,10 @@ the error `kind` and `message` attributes, e.g. we can write
 
 ```liquidsoap
 try
-  ...
+ ...
 catch err do
-  print("the error #{err.kind} was raised")
-  print("the error message is #{err.message}")
+ print("the error #{err.kind} was raised")
+ print("the error message is #{err.message}")
 end
 ```
 
@@ -1218,9 +1218,9 @@ corresponding message:
 ```liquidsoap
 data = "bla"
 try
-  file.write(data=data, "/non/existent/path")
+ file.write(data=data, "/non/existent/path")
 catch err do
-  log.important("Could not write to file: #{error.message(err)}")
+ log.important("Could not write to file: #{error.message(err)}")
 end
 ```
 
@@ -1228,9 +1228,9 @@ Specific errors can be caught with the syntax
 
 ```liquidsoap
 try
-  ...
+ ...
 catch err : l do
-  ...
+ ...
 end
 ```
 
@@ -1258,18 +1258,18 @@ whether or not there is an exception raised, you can use _finally_:
 ```liquidsoap
 # Without a catch block
 try
-  ...
+ ...
 finally
-  ...
+ ...
 end
 
 # With a catch block
 try
-  ...
+ ...
 catch ... do
-  ...
+ ...
 finally
-  ...
+ ...
 end
 ```
 
@@ -1279,15 +1279,15 @@ This is roughly equivalent to:
 finally_called = ref(false)
 def finally() = ... end
 try
-  let ret = ...
-  finally_called := true
-  finally()
-  ret
+ let ret = ...
+ finally_called := true
+ finally()
+ ret
 # If specified:
 catch ... do
-  let ret = ...
-  if not finally_called() then finally() end
-  ret
+ let ret = ...
+ if not finally_called() then finally() end
+ ret
 end
 ```
 
@@ -1307,7 +1307,7 @@ empty:
 
 ```liquidsoap
 def list.hd(l)
-  if l == [] then null() else list.hd(l) end
+ if l == [] then null() else list.hd(l) end
 end
 ```
 
@@ -1335,11 +1335,11 @@ Some other useful functions include
 - `null.defined`: test whether a value is null or not,
 - `null.get`: obtain the value of a nullable value supposed to be distinct from `null`,
 - `null.case`: execute a function or another, depending on whether a value is
-  null or not.
+ null or not.
 
 ### Runtime evaluation of scripting values {#runtime-evaluation-of-scripting-values}
 
-Similarly to how JSON is [parsed](json.html), you can evaluate string into values at runtime
+Similarly to how JSON is [parsed](./json.md), you can evaluate string into values at runtime
 using the `eval` decorator. As with JSON, too, the recommended way to use it is by adding an
 explicit type annotation:
 
@@ -1378,7 +1378,7 @@ and would then use it by including it:
 
 radio = ...
 output.icecast(%mp3, host="localhost", port=8000,
-               password=radio_pass, mount="my-radio.mp3", radio)
+ password=radio_pass, mount="my-radio.mp3", radio)
 ```
 
 so that passwords are not shown in the main script.
@@ -1405,11 +1405,11 @@ Multiline comments can be nested:
 #<
 This is a top-level comment
 
-  # This is also a comment
+ # This is also a comment
 
-  #<
-    This is a nested code comment
-  >#
+ #<
+ This is a nested code comment
+ >#
 >#
 ```
 
@@ -1427,7 +1427,7 @@ are started with the character `#` without a following `<`. Anything after the i
 
 ```liquidsoap
 def f(x) = # This is a single line comment.
-  123
+ 123
 end
 ```
 

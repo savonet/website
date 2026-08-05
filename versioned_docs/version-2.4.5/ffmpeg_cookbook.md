@@ -15,24 +15,24 @@ encoded_source = input.http("https://icecast.radiofrance.fr/fip-hifi.aac")
 
 # Send to one server here:
 output.icecast(
-  %ffmpeg(format = "adts", %audio.copy),
-  fallible=true,
-  mount="/restream",
-  host="streaming.example.com",
-  port=8000,
-  password="xxx",
-  encoded_source
+ %ffmpeg(format = "adts", %audio.copy),
+ fallible=true,
+ mount="/restream",
+ host="streaming.example.com",
+ port=8000,
+ password="xxx",
+ encoded_source
 )
 
 # An another one here:
 output.icecast(
-  %ffmpeg(format = "adts", %audio.copy),
-  fallible=true,
-  mount="/restream",
-  host="streaming2.example.com",
-  port=8000,
-  password="xxx",
-  encoded_source
+ %ffmpeg(format = "adts", %audio.copy),
+ fallible=true,
+ mount="/restream",
+ host="streaming2.example.com",
+ port=8000,
+ password="xxx",
+ encoded_source
 )
 ```
 
@@ -52,27 +52,27 @@ stream = input.http(start=false, "https://wwoz-sc.streamguys1.com/wwoz-hi.mp3")
 listeners_count = ref(0)
 
 def on_connect(_) =
-  listeners_count := listeners_count() + 1
-  if
-    listeners_count() > 0 and not stream.is_started()
-  then
-    log(
-      "Starting input"
-    )
-    stream.start()
-  end
+ listeners_count := listeners_count() + 1
+ if
+ listeners_count() > 0 and not stream.is_started()
+ then
+ log(
+ "Starting input"
+ )
+ stream.start()
+ end
 end
 
 def on_disconnect(_) =
-  listeners_count := listeners_count() - 1
-  if
-    listeners_count() == 0 and stream.is_started()
-  then
-    log(
-      "Stopping input"
-    )
-    stream.stop()
-  end
+ listeners_count := listeners_count() - 1
+ if
+ listeners_count() == 0 and stream.is_started()
+ then
+ log(
+ "Stopping input"
+ )
+ stream.stop()
+ end
 end
 
 blank = single("/tmp/blank.mp3")
@@ -80,12 +80,12 @@ blank = single("/tmp/blank.mp3")
 stream = fallback(track_sensitive=false, [stream, blank])
 
 o =
-  output.harbor(
-    %ffmpeg(format = "mp3", %audio.copy),
-    format="audio/mpeg",
-    mount="relay",
-    stream
-  )
+ output.harbor(
+ %ffmpeg(format = "mp3", %audio.copy),
+ format="audio/mpeg",
+ mount="relay",
+ stream
+ )
 
 o.on_connect(synchronous=true, on_connect)
 o.on_disconnect(synchronous=true, on_disconnect)
@@ -107,22 +107,22 @@ source = ffmpeg.encode.audio(%ffmpeg(%audio(codec = "libmp3lame")), source)
 
 # Send to one server here:
 output.icecast(
-  %ffmpeg(format = "mp3", %audio.copy),
-  mount="/restream",
-  host="streaming.example.com",
-  port=8000,
-  password="xxx",
-  source
+ %ffmpeg(format = "mp3", %audio.copy),
+ mount="/restream",
+ host="streaming.example.com",
+ port=8000,
+ password="xxx",
+ source
 )
 
 # An another one here:
 output.icecast(
-  %ffmpeg(format = "mp3", %audio.copy),
-  mount="/restream",
-  host="streaming2.example.com",
-  port=8000,
-  password="xxx",
-  source
+ %ffmpeg(format = "mp3", %audio.copy),
+ mount="/restream",
+ host="streaming2.example.com",
+ port=8000,
+ password="xxx",
+ source
 )
 ```
 
@@ -137,11 +137,11 @@ audio = ffmpeg.encode.audio(%ffmpeg(%audio(codec = "libmp3lame")), audio)
 
 # Send it to icecast
 output.icecast(
-  %ffmpeg(format = "mp3", %audio.copy),
-  host="...",
-  password="...",
-  mount="/stream",
-  audio
+ %ffmpeg(format = "mp3", %audio.copy),
+ host="...",
+ password="...",
+ mount="/stream",
+ audio
 )
 
 # A video source, for instance a static image
@@ -191,19 +191,19 @@ s2 = ffmpeg.filter.bitstream.h264_mp4toannexb(s2)
 s = fallback(track_sensitive=false, [s1, s2])
 
 mpegts =
-  %ffmpeg(format = "mpegts", fflags = "-autobsf", %audio.copy, %video.copy)
+ %ffmpeg(format = "mpegts", fflags = "-autobsf", %audio.copy, %video.copy)
 
 streams = [("mpegts", mpegts)]
 
 output_dir = "/tmp/hls"
 
 output.file.hls(
-  playlist="live.m3u8",
-  fallible=true,
-  segment_duration=5.,
-  output_dir,
-  streams,
-  s
+ playlist="live.m3u8",
+ fallible=true,
+ segment_duration=5.,
+ output_dir,
+ streams,
+ s
 )
 ```
 

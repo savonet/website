@@ -21,36 +21,36 @@ Category: Liquidsoap
 Parameters:
 
  * in_gain : float? (default: null)
-     set signal input gain. (default: 0.6)
+ set signal input gain. (default: 0.6)
 
  * out_gain : float? (default: null)
-     set signal output gain. (default: 0.3)
+ set signal output gain. (default: 0.3)
 
  * delays : string? (default: null)
-     set list of signal delays. (default: "1000")
+ set list of signal delays. (default: "1000")
 
  * decays : string? (default: null)
-     set list of signal decays. (default: "0.5")
+ set list of signal decays. (default: "0.5")
 
  * (unlabeled) : ffmpeg.filter.graph (default: None)
 
  * (unlabeled) : ffmpeg.filter.audio (default: None)
 ```
 
-Filter inputs and outputs are abstract values of type `ffmpeg.filter.audio` and `ffmpeg.filter.video`. Create them with `ffmpeg.filter.audio.input` and `ffmpeg.filter.video.input`, which take [media tracks](multitrack.html) as input. Convert them back to tracks with `ffmpeg.filter.audio.output` and `ffmpeg.filter.video.output`.
+Filter inputs and outputs are abstract values of type `ffmpeg.filter.audio` and `ffmpeg.filter.video`. Create them with `ffmpeg.filter.audio.input` and `ffmpeg.filter.video.input`, which take [media tracks](./multitrack.md) as input. Convert them back to tracks with `ffmpeg.filter.audio.output` and `ffmpeg.filter.video.output`.
 
 Filters are configured inside a function closure. Here is an example:
 
 ```liquidsoap title="ffmpeg-filter-flanger-highpass.liq"
 def flanger_highpass(audio_track) =
-  def mkfilter(graph) =
-    audio_track = ffmpeg.filter.audio.input(graph, audio_track)
-    audio_track = ffmpeg.filter.flanger(graph, audio_track, delay=10.)
-    audio_track = ffmpeg.filter.highpass(graph, audio_track, frequency=4000.)
-    ffmpeg.filter.audio.output(graph, audio_track)
-  end
+ def mkfilter(graph) =
+ audio_track = ffmpeg.filter.audio.input(graph, audio_track)
+ audio_track = ffmpeg.filter.flanger(graph, audio_track, delay=10.)
+ audio_track = ffmpeg.filter.highpass(graph, audio_track, frequency=4000.)
+ ffmpeg.filter.audio.output(graph, audio_track)
+ end
 
-  ffmpeg.filter.create(mkfilter)
+ ffmpeg.filter.create(mkfilter)
 end
 ```
 
@@ -60,13 +60,13 @@ Here is another example for video:
 
 ```liquidsoap title="ffmpeg-filter-hflip.liq"
 def hflip(video_track) =
-  def mkfilter(graph) =
-    video_track = ffmpeg.filter.video.input(graph, video_track)
-    video_track = ffmpeg.filter.hflip(graph, video_track)
-    ffmpeg.filter.video.output(graph, video_track)
-  end
+ def mkfilter(graph) =
+ video_track = ffmpeg.filter.video.input(graph, video_track)
+ video_track = ffmpeg.filter.hflip(graph, video_track)
+ ffmpeg.filter.video.output(graph, video_track)
+ end
 
-  ffmpeg.filter.create(mkfilter)
+ ffmpeg.filter.create(mkfilter)
 end
 ```
 
@@ -82,29 +82,29 @@ Here is an example:
 
 ```liquidsoap title="ffmpeg-filter-hflip2.liq"
 def hflip(s) =
-  def mkfilter(graph) =
-    let {audio = audio_track, video = video_track} = source.tracks(s)
+ def mkfilter(graph) =
+ let {audio = audio_track, video = video_track} = source.tracks(s)
 
-    video_track = ffmpeg.filter.video.input(graph, video_track)
-    video_track = ffmpeg.filter.hflip(graph, video_track)
+ video_track = ffmpeg.filter.video.input(graph, video_track)
+ video_track = ffmpeg.filter.hflip(graph, video_track)
 
-    audio_track = ffmpeg.filter.audio.input(graph, audio_track)
-    audio_track = ffmpeg.filter.acopy(graph, audio_track)
+ audio_track = ffmpeg.filter.audio.input(graph, audio_track)
+ audio_track = ffmpeg.filter.acopy(graph, audio_track)
 
-    video_track = ffmpeg.filter.video.output(graph, video_track)
-    audio_track = ffmpeg.filter.audio.output(graph, audio_track)
+ video_track = ffmpeg.filter.video.output(graph, video_track)
+ audio_track = ffmpeg.filter.audio.output(graph, audio_track)
 
-    source(
-      {
-        audio=audio_track,
-        video=video_track,
-        metadata=track.metadata(audio_track),
-        track_marks=track.track_marks(audio_track)
-      }
-    )
-  end
+ source(
+ {
+ audio=audio_track,
+ video=video_track,
+ metadata=track.metadata(audio_track),
+ track_marks=track.track_marks(audio_track)
+ }
+ )
+ end
 
-  ffmpeg.filter.create(mkfilter)
+ ffmpeg.filter.create(mkfilter)
 end
 ```
 
@@ -116,33 +116,33 @@ Some filters support [changing options at runtime](https://ffmpeg.org/ffmpeg-fil
 
 ```liquidsoap title="ffmpeg-filter-dynamic-volume.liq"
 def dynamic_volume(s) =
-  def mkfilter(graph) =
-    filter = ffmpeg.filter.volume.create(graph)
+ def mkfilter(graph) =
+ filter = ffmpeg.filter.volume.create(graph)
 
-    def set_volume(v) =
-      ignore(filter.process_command("volume", "#{v}"))
-    end
+ def set_volume(v) =
+ ignore(filter.process_command("volume", "#{v}"))
+ end
 
-    let {audio = audio_track} = source.tracks(s)
+ let {audio = audio_track} = source.tracks(s)
 
-    audio_track = ffmpeg.filter.audio.input(graph, audio_track)
-    filter.set_input(audio_track)
-    audio_track = filter.output
-    audio_track = ffmpeg.filter.audio.output(graph, audio_track)
+ audio_track = ffmpeg.filter.audio.input(graph, audio_track)
+ filter.set_input(audio_track)
+ audio_track = filter.output
+ audio_track = ffmpeg.filter.audio.output(graph, audio_track)
 
-    s =
-      source(
-        {
-          audio=audio_track,
-          metadata=track.metadata(audio_track),
-          track_marks=track.track_marks(audio_track)
-        }
-      )
+ s =
+ source(
+ {
+ audio=audio_track,
+ metadata=track.metadata(audio_track),
+ track_marks=track.track_marks(audio_track)
+ }
+ )
 
-    (s, set_volume)
-  end
+ (s, set_volume)
+ end
 
-  ffmpeg.filter.create(mkfilter)
+ ffmpeg.filter.create(mkfilter)
 end
 
 s = playlist("my_playlist")
@@ -178,7 +178,7 @@ Flag: extra
 Parameters:
 
  * outputs : int? (default: null)
-     set number of outputs. (default: 2)
+ set number of outputs. (default: 2)
 
  * (unlabeled) : ffmpeg.filter.graph (default: None)
 
@@ -206,7 +206,7 @@ Flag: extra
 Parameters:
 
  * inputs : int? (default: null)
-     specify the number of inputs. (default: 2)
+ specify the number of inputs. (default: 2)
 
  * (unlabeled) : ffmpeg.filter.graph (default: None)
 
@@ -221,21 +221,21 @@ Combined, these can be used as follows:
 
 ```liquidsoap title="ffmpeg-filter-parallel-flanger-highpass.liq"
 def parallel_flanger_highpass(s) =
-  def mkfilter(graph) =
-    audio_track = ffmpeg.filter.audio.input(graph, s.tracks.audio)
+ def mkfilter(graph) =
+ audio_track = ffmpeg.filter.audio.input(graph, s.tracks.audio)
 
-    let (audio, _) = ffmpeg.filter.asplit(outputs=2, graph, audio_track)
+ let (audio, _) = ffmpeg.filter.asplit(outputs=2, graph, audio_track)
 
-    let [a1, a2] = audio
+ let [a1, a2] = audio
 
-    a1 = ffmpeg.filter.flanger(graph, a1, delay=10.)
-    a2 = ffmpeg.filter.highpass(graph, a2, frequency=4000.)
+ a1 = ffmpeg.filter.flanger(graph, a1, delay=10.)
+ a2 = ffmpeg.filter.highpass(graph, a2, frequency=4000.)
 
-    audio_track = ffmpeg.filter.amerge(inputs=2, graph, [a1, a2], [])
+ audio_track = ffmpeg.filter.amerge(inputs=2, graph, [a1, a2], [])
 
-    ffmpeg.filter.audio.output(graph, audio_track)
-  end
+ ffmpeg.filter.audio.output(graph, audio_track)
+ end
 
-  ffmpeg.filter.create(mkfilter)
+ ffmpeg.filter.create(mkfilter)
 end
 ```

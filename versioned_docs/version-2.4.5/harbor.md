@@ -67,22 +67,22 @@ should be granted access or not. Typical example can be:
 
 ```liquidsoap title="harbor-auth.liq"
 def auth(args) =
-  # Call an external process to check the credentials: The script will return
-  # the string "true" of "false".
-  #
-  # First call the script. Make sure to apply proper escaping of the arguments
-  # to prevent command injection!
-  ret =
-    process.read.lines(
-      "/path/to/script --user=#{args.user} --password=#{args.password}"
-    )
+ # Call an external process to check the credentials: The script will return
+ # the string "true" of "false".
+ #
+ # First call the script. Make sure to apply proper escaping of the arguments
+ # to prevent command injection!
+ ret =
+ process.read.lines(
+ "/path/to/script --user=#{args.user} --password=#{args.password}"
+ )
 
-  # Then get the first line of its output.
-  ret = list.hd(default="", ret)
+ # Then get the first line of its output.
+ ret = list.hd(default="", ret)
 
-  # Finally returns the boolean represented by the output (bool_of_string can
-  # also be used).
-  if ret == "true" then true else false end
+ # Finally returns the boolean represented by the output (bool_of_string can
+ # also be used).
+ if ret == "true" then true else false end
 end
 ```
 
@@ -114,7 +114,7 @@ live = input.harbor("test-harbor", port=8080, password="xxx")
 
 files = playlist("the-playlist")
 
-# This is the final stream.  Uses the live source as soon as available, and
+# This is the final stream. Uses the live source as soon as available, and
 # don't wait for an end of track, since we don't want to cut the beginning of
 # the live stream.
 #

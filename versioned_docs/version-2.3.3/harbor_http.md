@@ -25,19 +25,19 @@ For convenience, a HTTP response builder is provided via `http.response`. Here's
 
 ```liquidsoap title="harbor.http.response.liq"
 def handler(request) =
-  log(
-    "Got a request on path #{request.path}, protocol version: #{
-      request.http_version
-    }, method: #{request.method}, headers: #{request.headers}, query: #{
-      request.query
-    }, body: #{request.body()}"
-  )
+ log(
+ "Got a request on path #{request.path}, protocol version: #{
+ request.http_version
+ }, method: #{request.method}, headers: #{request.headers}, query: #{
+ request.query
+ }, body: #{request.body()}"
+ )
 
-  http.response(
-    content_type="text/html",
-    data=
-      "<p>ok, this works!</p>"
-  )
+ http.response(
+ content_type="text/html",
+ data=
+ "<p>ok, this works!</p>"
+ )
 end
 
 harbor.http.register.simple(port=8080, method="GET", path, handler)
@@ -56,48 +56,48 @@ Its API is very similar to the node/express API. Here's an example:
 
 ```liquidsoap title="harbor.http.register.liq"
 def handler(request, response) =
-  log(
-    "Got a request on path #{request.path}, protocol version: #{
-      request.http_version
-    }, method: #{request.method}, headers: #{request.headers}, query: #{
-      request.query
-    }, body: #{request.body()}"
-  )
+ log(
+ "Got a request on path #{request.path}, protocol version: #{
+ request.http_version
+ }, method: #{request.method}, headers: #{request.headers}, query: #{
+ request.query
+ }, body: #{request.body()}"
+ )
 
-  # Set response code. Defaults to 200
-  response.status_code(201)
+ # Set response code. Defaults to 200
+ response.status_code(201)
 
-  # Set response status message. Uses `status_code` if not specified
-  response.status_message("Created")
+ # Set response status message. Uses `status_code` if not specified
+ response.status_message("Created")
 
-  # Replaces response headers
-  response.headers([("X-Foo", "bar")])
+ # Replaces response headers
+ response.headers([("X-Foo", "bar")])
 
-  # Set a single header
-  response.header("X-Foo", "bar")
+ # Set a single header
+ response.header("X-Foo", "bar")
 
-  # Set http protocol version
-  response.http_version("1.1")
+ # Set http protocol version
+ response.http_version("1.1")
 
-  # Same as setting the "Content-Type" header
-  response.content_type("application/liquidsoap")
+ # Same as setting the "Content-Type" header
+ response.content_type("application/liquidsoap")
 
-  # Set response data. Can be a `string` or a function of type `()->string` returning an empty string
-  # when done such as `file.read`
-  response.data("foo")
+ # Set response data. Can be a `string` or a function of type `()->string` returning an empty string
+ # when done such as `file.read`
+ response.data("foo")
 
-  # Advanced wrappers:
+ # Advanced wrappers:
 
-  # Sets content-type to json and data to `json.stringify({foo = "bla"})`
-  response.json({foo="bla"})
+ # Sets content-type to json and data to `json.stringify({foo = "bla"})`
+ response.json({foo="bla"})
 
-  # Sets `status_code` and `Location:` header for a HTTP redirect response. Takes an optional `status_code` argument.
-  response.redirect("http://...")
+ # Sets `status_code` and `Location:` header for a HTTP redirect response. Takes an optional `status_code` argument.
+ response.redirect("http://...")
 
-  # Sets content-type to html and data to `"<p>It works!</p>"`
-  response.html(
-    "<p>It works!</p>"
-  )
+ # Sets content-type to html and data to `"<p>It works!</p>"`
+ response.html(
+ "<p>It works!</p>"
+ )
 end
 
 harbor.http.register(port=8080, method="GET", path, handler)
@@ -129,16 +129,16 @@ is available and can be passed to each `harbor` operator:
 
 ```liquidsoap
 transport = http.transport.ssl(
-  # Server mode: required,
-  # client mode: optional, add certificate to trusted pool
-  certificate="/path/to/certificate/file",
+ # Server mode: required,
+ # client mode: optional, add certificate to trusted pool
+ certificate="/path/to/certificate/file",
 
-  # Server mode: required, client mode: ignored
-  key="/path/to/secret/key/file",
+ # Server mode: required, client mode: ignored
+ key="/path/to/secret/key/file",
 
-  # Required if key file requires one.
-  # TLS does not support password encrypted keys!
-  password="optional password"
+ # Required if key file requires one.
+ # TLS does not support password encrypted keys!
+ password="optional password"
 )
 
 harbor.http.register(transport=transport, port=8000, ...)
@@ -164,13 +164,13 @@ It is also possible to directly interact with the underlying socket using the `s
 ```liquidsoap title="harbor-simple.liq"
 # Custom response
 def handler(req) =
-  req.socket.write(
-    "HTTP/1.0 201 YYR\r\nFoo: bar\r\n\r\n"
-  )
-  req.socket.close()
+ req.socket.write(
+ "HTTP/1.0 201 YYR\r\nFoo: bar\r\n\r\n"
+ )
+ req.socket.close()
 
-  # Null indicates that we're using the socket directly.
-  null()
+ # Null indicates that we're using the socket directly.
+ null()
 end
 
 harbor.http.register.simple("/custom", port=3456, handler)
@@ -190,13 +190,13 @@ In this case, you can register the following handler:
 ```liquidsoap title="harbor-redirect.liq"
 # Redirect all files other than /admin.* to icecast, located at localhost:8000.
 def redirect_icecast(request, response) =
-  response.redirect("http://localhost:8000#{request.path}")
+ response.redirect("http://localhost:8000#{request.path}")
 end
 
 # Register this handler at port 8005 (provided harbor sources are also served
 # from this port).
 harbor.http.register.regexp(
-  port=8005, method="GET", r/^\/admin/, redirect_icecast
+ port=8005, method="GET", r/^\/admin/, redirect_icecast
 )
 ```
 
@@ -213,7 +213,7 @@ s.on_metadata(fun (m) -> meta := m)
 
 # Return the json content of meta
 def get_meta(_, response) =
-  response.json(meta())
+ response.json(meta())
 end
 
 # Register get_meta at port 700
@@ -229,10 +229,10 @@ HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
 {
-  "genre": "Soul",
-  "album": "The Complete Stax-Volt Singles: 1959-1968 (Disc 8)",
-  "artist": "Astors",
-  "title": "Daddy Didn't Tell Me"
+ "genre": "Soul",
+ "album": "The Complete Stax-Volt Singles: 1959-1968 (Disc 8)",
+ "artist": "Astors",
+ "title": "Daddy Didn't Tell Me"
 }
 ```
 
@@ -249,21 +249,21 @@ s = insert_metadata(s)
 
 # The handler
 def set_meta(request, response) =
-  # Filter out unusual metadata
-  meta = metadata.export(request.query)
+ # Filter out unusual metadata
+ meta = metadata.export(request.query)
 
-  # Grab the returned message
-  ret =
-    if
-      meta != []
-    then
-      s.insert_metadata(meta)
-      "OK!"
-    else
-      "No metadata to add!"
-    end
+ # Grab the returned message
+ ret =
+ if
+ meta != []
+ then
+ s.insert_metadata(meta)
+ "OK!"
+ else
+ "No metadata to add!"
+ end
 
-  response.html("<html><body><b>#{ret}</b></body></html>")
+ response.html("<html><body><b>#{ret}</b></body></html>")
 end
 
 # Register handler on port 700

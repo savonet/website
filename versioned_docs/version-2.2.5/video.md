@@ -13,19 +13,19 @@ vorbis as codecs for audio and video) you can simply type:
 source = single("video.mp4")
 
 output.icecast(
-        %ffmpeg(format="ogg",
-          %audio(codec="libvorbis"),
-          %video(codec="libtheora")
-        ),
-        host="localhost",
-        port=8000,
-        password="hackme",
-        mount="/videostream",
-        source)
+ %ffmpeg(format="ogg",
+ %audio(codec="libvorbis"),
+ %video(codec="libtheora")
+ ),
+ host="localhost",
+ port=8000,
+ password="hackme",
+ mount="/videostream",
+ source)
 ```
 
 And of course you could have used a `playlist` instead of `single` to have
-multiple files, or used other [formats](encoding_formats.html) for the stream.
+multiple files, or used other [formats](./encoding_formats.md) for the stream.
 
 In order to test a video stream, it is often convenient to use the `output.sdl`
 operator (or `output.graphics`) which will open a window and display the video
@@ -43,31 +43,31 @@ of audio and video formats but it can also send and receive data to many differe
 and `output.url`. On top of that, it also supports all the [FFmpeg filters](https://ffmpeg.org/ffmpeg-filters.html)
 and passing encoded data, if your script does not need re-encoding.
 
-The syntax for the encoder is detailed in the [encoders page](encoding_formats.html). Here are some examples:
+The syntax for the encoder is detailed in the [encoders page](./encoding_formats.md). Here are some examples:
 
 ```liquidsoap
 # AC3 audio and H264 video encapsulated in a MPEG-TS bitstream
 %ffmpeg(format="mpegts",
-  %audio(codec="ac3",channel_coupling=0),
-  %video(codec="libx264",b="2600k",
-         "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
-         preset="ultrafast"))
+ %audio(codec="ac3",channel_coupling=0),
+ %video(codec="libx264",b="2600k",
+ "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
+ preset="ultrafast"))
 
 # AAC audio and H264 video encapsulated in a mp4 file (to use with
 # `output.file` only, mp4 container cannot be streamed!
 %ffmpeg(format="mp4",
-  %audio(codec="aac"),
-  %video(codec="libx264",b="2600k"))
+ %audio(codec="aac"),
+ %video(codec="libx264",b="2600k"))
 
 # Ogg opus and theora encappsulated in an ogg bitstream
 %ffmpeg(format="ogg",
-  %audio(codec="libopus"),
-  %video(codec="libtheora"))
+ %audio(codec="libopus"),
+ %video(codec="libtheora"))
 
 # Ogg opus and VP8 video encapsulated in a webm bitstream
 %ffmpeg(format="webm",
-  %audio(codec="libopus"),
-  %video(codec="libvpx"))
+ %audio(codec="libopus"),
+ %video(codec="libvpx"))
 ```
 
 ### Streaming with FFmpeg {#streaming-with-ffmpeg}
@@ -101,10 +101,10 @@ You can add a logo (any image) using the `video.add_image` operator, as follows:
 
 ```liquidsoap
 source = video.add_image(
-       width=30,height=30,
-       x=10,y=10,
-       file="logo.jpg",
-       source)
+ width=30,height=30,
+ x=10,y=10,
+ file="logo.jpg",
+ source)
 ```
 
 ### Inputting from a webcam {#inputting-from-a-webcam}
@@ -132,8 +132,8 @@ Adding scrolling text at the bottom of your video is as easy as
 
 ```liquidsoap
 source = video.add_text.sdl(
-       font="/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
-       "Hello world!", source)
+ font="/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
+ "Hello world!", source)
 ```
 
 You might need to change the `font` parameter so that it matches a font file
@@ -143,7 +143,7 @@ present on your system.
 
 There are many of effects that you can use to add some fun to your videos:
 `video.greyscale`, `video.sepia`, `video.lomo`, etc. [Read the
-documentation](reference.html) to find out about them. If you have compiled
+documentation](./reference/index.mdx) to find out about them. If you have compiled
 Liquidsoap with [frei0r](http://www.piksel.org/frei0r/) support, and have
 installed frei0r plugins, they will be named `video.frei0r.*`. You can have a
 list of those supported on your installation as usual, using `liquidsoap --list-plugins`.
@@ -184,8 +184,8 @@ censored = video.frei0r.pixeliz0r(blocksizex=0.1,blocksizey=0.1,cam)
 unmask = video.frei0r.invert0r(mask)
 # Put the pixellized face over the video
 s = video.frei0r.addition(
-  video.frei0r.multiply(mask,censored),
-  video.frei0r.multiply(unmask,cam))
+ video.frei0r.multiply(mask,censored),
+ video.frei0r.multiply(unmask,cam))
 # We have to bufferize the source because its clock it GStreamer's clock
 s = buffer(buffer=0.1,mksafe(s))
 

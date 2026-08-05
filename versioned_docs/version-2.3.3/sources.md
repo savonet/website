@@ -21,7 +21,7 @@ from output functions, because outputting a stream is the only reason why you
 want to compute it.
 
 All sources, operators and outputs are listed in the
-[scripting API reference](reference.html).
+[scripting API reference](./reference/index.mdx).
 
 ## How does it work? {#how-does-it-work}
 
@@ -29,14 +29,14 @@ To clarify the picture let's study in more details an example:
 
 ```liquidsoap
 radio =
-  output.icecast(
-    %vorbis,mount="test.ogg",
-    random(
-      [ jingle ,
-        fallback([ playlist1,playlist2,playlist3 ]) ]))
+ output.icecast(
+ %vorbis,mount="test.ogg",
+ random(
+ [ jingle ,
+ fallback([ playlist1,playlist2,playlist3 ]) ]))
 ```
 
-At every cycle of the [clock](clocks.html), the output asks the `random` node for data,
+At every cycle of the [clock](./clocks.md), the output asks the `random` node for data,
 until it gets a full frame of raw audio.
 Then, it encodes the frame and sends it to the Icecast server.
 Suppose `random` has chosen the `fallback` node,
@@ -126,7 +126,7 @@ source will be used by two sources at the same time.
 ## Execution model {#execution-model}
 
 In your script you define a bunch of sources interacting together. Each
-source belongs to a [clock](clocks.html), but clocks only have direct access
+source belongs to a [clock](./clocks.md), but clocks only have direct access
 to _active sources_, which are mostly outputs.
 At every cycle of the clock, active sources are animated: a chunk of stream
 (frame) is computed, and potentially outputted one way or another.

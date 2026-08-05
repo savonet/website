@@ -6,7 +6,7 @@ description: "If you want to have a constant average volume on any audio stream,
 
 If you want to have a constant average volume on any audio stream, you can use the `normalize` operator. However, this operator cannot guess the volume of the whole stream, and can be "surprised" by rapid changes of the volume. This can lead to a volume that is too low, too high, oscillates. In some cases, dynamic normalization also creates saturation.
 
-To tweak the normalization, several parameters are available. These are listed and explained in the [reference](reference.html) and also visible by executing `liquidsoap -h normalize`. However, if the stream you want to normalize consist of audio files, using the replay gain technology might be a better choice.
+To tweak the normalization, several parameters are available. These are listed and explained in the [reference](./reference/index.mdx) and also visible by executing `liquidsoap -h normalize`. However, if the stream you want to normalize consist of audio files, using the replay gain technology might be a better choice.
 
 ## Computing track loudness normalization {#computing-track-loudness-normalization}
 

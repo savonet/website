@@ -28,13 +28,13 @@ Use `thread.run` when you want to run a task repeatedly every N seconds. This is
 
 ```liquidsoap title="scheduling_simple.liq"
 thread.run(
-  every=600.,
-  # This is the same as: fun () -> log("10 minutes have passed.")
-  {
-    log(
-      "10 minutes have passed."
-    )
-  }
+ every=600.,
+ # This is the same as: fun () -> log("10 minutes have passed.")
+ {
+ log(
+ "10 minutes have passed."
+ )
+ }
 )
 ```
 
@@ -46,8 +46,8 @@ You can schedule any function here — such as sending metadata, modifying a sou
 
 ```liquidsoap title="scheduling_queue.liq"
 thread.run(
-  every=3600.,
-  {request_queue.push(request.create("/path/to/hourly-jingle.mp3"))}
+ every=3600.,
+ {request_queue.push(request.create("/path/to/hourly-jingle.mp3"))}
 )
 
 ```
@@ -56,18 +56,18 @@ In this case, we assume that `request_queue` is a `request.queue` source used el
 
 ## `thread.when`: Run at a Specific Time {#thread.when-run-at-a-specific-time}
 
-To schedule a task at a specific time, use `thread.when`. It takes a [time predicate](language.html#time-predicates) — a Liquidsoap-specific language construct that returns `true` when the current time matches the given interval or time.
+To schedule a task at a specific time, use `thread.when`. It takes a [time predicate](./language.md#time-predicates) — a Liquidsoap-specific language construct that returns `true` when the current time matches the given interval or time.
 
 ### Example: Run a task at 9:00 AM {#example-run-a-task-at-900-am}
 
 ```liquidsoap title="scheduling_9am.liq"
 thread.when(
-  {9h},
-  {
-    log(
-      "It's 9 AM!"
-    )
-  }
+ {9h},
+ {
+ log(
+ "It's 9 AM!"
+ )
+ }
 )
 ```
 
@@ -79,8 +79,8 @@ You can refer to the `thread.when` and `predicate.activates` documentation for m
 
 ```liquidsoap title="scheduling_queue_midnight.liq"
 thread.when(
-  {23h59m},
-  {request_queue.push(request.create("/path/to/midnight-track.mp3"))}
+ {23h59m},
+ {request_queue.push(request.create("/path/to/midnight-track.mp3"))}
 )
 
 ```
@@ -91,12 +91,12 @@ If you’re used to cron syntax, you can use `cron.add` to schedule tasks using 
 
 ```liquidsoap title="cron_add.liq"
 cron.add(
-  "0 12 * * *",
-  {
-    log(
-      "It’s noon!"
-    )
-  }
+ "0 12 * * *",
+ {
+ log(
+ "It’s noon!"
+ )
+ }
 )
 ```
 
@@ -106,14 +106,14 @@ If needed, the function returns a unique identifier for the task, which you can 
 
 ```liquidsoap title="cron_id.liq"
 let {id} =
-  cron.add(
-    "0 12 * * *",
-    {
-      log(
-        "It’s noon!"
-      )
-    }
-  )
+ cron.add(
+ "0 12 * * *",
+ {
+ log(
+ "It’s noon!"
+ )
+ }
+ )
 ```
 
 ### Explicit IDs {#explicit-ids}
@@ -122,13 +122,13 @@ You can also pass an explicit ID:
 
 ```liquidsoap title="cron_id_arg.liq"
 cron.add(
-  id="minight-task",
-  "0 0 * * *",
-  {
-    log(
-      "Midnight event"
-    )
-  }
+ id="minight-task",
+ "0 0 * * *",
+ {
+ log(
+ "Midnight event"
+ )
+ }
 )
 ```
 

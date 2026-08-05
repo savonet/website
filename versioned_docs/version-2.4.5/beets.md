@@ -80,21 +80,21 @@ every time the source must prepare a new track:
 
 ```liquidsoap title="beets-source.liq"
 def beets(id, query) =
-  beets_src =
-    request.dynamic(
-      id=id,
-      retry_delay=1.,
-      {
-        request.create(
-          string.trim(
-            process.read(
-              "#{BEET} random -f '$path' #{query}"
-            )
-          )
-        )
-      }
-    )
-  (beets_src : source)
+ beets_src =
+ request.dynamic(
+ id=id,
+ retry_delay=1.,
+ {
+ request.create(
+ string.trim(
+ process.read(
+ "#{BEET} random -f '$path' #{query}"
+ )
+ )
+ )
+ }
+ )
+ (beets_src : source)
 end
 
 all_music = beets("all_music", "")
@@ -120,38 +120,38 @@ your Beet configuration should include something like:
 
 ```
 import:
-    write: yes
+ write: yes
 ```
 
 Then we only need to add `amplify` to our source creation function. In the example below we also add `blank.eat`, to automatically cut silence at the beginning or end of tracks.
 
 ```liquidsoap title="beets-amplify.liq"
 def beets(id, query) =
-  beets_src =
-    blank.eat(
-      id="#{id}_",
-      start_blank=true,
-      max_blank=1.0,
-      threshold=-45.0,
-      amplify(
-        override="replaygain_track_gain",
-        1.0,
-        request.dynamic(
-          id=id,
-          retry_delay=1.,
-          {
-            request.create(
-              string.trim(
-                process.read(
-                  "#{BEET} random -f '$path' #{query}"
-                )
-              )
-            )
-          }
-        )
-      )
-    )
-  (beets_src : source)
+ beets_src =
+ blank.eat(
+ id="#{id}_",
+ start_blank=true,
+ max_blank=1.0,
+ threshold=-45.0,
+ amplify(
+ override="replaygain_track_gain",
+ 1.0,
+ request.dynamic(
+ id=id,
+ retry_delay=1.,
+ {
+ request.create(
+ string.trim(
+ process.read(
+ "#{BEET} random -f '$path' #{query}"
+ )
+ )
+ )
+ }
+ )
+ )
+ )
+ (beets_src : source)
 end
 ```
 
@@ -169,31 +169,31 @@ what's needed by protocol resolution:
 
 ```liquidsoap title="beets-protocol.liq"
 def beets_protocol(~rlog, ~maxtime, arg) =
-  timeout = maxtime - time()
-  command =
-    "#{BEET} random -f '$path' #{arg}"
-  p = process.run(timeout=timeout, command)
-  if
-    p.status == "exit" and p.status.code == 0
-  then
-    string.trim(p.stdout)
-  else
-    rlog(
-      "Failed to execute #{command}: #{p.status} (#{p.status.code}) #{p.stderr}"
-    )
-    null
-  end
+ timeout = maxtime - time()
+ command =
+ "#{BEET} random -f '$path' #{arg}"
+ p = process.run(timeout=timeout, command)
+ if
+ p.status == "exit" and p.status.code == 0
+ then
+ string.trim(p.stdout)
+ else
+ rlog(
+ "Failed to execute #{command}: #{p.status} (#{p.status.code}) #{p.stderr}"
+ )
+ null
+ end
 end
 protocol.add(
-  "beets",
-  beets_protocol,
-  syntax="same arguments as beet's random module, see \
-   https://beets.readthedocs.io/en/stable/reference/query.html"
+ "beets",
+ beets_protocol,
+ syntax="same arguments as beet's random module, see \
+ https://beets.readthedocs.io/en/stable/reference/query.html"
 )
 ```
 
 Once this is done,
-you can push a beets query from [the telnet server](server.html):
+you can push a beets query from [the telnet server](./server.md):
 if you created `request.queue(id="userrequested")`,
 the server command
 `userrequested.push beets:All along the watchtower`
@@ -204,6 +204,6 @@ the recipient queue in an `amplify` operator, like
 
 ```liquidsoap
 userrequested = amplify(override="replaygain_track_gain", 1.0,
-  request.queue(id="userrequested")
+ request.queue(id="userrequested")
 )
 ```

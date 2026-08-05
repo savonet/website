@@ -22,8 +22,8 @@ liquidsoap 'out(sine())'
 
 Did it work? If so, try to modify it:
 
-- Change the pitch. Hint: get the doc of `sine` using `liquidsoap -h sine` or [online](reference.html).
-- Use a different wave shape, or perhaps some white noise. Hint: look-up the [API](reference.html) in the `Source / Input` section.
+- Change the pitch. Hint: get the doc of `sine` using `liquidsoap -h sine` or [online](./reference/index.mdx).
+- Use a different wave shape, or perhaps some white noise. Hint: look-up the [API](./reference/index.mdx) in the `Source / Input` section.
 
 ## Play a remote stream, discover fallibility {#play-a-remote-stream-discover-fallibility}
 
@@ -99,7 +99,7 @@ output.file(%vorbis,"test.ogg",source)
 Here `source` is whatever you want, for example `sine()`.
 
 You can tweak the options of the encoding format, or change the encoding
-format; the available options are listed [here](encoding_formats.html).
+format; the available options are listed [here](./encoding_formats.md).
 You can change the number of channels (for example, using `%vorbis(mono)`)
 but this may create problems with a playlist or remote stream,
 because conversions are not implicit in liquidsoap;
@@ -129,7 +129,7 @@ for more complex liquidsoap programs, and for saving/editing the program.
 Write the interactive example expression in a file, say `test.liq`.
 
 - You can run it using `liquidsoap -t - < test.liq`, you get the same behavior as before.
-- If you run it using `liquidsoap -t test.liq` the logs will be written in `test.log` in the default logging directory. This can fail as you may not have access to that directory. Change the directory using the setting (see [how to get help](help.html) about that) `log.file.path`. Then use the settings `log.stdout` and `log.file` for logging to the terminal and not to a file.
+- If you run it using `liquidsoap -t test.liq` the logs will be written in `test.log` in the default logging directory. This can fail as you may not have access to that directory. Change the directory using the setting (see [how to get help](./help.md) about that) `log.file.path`. Then use the settings `log.stdout` and `log.file` for logging to the terminal and not to a file.
 - Finally, find the setting for getting rid of the `-t` option on the command line.
 - You can also use `#!/usr/bin/liquidsoap` (adapt the path) as the first line of your script to directly run `./test.liq` instead of `liquidsoap test.liq` (you need to `chmod +x test.liq`).
 
@@ -180,12 +180,12 @@ As follows:
 
 ```
 % liquidsoap --no-stdlib -i /path/to/script.liq
-x     : int
+x : int
 42
 No output defined, nothing to do.
 ```
 
-Try to obtain the following types (some help can be found [there](language.html)):
+Try to obtain the following types (some help can be found [there](./language.md)):
 
 - `float`
 - `bool`
@@ -209,7 +209,7 @@ Try this:
 
 ```liquidsoap
 def double(s)
-  s ^ s
+ s ^ s
 end
 print(double("foo"))
 ```
@@ -224,9 +224,9 @@ A simple example:
 
 ```liquidsoap
 if "foo"=="bar" then
-  print("This is madness.")
+ print("This is madness.")
 else
-  print("Phew.")
+ print("Phew.")
 end
 ```
 
@@ -234,11 +234,11 @@ It can also be written as follows:
 
 ```liquidsoap
 print(
-  if "foo"=="bar" then
-    "This is madness."
-  else
-    "Phew."
-  end)
+ if "foo"=="bar" then
+ "This is madness."
+ else
+ "Phew."
+ end)
 ```
 
 Now, define the variable `message` to be the correct message depending
@@ -257,8 +257,8 @@ Here is a function that prints the date and returns 42:
 
 ```liquidsoap
 def f()
-  print(get_process_output("date"))
-  42
+ print(get_process_output("date"))
+ 42
 end
 # Let's use it:
 print(f())
@@ -294,7 +294,7 @@ and each `Ai` specifies one parameters:
 - optional labeled parameters are written `?label:T`.
 
 You will rarely have to define a function with labeled parameters,
-but if you're curious you can learn it [there](language.html).
+but if you're curious you can learn it [there](./language.md).
 
 ## What you cannot do {#what-you-cannot-do}
 

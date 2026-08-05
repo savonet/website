@@ -4,7 +4,7 @@ description: "Liquidsoap is a general audio stream generator, but is mainly inte
 ---
 ## The Internet radio toolchain {#the-internet-radio-toolchain}
 
-[Liquidsoap](index.html) is a general audio stream generator, but is mainly intended for Internet radios. Before starting with the proper Liquidsoap tutorial let's describe quickly the components of the internet radio toolchain, in case the reader is not familiar with it.
+[Liquidsoap](./index.md) is a general audio stream generator, but is mainly intended for Internet radios. Before starting with the proper Liquidsoap tutorial let's describe quickly the components of the internet radio toolchain, in case the reader is not familiar with it.
 
 The chain is made of:
 
@@ -76,7 +76,7 @@ Liquidsoap is a scripting language. Many simple setups can be achieved by evalua
 In the first example we'll play a playlist. Let's put a list of audio files in
 `playlist.pls`: one filename per line, lines starting with a `#` are
 ignored. You can also put remote files' URLs, if your liquidsoap has
-[support](help.html#plugins) for the corresponding protocols.
+[support](./help.md#plugins) for the corresponding protocols.
 Then just run:
 
 ```liquidsoap
@@ -107,10 +107,10 @@ We are now going to send an audio stream, encoded as Ogg Vorbis, to an Icecast s
 
 ```liquidsoap
 liquidsoap \
-  'output.icecast(%vorbis,
-     host = "localhost", port = 8000,
-     password = "hackme", mount = "liq.ogg",
-     mksafe(playlist("playlist.m3u")))'
+ 'output.icecast(%vorbis,
+ host = "localhost", port = 8000,
+ password = "hackme", mount = "liq.ogg",
+ mksafe(playlist("playlist.m3u")))'
 ```
 
 The main difference with the previous is that we used `output.icecast` instead of `output`. The second difference is the use of the `mksafe` which turns your fallible playlist source into an infallible source.
@@ -119,18 +119,18 @@ If you want to use HLS instead for streaming, you can do:
 
 ```liquidsoap
 liquidsoap \
-  'output.file.hls(
-    "/path/to/hls/directory",
-    [("aac",
-      %ffmpeg(
-        format="mpegts",
-        %audio(codec="aac", b="128k")
-      ))],
-     mksafe(playlist("playlist.m3u")))'
+ 'output.file.hls(
+ "/path/to/hls/directory",
+ [("aac",
+ %ffmpeg(
+ format="mpegts",
+ %audio(codec="aac", b="128k")
+ ))],
+ mksafe(playlist("playlist.m3u")))'
 ```
 
 Once started, this will place all the files required for HLS stream into the local path `"/path/to/hls/directory"` which you can then server over HTTP.
-The HLS output has many interesting options, including callbacks to upload its files and more. See the [HLS Output](hls_output.html) page for more details.
+The HLS output has many interesting options, including callbacks to upload its files and more. See the [HLS Output](./hls_output.md) page for more details.
 
 ### Input from another streaming server {#input-from-another-streaming-server}
 
@@ -138,7 +138,7 @@ Liquidsoap can use another stream as an audio source. This may be useful if you 
 
 ```liquidsoap
 liquidsoap \
-  'output(input.http("https://icecast.radiofrance.fr/fip-hifi.aac"))'
+ 'output(input.http("https://icecast.radiofrance.fr/fip-hifi.aac"))'
 ```
 
 ### Input from the soundcard {#input-from-the-soundcard}
@@ -156,7 +156,7 @@ liquidsoap 'output.alsa(input.alsa())'
 ### Other examples {#other-examples}
 
 You can play with many more examples. Here are a few more. To build your own,
-lookup the [API documentation](reference.html) to check what functions are available, and what parameters they accept.
+lookup the [API documentation](./reference/index.mdx) to check what functions are available, and what parameters they accept.
 
 ```liquidsoap
 # Listen to your playlist, but normalize the volume
@@ -166,7 +166,7 @@ liquidsoap 'output(normalize(playlist("playlist_file")))'
 ```liquidsoap
 # ... same, but also add smart cross-fading
 liquidsoap 'output(crossfade(
-              normalize(playlist("playlist_file"))))'
+ normalize(playlist("playlist_file"))))'
 ```
 
 ## Script files {#script-files}
@@ -226,24 +226,24 @@ radio = fallback(track_sensitive=false, [radio, security])
 
 # Stream it out
 output.icecast(
-  %vorbis,
-  host="localhost",
-  port=8000,
-  password="hackme",
-  mount="basic-radio.ogg",
-  radio
+ %vorbis,
+ host="localhost",
+ port=8000,
+ password="hackme",
+ mount="basic-radio.ogg",
+ radio
 )
 ```
 
 ## What's next? {#whats-next}
 
-You can first have a look at a [more complex example](complete_case.html). There is also a second tutorial about [advanced techniques](advanced.html).
+You can first have a look at a [more complex example](./complete_case.md). There is also a second tutorial about [advanced techniques](advanced.html).
 
-You should definitely learn [how to get help](help.html).
+You should definitely learn [how to get help](./help.md).
 If you know enough liquidsoap for your use, you'll only need to refer to the
-[scripting reference](reference.html), or see the [cookbook](cookbook.html).
+[scripting reference](./reference/index.mdx), or see the [cookbook](./cookbook.md).
 At some point,
-you might read more about Liquidsoap's [scripting language](language.html).
+you might read more about Liquidsoap's [scripting language](./language.md).
 For a better understanding of liquidsoap,
 it is also useful to read a bit about the notions of
-[sources](sources.html) and [requests](requests.html).
+[sources](./sources.md) and [requests](./requests.md).

@@ -16,13 +16,13 @@ The encoder's parameters are as follows:
 
 ```
 %gstreamer(channels=2,
-           audio="lamemp3enc",
-           has_video=true,
-           video="x264enc",
-           muxer="mpegtsmux",
-           metadata="metadata",
-           log=5,
-           pipeline="")
+ audio="lamemp3enc",
+ has_video=true,
+ video="x264enc",
+ muxer="mpegtsmux",
+ metadata="metadata",
+ log=5,
+ pipeline="")
 ```
 
 Without using the `pipeline` argument, the `audio` and `video` arguments are used to build the
@@ -37,75 +37,75 @@ An MP3 encoder that expects sources of type `audio=2, video=0, midi=0`:
 
 ```
 % liquidsoap 'output.file(%gstreamer(audio="lamemp3enc",
-                                     muxer="",
-                                     video="",
-                                     log=3),...)'
+ muxer="",
+ video="",
+ log=3),...)'
 (...)
 2012/12/13 19:16:23 [encoder.gstreamer:3] Gstreamer encoder pipeline: appsrc
-  name="audio_src" block=true caps="audio/x-raw,format=S16LE,layout=interleaved,
-  channels=2,rate=44100" format=time ! queue ! audioconvert ! audioresample !
-  lamemp3enc ! appsink name=sink sync=false emit-signals=true
+ name="audio_src" block=true caps="audio/x-raw,format=S16LE,layout=interleaved,
+ channels=2,rate=44100" format=time ! queue ! audioconvert ! audioresample !
+ lamemp3enc ! appsink name=sink sync=false emit-signals=true
 ```
 
 A x264 encoder that expects sources of type `audio=0, video=1, midi=0`:
 
 ```
 % liquidsoap 'output.file(%gstreamer(audio="",
-                                     muxer="mpegtsmux",
-                                     video="x264enc",
-                                     log=3),...)'
+ muxer="mpegtsmux",
+ video="x264enc",
+ log=3),...)'
 (...)
-2012/12/13 19:14:43 [encoder.gstreamer:3] Gstreamer encoder pipeline:  appsrc
-  name="video_src" block=true caps="video/x-raw,format=RGBA,width=320,height=240,
-  framerate=25/1,pixel-aspect-ratio=1/1" format=time blocksize=307200 ! queue !
-  videoconvert ! videoscale add-borders=true ! videorate ! x264enc !
-  mpegtsmux name=muxer ! appsink name=sink sync=false emit-signals=true
+2012/12/13 19:14:43 [encoder.gstreamer:3] Gstreamer encoder pipeline: appsrc
+ name="video_src" block=true caps="video/x-raw,format=RGBA,width=320,height=240,
+ framerate=25/1,pixel-aspect-ratio=1/1" format=time blocksize=307200 ! queue !
+ videoconvert ! videoscale add-borders=true ! videorate ! x264enc !
+ mpegtsmux name=muxer ! appsink name=sink sync=false emit-signals=true
 ```
 
 An MPEG TS encoder that expects sources of type `audio=2, video=1, midi=0`:
 
 ```
 % liquidsoap 'output.file(%gstreamer(audio="lamemp3enc",
-                                     muxer="mpegtsmux",
-                                     video="x264enc",
-                                     log=3),...)'
+ muxer="mpegtsmux",
+ video="x264enc",
+ log=3),...)'
 (...)
 2012/12/13 19:18:09 [encoder.gstreamer:3] Gstreamer encoder pipeline: appsrc
-  name="audio_src" block=true caps="audio/x-raw,format=S16LE,
-  layout=interleaved,channels=2,rate=44100" format=time ! queue ! audioconvert
-  ! audioresample ! lamemp3enc ! muxer. appsrc name="video_src" block=true
-  caps="video/x-raw,format=RGBA,width=320,height=240,framerate=25/1,
-  pixel-aspect-ratio=1/1" format=time blocksize=307200 ! queue ! videoconvert
-  ! videoscale add-borders=true ! videorate ! x264enc ! muxer. mpegtsmux
-  name=muxer ! appsink name=sink sync=false emit-signals=true
+ name="audio_src" block=true caps="audio/x-raw,format=S16LE,
+ layout=interleaved,channels=2,rate=44100" format=time ! queue ! audioconvert
+ ! audioresample ! lamemp3enc ! muxer. appsrc name="video_src" block=true
+ caps="video/x-raw,format=RGBA,width=320,height=240,framerate=25/1,
+ pixel-aspect-ratio=1/1" format=time blocksize=307200 ! queue ! videoconvert
+ ! videoscale add-borders=true ! videorate ! x264enc ! muxer. mpegtsmux
+ name=muxer ! appsink name=sink sync=false emit-signals=true
 ```
 
 An ogg/vorbis+theora encoder that expects source of type `audio=1, video=1, midi=0`:
 
 ```
 % liquidsoap 'output.file(%gstreamer(audio="vorbisenc",
-                                     muxer="oggmux",
-                                     video="theoraenc",
-                                     channels=1,
-                                     log=3),...)'
+ muxer="oggmux",
+ video="theoraenc",
+ channels=1,
+ log=3),...)'
 (...)
 2012/12/13 19:21:17 [encoder.gstreamer:3] Gstreamer encoder pipeline: appsrc
-  name="audio_src" block=true caps="audio/x-raw,format=S16LE,layout=interleaved,
-  channels=1,rate=44100" format=time ! queue ! audioconvert ! audioresample !
-  vorbisenc ! muxer. appsrc name="video_src" block=true caps="video/x-raw,
-  format=RGBA,width=320,height=240,framerate=25/1,pixel-aspect-ratio=1/1"
-  format=time blocksize=307200 ! queue ! videoconvert ! videoscale add-borders=true
-  ! videorate ! theoraenc ! muxer. oggmux name=muxer ! appsink name=sink
-  sync=false emit-signals=true
+ name="audio_src" block=true caps="audio/x-raw,format=S16LE,layout=interleaved,
+ channels=1,rate=44100" format=time ! queue ! audioconvert ! audioresample !
+ vorbisenc ! muxer. appsrc name="video_src" block=true caps="video/x-raw,
+ format=RGBA,width=320,height=240,framerate=25/1,pixel-aspect-ratio=1/1"
+ format=time blocksize=307200 ! queue ! videoconvert ! videoscale add-borders=true
+ ! videorate ! theoraenc ! muxer. oggmux name=muxer ! appsink name=sink
+ sync=false emit-signals=true
 ```
 
 For advanced users, the `pipeline` argument can be used to override the whole pipeline. For instance:
 
 ```
 % liquidsoap 'output.file(%gstreamer(pipeline="appsrc name=\"audio_src\"
-    block=true caps=\"audio/x-raw,format=S16LE,layout=interleaved,
-    channels=1,rate=44100\" format=time ! lamemp3enc ! appsink name=sink
-    sync=false emit-signals=true",channels=1,log=3),...)'
+ block=true caps=\"audio/x-raw,format=S16LE,layout=interleaved,
+ channels=1,rate=44100\" format=time ! lamemp3enc ! appsink name=sink
+ sync=false emit-signals=true",channels=1,log=3),...)'
 (...)
 ```
 
@@ -130,17 +130,17 @@ An ogg/vorbis encoder with vorbis tags:
 
 ```
 % liquidsoap 'output.file(%gstreamer(audio="vorbisenc ! vorbistag name='metadata'",
-                                     muxer="oggmux",
-                                     video=""),...)'
+ muxer="oggmux",
+ video=""),...)'
 ```
 
 An MP3 encoder with id3v2 tags:
 
 ```
 % liquidsoap 'output.file(%gstreamer(audio="lamemp3enc",
-                                     muxer="id3v2mux",
-                                     video="",
-                                     metadata="muxer"),...)'
+ muxer="id3v2mux",
+ video="",
+ metadata="muxer"),...)'
 ```
 
 In the last example, we tell the `%gstreamer` encoder that the element for injecting metadata is named

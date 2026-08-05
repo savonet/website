@@ -27,15 +27,15 @@ where 'a, 'b, 'c, 'd is either float or ()->float
 Flag: hidden
 Parameters:
 * id : string (default "")
-    Force the value of the source ID.
+ Force the value of the source ID.
 * delay_base : anything that is either float or ()->float (default 6.32499980927)
-    Delay base (ms) (0.1 <= delay_base <= 25).
+ Delay base (ms) (0.1 <= delay_base <= 25).
 * feedback : anything that is either float or ()->float (default 0.)
-    Feedback (-1 <= feedback <= 1).
+ Feedback (-1 <= feedback <= 1).
 * lfo_frequency : anything that is either float or ()->float (default 0.334370166063)
-    LFO frequency (Hz) (0.05 <= lfo_frequency <= 100).
+ LFO frequency (Hz) (0.05 <= lfo_frequency <= 100).
 * max_slowdown : anything that is either float or ()->float (default 2.5)
-    Max slowdown (ms) (0 <= max_slowdown <= 10).
+ Max slowdown (ms) (0 <= max_slowdown <= 10).
 * (unlabeled) : source(audio='#e,video='#f,midi='#g) (default None)
 ```
 

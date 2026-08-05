@@ -15,19 +15,19 @@ encoded_source = input.http("https://icecast.radiofrance.fr/fip-hifi.aac")
 
 # Send to one server here:
 output.icecast(
-  %ffmpeg(format="adts", %audio.copy),
-  fallible=true,
-  mount="/restream",
-  host="streaming.example.com", port=8000, password="xxx",
-  encoded_source)
+ %ffmpeg(format="adts", %audio.copy),
+ fallible=true,
+ mount="/restream",
+ host="streaming.example.com", port=8000, password="xxx",
+ encoded_source)
 
 # An another one here:
 output.icecast(
-  %ffmpeg(format="adts", %audio.copy),
-  fallible=true,
-  mount="/restream",
-  host="streaming2.example.com", port=8000, password="xxx",
-  encoded_source)
+ %ffmpeg(format="adts", %audio.copy),
+ fallible=true,
+ mount="/restream",
+ host="streaming2.example.com", port=8000, password="xxx",
+ encoded_source)
 ```
 
 We cannot use `mksafe` here because the content is not plain `pcm` samples, which this operator is designed to produce. There
@@ -51,19 +51,19 @@ stream = input.http(start = false, "https://wwoz-sc.streamguys1.com/wwoz-hi.mp3"
 listeners_count = ref(0)
 
 def on_connect(~headers, ~uri, ~protocol, _) =
-  listeners_count := !listeners_count + 1
-  if !listeners_count > 0 and not stream.is_started() then
-    log("Starting input")
-    stream.start()
-  end
+ listeners_count := !listeners_count + 1
+ if !listeners_count > 0 and not stream.is_started() then
+ log("Starting input")
+ stream.start()
+ end
 end
 
 def on_disconnect(_) =
-  listeners_count := !listeners_count - 1
-  if !listeners_count == 0 and stream.is_started() then
-    log("Stopping input")
-    stream.stop()
-  end
+ listeners_count := !listeners_count - 1
+ if !listeners_count == 0 and stream.is_started() then
+ log("Stopping input")
+ stream.stop()
+ end
 end
 
 blank = single("/tmp/blank.mp3")
@@ -71,12 +71,12 @@ blank = single("/tmp/blank.mp3")
 stream = fallback(track_sensitive=false, [stream, blank])
 
 output.harbor(
-  %ffmpeg(format="mp3", %audio.copy),
-  format="audio/mpeg",
-  mount="relay",
-  on_connect=on_connect,
-  on_disconnect=on_disconnect,
-  stream)
+ %ffmpeg(format="mp3", %audio.copy),
+ format="audio/mpeg",
+ mount="relay",
+ on_connect=on_connect,
+ on_disconnect=on_disconnect,
+ stream)
 ```
 
 ## Shared encoding {#shared-encoding}
@@ -94,22 +94,22 @@ source = mksafe(source)
 
 # Encode it in mp3:
 source = ffmpeg.encode.audio(
-  %ffmpeg(%audio(codec="libmp3lame")),
-  source)
+ %ffmpeg(%audio(codec="libmp3lame")),
+ source)
 
 # Send to one server here:
 output.icecast(
-  %ffmpeg(format="mp3", %audio.copy),
-  mount="/restream",
-  host="streaming.example.com", port=8000, password="xxx",
-  source)
+ %ffmpeg(format="mp3", %audio.copy),
+ mount="/restream",
+ host="streaming.example.com", port=8000, password="xxx",
+ source)
 
 # An another one here:
 output.icecast(
-  %ffmpeg(format="mp3", %audio.copy),
-  mount="/restream",
-  host="streaming2.example.com", port=8000, password="xxx",
-  source)
+ %ffmpeg(format="mp3", %audio.copy),
+ mount="/restream",
+ host="streaming2.example.com", port=8000, password="xxx",
+ source)
 ```
 
 Shared encoding is even more useful when dealing with video encoding, which is very costly. Here's a fun example
@@ -122,16 +122,16 @@ audio = ...
 
 # Encode it in mp3
 audio = ffmpeg.encode.audio(
-  %ffmpeg(%audio(codec="libmp3lame")),
-  audio)
+ %ffmpeg(%audio(codec="libmp3lame")),
+ audio)
 
 # Send it to icecast
 output.icecast(
-  %ffmpeg(format="mp3", %audio.copy),
-  host = "...",
-  password = "...",
-  mount = "/stream",
-  audio
+ %ffmpeg(format="mp3", %audio.copy),
+ host = "...",
+ password = "...",
+ mount = "/stream",
+ audio
 )
 
 # A video source, for instance a static image
@@ -139,17 +139,17 @@ video = ...
 
 # Encode it in h264 format
 video = ffmpeg.encode.video(
-  %ffmpeg(%video(codec="libx264")),
-  video)
+ %ffmpeg(%video(codec="libx264")),
+ video)
 
 # Mux it with the audio
 stream = source.mux.video(video=video, audio)
 
 # Copy encoder for the rtmp stream
 enc = %ffmpeg(
-  format="flv",
-  %audio.copy,
-  %video.copy)
+ format="flv",
+ %audio.copy,
+ %video.copy)
 
 # Send to YouTube
 key = "..."
@@ -189,22 +189,22 @@ s2 = ffmpeg.filter.bitstream.h264_mp4toannexb(s2)
 s = fallback(track_sensitive=false, [s1, s2])
 
 mpegts = %ffmpeg(
-  format="mpegts",
-  fflags="-autobsf",
-  %audio.copy, %video.copy)
+ format="mpegts",
+ fflags="-autobsf",
+ %audio.copy, %video.copy)
 
 streams = [
-  ("mpegts",mpegts),
+ ("mpegts",mpegts),
 ]
 
 output_dir = "/tmp/hls"
 
 output.file.hls(playlist="live.m3u8",
-                fallible=true,
-                segment_duration=5.,
-                output_dir,
-                streams,
-                s)
+ fallible=true,
+ segment_duration=5.,
+ output_dir,
+ streams,
+ s)
 ```
 
 - We need the `h264_mp4toannexb` on each stream to make sure that the mp4 data conforms to what the mpegts container expect

@@ -86,39 +86,39 @@ In other words, while the main stream experiences time normally, the sources fee
 
 ```
 · output.icecast (ticks: 3, time: 0.06s, self_sync: false)
-  ├── outputs: output.icecast [output.icecast], output.file [output.file]
-  ├── active sources:
-  ├── passive sources: audio.producer [ffmpeg_encode_audio],
-  │                    ffmpeg_encode_audio [output.icecast, output.file]
-  └── audio.producer (ticks: 6, time: 0.12s, self_sync: false)
-      ├── outputs: audio.consumer [audio.producer, audio.consumer]
-      ├── active sources:
-      ├── passive sources: safe_blank.1 [mksafe.1], safe_blank [mksafe],
-      │                    cross [track_metadata_deduplicate, metadata_deduplicate],
-      │                    track_metadata_deduplicate [metadata_deduplicate],
-      │                    metadata_deduplicate [mksafe, insert_initial_track_mark.6],
-      │                    mksafe [metadata_map.2, metadata_map.3],
-      │                    metadata_map.2 [metadata_map.3],
-      │                    metadata_map.3 [mksafe.1, insert_initial_track_mark.1],
-      │                    mksafe.1 [audio.consumer], insert_initial_track_mark [],
-      │                    insert_initial_track_mark.1 [mksafe.1],
-      │                    insert_initial_track_mark.6 [mksafe]
-      └── cross (ticks: 132, time: 2.64s, self_sync: false)
-          ├── outputs:
-          ├── active sources:
-          └── passive sources: source [switch, switch.1],
-                               audio [switch, switch.1, insert_initial_track_mark.2],
-                               switch [switch.1, insert_initial_track_mark.3],
-                               switch.1 [switch.2, insert_initial_track_mark.4],
-                               request_queue [switch.2],
-                               switch.2 [switch.3, insert_initial_track_mark.5],
-                               request_queue_1 [switch.3], switch.3 [metadata_map, metadata_map.1],
-                               metadata_map [metadata_map.1],
-                               metadata_map.1 [track_amplify, amplify], track_amplify [amplify],
-                               amplify [cross, cross], insert_initial_track_mark.2 [switch],
-                               insert_initial_track_mark.3 [switch.1],
-                               insert_initial_track_mark.4 [switch.2],
-                               insert_initial_track_mark.5 [switch.3], cross.eos_buffer [cross]
+ ├── outputs: output.icecast [output.icecast], output.file [output.file]
+ ├── active sources:
+ ├── passive sources: audio.producer [ffmpeg_encode_audio],
+ │ ffmpeg_encode_audio [output.icecast, output.file]
+ └── audio.producer (ticks: 6, time: 0.12s, self_sync: false)
+ ├── outputs: audio.consumer [audio.producer, audio.consumer]
+ ├── active sources:
+ ├── passive sources: safe_blank.1 [mksafe.1], safe_blank [mksafe],
+ │ cross [track_metadata_deduplicate, metadata_deduplicate],
+ │ track_metadata_deduplicate [metadata_deduplicate],
+ │ metadata_deduplicate [mksafe, insert_initial_track_mark.6],
+ │ mksafe [metadata_map.2, metadata_map.3],
+ │ metadata_map.2 [metadata_map.3],
+ │ metadata_map.3 [mksafe.1, insert_initial_track_mark.1],
+ │ mksafe.1 [audio.consumer], insert_initial_track_mark [],
+ │ insert_initial_track_mark.1 [mksafe.1],
+ │ insert_initial_track_mark.6 [mksafe]
+ └── cross (ticks: 132, time: 2.64s, self_sync: false)
+ ├── outputs:
+ ├── active sources:
+ └── passive sources: source [switch, switch.1],
+ audio [switch, switch.1, insert_initial_track_mark.2],
+ switch [switch.1, insert_initial_track_mark.3],
+ switch.1 [switch.2, insert_initial_track_mark.4],
+ request_queue [switch.2],
+ switch.2 [switch.3, insert_initial_track_mark.5],
+ request_queue_1 [switch.3], switch.3 [metadata_map, metadata_map.1],
+ metadata_map [metadata_map.1],
+ metadata_map.1 [track_amplify, amplify], track_amplify [amplify],
+ amplify [cross, cross], insert_initial_track_mark.2 [switch],
+ insert_initial_track_mark.3 [switch.1],
+ insert_initial_track_mark.4 [switch.2],
+ insert_initial_track_mark.5 [switch.3], cross.eos_buffer [cross]
 ```
 
 Notice that the `cross` clock has advanced to 2.64s while the parent clock is only at 0.12s — the crossfade has been accelerating its sources around transition times to pre-compute transition data ahead of real time.
@@ -129,30 +129,30 @@ Notice that the `cross` clock has advanced to 2.64s while the parent clock is on
 Clock output.icecast:
 Outputs:
 · output.icecast [output]
-  └── ffmpeg_encode_audio [passive]
-      └── audio.producer [passive]
+ └── ffmpeg_encode_audio [passive]
+ └── audio.producer [passive]
 · output.file [output]
-  └── ffmpeg_encode_audio [passive] (*)
+ └── ffmpeg_encode_audio [passive] (*)
 
 Clock audio.producer (controlled by output.icecast):
 Outputs:
 · audio.producer [external activation]
-  └── audio.consumer [output]
-      └── mksafe.1 [passive]
-          ├── safe_blank.1 [passive]
-          ├── metadata_map.3 [passive]
-          │   ├── mksafe [passive]
-          │   │   ├── safe_blank [passive]
-          │   │   ├── metadata_deduplicate [passive]
-          │   │   │   ├── cross [passive]
-          │   │   │   └── track_metadata_deduplicate [passive]
-          │   │   │       └── cross [passive] (*)
-          │   │   └── insert_initial_track_mark [passive]
-          │   │       └── safe_blank [passive] (*)
-          │   └── metadata_map.2 [passive]
-          │       └── mksafe [passive] (*)
-          └── insert_initial_track_mark.1 [passive]
-              └── metadata_map.3 [passive] (*)
+ └── audio.consumer [output]
+ └── mksafe.1 [passive]
+ ├── safe_blank.1 [passive]
+ ├── metadata_map.3 [passive]
+ │ ├── mksafe [passive]
+ │ │ ├── safe_blank [passive]
+ │ │ ├── metadata_deduplicate [passive]
+ │ │ │ ├── cross [passive]
+ │ │ │ └── track_metadata_deduplicate [passive]
+ │ │ │ └── cross [passive] (*)
+ │ │ └── insert_initial_track_mark [passive]
+ │ │ └── safe_blank [passive] (*)
+ │ └── metadata_map.2 [passive]
+ │ └── mksafe [passive] (*)
+ └── insert_initial_track_mark.1 [passive]
+ └── metadata_map.3 [passive] (*)
 ```
 
 The source graph shows evaluation flowing from top to bottom: outputs at the top drive the sources below them. A `(*)` marks a source that has already appeared elsewhere in the graph — it is referenced again rather than expanded a second time.

@@ -13,11 +13,11 @@ using the AWS command-line to download a file from S3:
 
 ```liquidsoap
 def s3_protocol(~rlog,~maxtime,arg) =
-  extname = file.extension(leading_dot=false,dir_sep="/",arg)
-  [process_uri(extname=extname,"aws s3 cp s3:#{arg} $(output)")]
+ extname = file.extension(leading_dot=false,dir_sep="/",arg)
+ [process_uri(extname=extname,"aws s3 cp s3:#{arg} $(output)")]
 end
 protocol.add("s3",s3_protocol,doc="Fetch files from s3 using the AWS CLI",
-             syntax="s3://uri")
+ syntax="s3://uri")
 ```
 
 Each protocol needs to register a handler, here the `s3_protocol` function. This function takes
@@ -29,7 +29,7 @@ This makes it possible to create your own custom resolution chain, including for
 
 ```liquidsoap
 def cue_protocol(~rlog,~maxtime,arg) =
-  [process_uri(extname="wav",uri=uri,"ffmpeg -y -i $(input) -af -ss 10 -t 30 $(output)")]
+ [process_uri(extname="wav",uri=uri,"ffmpeg -y -i $(input) -af -ss 10 -t 30 $(output)")]
 end
 protocol.add("cue_cut",cue_protocol)
 ```
@@ -40,8 +40,8 @@ Likewise, you can apply a normalization program:
 
 ```liquidsoap
 def normalization_protocol(~rlog,~maxtime,arg) =
-  # "normalize" command here is just an example..
-  [process_uri(extname="wav",uri=arg,"normalize $(inpuit)")]
+ # "normalize" command here is just an example..
+ [process_uri(extname="wav",uri=arg,"normalize $(inpuit)")]
 end
 protocol.add("normalize",normalization_protoco)
 ```

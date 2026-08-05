@@ -20,10 +20,10 @@ s = ...
 
 # Apply stereotool to it:
 s = stereotool(
-  library_file="/path/to/stereotool/shared/lib",
-  license_key="my_license_key",
-  preset="/path/to/preset/file",
-  s
+ library_file="/path/to/stereotool/shared/lib",
+ license_key="my_license_key",
+ preset="/path/to/preset/file",
+ s
 )
 ```
 

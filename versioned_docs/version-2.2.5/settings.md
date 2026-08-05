@@ -872,7 +872,7 @@ settings.playlist.mime_types.basic := [{mime="audio/x-scpls", strict=true, parse
 settings.playlist.mime_types.xml := [{mime="video/x-ms-asf", strict=true, parser=<fun>}, {mime="audio/x-ms-asx", strict=true, parser=<fun>}, {mime="text/xml", strict=true, parser=<fun>}, {mime="application/xml", strict=true, parser=<fun>}, {mime="application/smil", strict=true, parser=<fun>}, {mime="application/smil+xml", strict=true, parser=<fun>}, {mime="application/xspf+xml", strict=true, parser=<fun>}, {mime="application/rss+xml", strict=true, parser=<fun>}]
 ```
 
-##  {#section}
+## {#section}
 
 ### All available autocue implementations {#all-available-autocue-implementations}
 
@@ -886,7 +886,7 @@ settings.autocue.implementations := [("internal", <fun>)]
 settings.autocue.target_cross_duration := 3.
 ```
 
-###  {#section-1}
+### {#section-1}
 
 #### Priority for the autocue metadata resolver. Default value allows it to override both file and request metadata. {#priority-for-the-autocue-metadata-resolver.-default-value-allows-it-to-override-both-file-and-request-metadata.}
 
@@ -912,7 +912,7 @@ settings.autocue.amplify_behavior := "keep"
 settings.autocue.amplify_aliases := ["replaygain_track_gain"]
 ```
 
-###  {#section-2}
+### {#section-2}
 
 #### Disable processing when one of these metadata is found {#disable-processing-when-one-of-these-metadata-is-found}
 
@@ -1162,25 +1162,25 @@ settings.video.converter.preferred := "ffmpeg"
 settings.video.text := "sdl"
 ```
 
-##  {#section-3}
+## {#section-3}
 
 ```liquidsoap
 settings.make := <fun>
 ```
 
-###  {#section-4}
+### {#section-4}
 
 ```liquidsoap
 settings.make.void := fun (~comments="",_) -> {comments=comments, description=description}
 ```
 
-###  {#section-5}
+### {#section-5}
 
 ```liquidsoap
 settings.make.protocol := <fun>
 ```
 
-###  {#section-6}
+### {#section-6}
 
 ```liquidsoap
 settings.make.external := <fun>

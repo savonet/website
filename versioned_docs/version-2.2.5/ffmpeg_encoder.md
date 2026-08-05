@@ -11,13 +11,13 @@ during the instantiation of the encoder. Here are some configuration examples:
 
 ```liquidsoap
 %ffmpeg(format="mpegts",
-  %audio(
-    codec="libfdk_aac",
-    samplerate=22050,
-    b="32k",
-    afterburner=1,
-    profile="aac_he_v2"
-  )
+ %audio(
+ codec="libfdk_aac",
+ samplerate=22050,
+ b="32k",
+ afterburner=1,
+ profile="aac_he_v2"
+ )
 )
 ```
 
@@ -31,14 +31,14 @@ during the instantiation of the encoder. Here are some configuration examples:
 
 ```liquidsoap
 %ffmpeg(
-  format="mpegts",
-  %audio(codec="ac3", channel_coupling=0),
-  %video(
-    codec="libx264",
-    b="2600k",
-    "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
-    preset="ultrafast"
-  )
+ format="mpegts",
+ %audio(codec="ac3", channel_coupling=0),
+ %video(
+ codec="libx264",
+ b="2600k",
+ "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
+ preset="ultrafast"
+ )
 )
 ```
 
@@ -46,14 +46,14 @@ during the instantiation of the encoder. Here are some configuration examples:
 
 ```liquidsoap
 %ffmpeg(
-  format="mpegts",
-  %audio.raw(codec="ac3", channel_coupling=0),
-  %video.raw(
-    codec="libx264",
-    b="2600k",
-    "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
-    preset="ultrafast"
-  )
+ format="mpegts",
+ %audio.raw(codec="ac3", channel_coupling=0),
+ %video.raw(
+ codec="libx264",
+ b="2600k",
+ "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
+ preset="ultrafast"
+ )
 )
 ```
 
@@ -61,9 +61,9 @@ during the instantiation of the encoder. Here are some configuration examples:
 
 ```liquidsoap
 %ffmpeg(
-  format="mp3",
-  %audio(codec="libmp3lame"),
-  %video.copy
+ format="mp3",
+ %audio(codec="libmp3lame"),
+ %video.copy
 )
 ```
 
@@ -71,42 +71,42 @@ The full syntax is as follows:
 
 ```liquidsoap
 %ffmpeg(
-  format=<format>,
-  # Audio section
-  %audio(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %audio.raw(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %audio.copy(<option>),
-  # Video section
-  %video(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %video.raw(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %video.copy(<option>),
-  # Generic options
-  <option_name>=<option_value>, ...
+ format=<format>,
+ # Audio section
+ %audio(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %audio.raw(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %audio.copy(<option>),
+ # Video section
+ %video(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %video.raw(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %video.copy(<option>),
+ # Generic options
+ <option_name>=<option_value>, ...
 )
 ```
 
 Where:
 
 - `<format>` is either a string value (e.g. `"mpegts"`), as returned by the `ffmpeg -formats` command or `none`. When set to `none` or
-  simply no specified, the encoder will try to auto-detect it.
+ simply no specified, the encoder will try to auto-detect it.
 - `<codec>` is a string value (e.g. `"libmp3lame"`), as returned by the `ffmpeg -codecs` command.
 - `<option_name>` can be any syntactically valid variable name or string. Strings are typically used when the option name is of the
-  form: `foo-bar`.
+ form: `foo-bar`.
 - `%audio(...)` is for options specific to the audio codec. Unused options will raise an exception. Any option supported by `ffmpeg` can be
-  passed here. Streams encoded using `%audio` are using liquidsoap internal frame format and are fully handled on the liquidsoap side.
+ passed here. Streams encoded using `%audio` are using liquidsoap internal frame format and are fully handled on the liquidsoap side.
 - `%audio.raw(...)` behaves like `%audio` except that the audio data is kept as ffmpeg's internal format. This can avoid data copy and is
-  also the format required to use [ffmpeg filters](ffmpeg_filters.html).
+ also the format required to use [ffmpeg filters](./ffmpeg_filters.md).
 - `%audio.copy` copies data without decoding or encoding it. This is great to avoid using the CPU, but in this case, the data cannot be
-  processed with operators that modify it, such as `fade.{in,out}` or `smart_cross`. Also, all streams must agree on the same data format.
+ processed with operators that modify it, such as `fade.{in,out}` or `smart_cross`. Also, all streams must agree on the same data format.
 - `%video(...)` is for options specific to the video codec. Unused options will raise an exception. Any option supported by `ffmpeg` can be
-  passed here.
+ passed here.
 - `%video.raw` and `%video.copy` have the same meaning as their `%audio` counterpart.
 - Generic options are passed to audio, video and format (container) setup. Unused options will raise an exception. Any option supported
-  by `ffmpeg` can be passed here.
+ by `ffmpeg` can be passed here.
 
 ### HLS output {#hls-output}
 
@@ -125,7 +125,7 @@ fact. The `%ffmpeg` encoder is one such encoder that can be used with this opera
 The `%audio.copy` and `%video.copy` encoders have two mutually exclusive options to handle keyframes:
 
 - `%audio.copy(wait_for_keyframe)` and `%video.copy(wait_for_keyframe)`: Wait until at least one keyframe has been passed to start passing
-  encoded packets from a new stream.
+ encoded packets from a new stream.
 - `%audio.copy(ignore_keyframe)` and `%video.copy(ignore_keyframe)`: Ignore all keyframes.
 
 These options are useful when switching from one encoded stream to the next.
@@ -164,12 +164,12 @@ Here's an example:
 
 ```liquidsoap
 enc = %ffmpeg(
-  format="mpegts",
-  %video(
-    hwaccel="device",
-    hwaccel_devic="/dev/...",
-    ...
-  )
+ format="mpegts",
+ %video(
+ hwaccel="device",
+ hwaccel_devic="/dev/...",
+ ...
+ )
 )
 ```
 

@@ -24,10 +24,10 @@ s = playlist(cue, on_done=shutdown)
 
 # Shove all that to a output.file operator.
 output.file(
-  %mp3(id3v2 = true, bitrate = 320),
-  fallible=true,
-  reopen_on_metadata=fun (_) -> true,
-  "/path/to/$(track) - $(title).mp3",
-  s
+ %mp3(id3v2 = true, bitrate = 320),
+ fallible=true,
+ reopen_on_metadata=fun (_) -> true,
+ "/path/to/$(track) - $(title).mp3",
+ s
 )
 ```

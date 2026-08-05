@@ -120,7 +120,7 @@ care about the WAV length header then you should use this parameter.
 
 ## FFmpeg {#ffmpeg}
 
-See detailed [ffmpeg encoders](ffmpeg_encoder.html) article.
+See detailed [ffmpeg encoders](./ffmpeg_encoder.md) article.
 
 ## Ogg {#ogg}
 
@@ -175,12 +175,12 @@ their meanings and values.
 
 ```liquidsoap
 %theora(quality=40,width=640,height=480,
-        picture_width=255,picture_height=255,
-        picture_x=0, picture_y=0,
-        aspect_numerator=1, aspect_denominator=1,
-        keyframe_frequency=64, vp3_compatible=false,
-        soft_target=false, buffer_delay=5,
-        speed=0)
+ picture_width=255,picture_height=255,
+ picture_x=0, picture_y=0,
+ aspect_numerator=1, aspect_denominator=1,
+ keyframe_frequency=64, vp3_compatible=false,
+ soft_target=false, buffer_delay=5,
+ speed=0)
 ```
 
 You can also pass `bitrate=x` explicitly instead of a quality.
@@ -191,9 +191,9 @@ from the settings `frame.video.height/width`.
 
 ```liquidsoap
 %speex(stereo=false, samplerate=44100, quality=7,
-       mode=wideband, # One of: wideband|narrowband|ultra-wideband
-       frames_per_packet=1,
-       complexity=5)
+ mode=wideband, # One of: wideband|narrowband|ultra-wideband
+ frames_per_packet=1,
+ complexity=5)
 ```
 
 You can also control quality using `abr=x` or `vbr=y`.
@@ -209,9 +209,9 @@ The parameters are:
 
 ```liquidsoap
 %flac(samplerate=44100,
-      channels=2,
-      compression=5,
-      bits_per_sample=16)
+ channels=2,
+ compression=5,
+ bits_per_sample=16)
 ```
 
 `compression` ranges from 0 to 8 and `bits_per_sample` should be one of: `8`, `16`, `24` or `32`.
@@ -242,14 +242,14 @@ on configuration values and meanings.
 
 ## External encoders {#external-encoders}
 
-For a detailed presentation of external encoders, see [this page](external_encoders.html).
+For a detailed presentation of external encoders, see [this page](./external_encoders.md).
 
 ```liquidsoap
 %external(channels=2,samplerate=44100,header=true,
-          restart_on_crash=false,
-          restart_on_metadata,
-          restart_after_delay=30,
-          process="progname")
+ restart_on_crash=false,
+ restart_on_metadata,
+ restart_after_delay=30,
+ process="progname")
 ```
 
 Only one of `restart_on_metadata` and `restart_after_delay` should

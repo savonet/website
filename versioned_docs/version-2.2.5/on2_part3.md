@@ -34,7 +34,7 @@ You can visualize the audio volume on screen using `visu.volume`:
 d = 1.
 t = "lin"
 s = fade.in(duration=d,type=t,
-      fade.out(duration=d,type=t,sine(duration=3.*d)))
+ fade.out(duration=d,type=t,sine(duration=3.*d)))
 output.ao(visu.volume(s))
 ```
 
@@ -60,14 +60,14 @@ second argument.
 
 ```liquidsoap
 def images
-  video.fade.in(duration=1.,video.fade.out(duration=1.,
-    video.add_text(metadata="filename","<no filename>",
-                   size=12,
-                   playlist(prefix="annotate:duration=3:",argv(1)))))
+ video.fade.in(duration=1.,video.fade.out(duration=1.,
+ video.add_text(metadata="filename","<no filename>",
+ size=12,
+ playlist(prefix="annotate:duration=3:",argv(1)))))
 end
 
 def sound
-  playlist(argv(2))
+ playlist(argv(2))
 end
 
 output.ao(fallible=true,sound)
@@ -77,7 +77,7 @@ clock(id="video", output.sdl(fallible=true,images))
 # Play the result in VLC rather than mplayer (or even liquidsoap)
 # as it is a sequentialized ogg stream.
 # output.file(%ogg(%vorbis,%theora),"slideshow.ogg",
-#   mksafe(source.mux.video(video=images,sound)))
+# mksafe(source.mux.video(video=images,sound)))
 ```
 
 If you experience transparency problems... it's a known bug
@@ -94,7 +94,7 @@ that you can then process as any other video stream:
 d = 1.
 t = "lin"
 s = fade.in(duration=d,type=t,
-      fade.out(duration=d,type=t,sine(duration=3.*d)))
+ fade.out(duration=d,type=t,sine(duration=3.*d)))
 output.sdl(drop_audio(video.volume(s)))
 ```
 
@@ -151,11 +151,11 @@ order to add a rotating image on a video you could use
 
 ```liquidsoap
 s = add([s,
-         video.rotate(
-           video.add_image(
-             width=50, height=50, x=150, y=150,
-             file="image.ppm",
-             blank()))])
+ video.rotate(
+ video.add_image(
+ width=50, height=50, x=150, y=150,
+ file="image.ppm",
+ blank()))])
 ```
 
 ## Overloaded demo {#overloaded-demo}
@@ -166,47 +166,47 @@ file = single("bus.ogg")
 istring = interactive.string
 
 v = add([file,
-         # video.text("Hello world..."),
-         # video.text("Mip mip!",color=0xff0000,y=-1,speed=300),
-         video.text(istring("a",""),color=0xff0000,font=mono,size=30,y=-01),
-         video.text(istring("b",""),color=0xff0000,font=mono,size=30,y=-31),
-         video.text(istring("c",""),color=0xff0000,font=mono,size=30,y=-61),
+ # video.text("Hello world..."),
+ # video.text("Mip mip!",color=0xff0000,y=-1,speed=300),
+ video.text(istring("a",""),color=0xff0000,font=mono,size=30,y=-01),
+ video.text(istring("b",""),color=0xff0000,font=mono,size=30,y=-31),
+ video.text(istring("c",""),color=0xff0000,font=mono,size=30,y=-61),
 ])
 
 output.alsa(drop_video(file))
 
 # output.file.theora("out.ogv",
 output.sdl(add([video.fade.in(video.fade.in(transition="disc",v)),
-                # video.rotate(video.scale(coef=0.3,offset_x=20,offset_y=20,v)),
-               video.image("chameau.pnm",width=50,height=50,
-                           x=-10,y=10,alpha=0xffffff),
+ # video.rotate(video.scale(coef=0.3,offset_x=20,offset_y=20,v)),
+ video.image("chameau.pnm",width=50,height=50,
+ x=-10,y=10,alpha=0xffffff),
 ]))
 
 text = fun (v,s) -> ignore(server.execute('var.set #{v} = "#{s}"'))
 
 def pingouin()
-  text("c","(o_ ")
-  text("b","//\\ ")
-  text("a","v_/_")
+ text("c","(o_ ")
+ text("b","//\\ ")
+ text("a","v_/_")
 end
 
 def pan()
-  text("c","(X_ ")
+ text("c","(X_ ")
 end
 
 server.register("pingouin", fun (_) -> begin pingouin() "Oui seigneur..." end)
 server.register("pan", fun (_) -> begin pan() "Zog zog!" end)
 
 server.register("anim", fun (s) -> begin
-  s = if s=="t" then
-    pan()
-    "f"
-  else
-    pingouin()
-    "t"
-  end
-  add_timeout(1.,{ ignore(server.execute("anim #{s}")) (-1.) })
-  "Done."
+ s = if s=="t" then
+ pan()
+ "f"
+ else
+ pingouin()
+ "t"
+ end
+ add_timeout(1.,{ ignore(server.execute("anim #{s}")) (-1.) })
+ "Done."
 end)
 ```
 

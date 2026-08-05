@@ -1,5 +1,5 @@
 ---
-title: "Understanding Sources in Liquidsoap 🎧"
+title: "Understanding Sources in Liquidsoap"
 description: "When you write a Liquidsoap script, you're not just stringing commands together — you're building a streaming system."
 sidebar_label: "Sources"
 ---
@@ -21,7 +21,7 @@ At any moment, Liquidsoap can ask a source: _"Give me the next frame."_ The sour
 
 This model lets you combine sources, decorate them, filter them, or choose between them — all in a script.
 
-## Building Streams from Sources 🧱 {#building-streams-from-sources-}
+## Building Streams from Sources {#building-streams-from-sources-}
 
 The Liquidsoap language gives you **functions and operators** to build sources:
 
@@ -32,13 +32,13 @@ You can build complex behaviors from simple building blocks. For example:
 
 ```liquidsoap
 radio =
-  output.icecast(
-    %vorbis, mount="test.ogg",
-    random([
-      jingle,
-      fallback([playlist1, playlist2, playlist3])
-    ])
-  )
+ output.icecast(
+ %vorbis, mount="test.ogg",
+ random([
+ jingle,
+ fallback([playlist1, playlist2, playlist3])
+ ])
+ )
 ```
 
 Here’s what’s happening:
@@ -50,7 +50,7 @@ Here’s what’s happening:
 
 Every time the system needs audio, this little pipeline wakes up and produces a frame of data.
 
-## Sources Are Not Always Reliable (And That’s Okay) ⚠️ {#sources-are-not-always-reliable-and-thats-okay-}
+## Sources Are Not Always Reliable (And That’s Okay) {#sources-are-not-always-reliable-and-thats-okay-}
 
 What happens if a playlist runs out of tracks? Or a file fails to load?
 
@@ -70,11 +70,11 @@ Liquidsoap can **check the liveness** of your source graph at startup and warn y
 
 Want to allow failures? You can pass `fallible=true` to most output operators — but do so only if you’re okay with your stream pausing and restarting when necessary.
 
-## How Streaming Actually Happens 🔁 {#how-streaming-actually-happens-}
+## How Streaming Actually Happens {#how-streaming-actually-happens-}
 
 Once your script defines a set of sources and outputs, how does Liquidsoap keep the data flowing?
 
-It all comes down to a **clock**. ⏰
+It all comes down to a **clock**.
 
 Each source is assigned to a clock. During each clock tick (i.e. iteration), Liquidsoap:
 
@@ -85,7 +85,7 @@ Each source is assigned to a clock. During each clock tick (i.e. iteration), Liq
 
 This forms a **streaming loop**, and it's central to how Liquidsoap runs.
 
-## Active Sources 🔌 {#active-sources-}
+## Active Sources {#active-sources-}
 
 Most sources are passive: they only do work when asked. But some are **active** — they need to run even if no one is listening.
 
@@ -96,7 +96,7 @@ For example:
 
 These sources are **always receiving data**, so they must process it continually or risk overflowing. Even if you don’t route them to an output, Liquidsoap keeps them alive.
 
-## Don’t Block the Stream 🛑 {#dont-block-the-stream-}
+## Don’t Block the Stream {#dont-block-the-stream-}
 
 The streaming loop must stay fast and responsive. So, **expensive tasks are offloaded to background threads**:
 
@@ -114,10 +114,10 @@ Keep the streaming loop light and snappy — it’s the heartbeat of your system
 
 ## What’s Next? {#whats-next}
 
-Now that you understand what sources are and how they work, you’ve unlocked the foundation of Liquidsoap. 🎉
+Now that you understand what sources are and how they work, you’ve unlocked the foundation of Liquidsoap.
 
 Want to go deeper?
 
-- Explore the [scripting API reference](reference.html)
-- Learn about [clocks](clocks.html)
+- Explore the [scripting API reference](./reference/index.mdx)
+- Learn about [clocks](./clocks.md)
 - Experiment with your own custom source graphs

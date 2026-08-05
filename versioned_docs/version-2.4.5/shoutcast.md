@@ -10,7 +10,7 @@ much more features than Shoutcast), it is also able to stream to Shoutcast.
 
 Shoutcast server accept streams encoded with the MP3 or AAC/AAC+ codec. You to compile Liquidsoap with
 `lame` support, so it can encode in MP3. Liquidsoap also has support for AAC+ encoding
-using FDK-AAC or using an [external encoder](external_encoders.html). The recommended format is MP3.
+using FDK-AAC or using an [external encoder](./external_encoders.md). The recommended format is MP3.
 
 Shoutcast output are done using the `output.shoutcast` operator with the appropriate parameters.
 An example is:
@@ -19,11 +19,11 @@ An example is:
 source = single("audiofile.ogg")
 
 output.shoutcast(
-  %mp3,
-  host="shoutcast.example.org",
-  port=8000,
-  password="changeme",
-  source
+ %mp3,
+ host="shoutcast.example.org",
+ port=8000,
+ password="changeme",
+ source
 )
 ```
 

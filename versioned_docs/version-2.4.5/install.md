@@ -122,4 +122,4 @@ export LIBRARY_PATH=/opt/homebrew/lib
 
 ## Installing from source {#installing-from-source}
 
-See the [build instructions](build.html)
+See the [build instructions](./build.md)

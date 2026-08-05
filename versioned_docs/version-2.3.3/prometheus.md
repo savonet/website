@@ -33,8 +33,8 @@ They share a similar type and API, which is as follows:
  ?subsystem : string,
  labels : [string],
  string) ->
-   (label_values : [string]) ->
-     (float) -> unit
+ (label_values : [string]) ->
+ (float) -> unit
 ```
 
 This type can be a little confusing. Here's how it works:
@@ -62,14 +62,14 @@ Finally, the programmer can now use that callback to set the metric as desired. 
 
 ```liquidsoap title="prometheus-callback.liq"
 def check_if_ready(set_is_ready, s) =
-  def callback() =
-    if source.is_ready(s) then set_is_ready(1.) else set_is_ready(0.) end
-  end
-  callback
+ def callback() =
+ if source.is_ready(s) then set_is_ready(1.) else set_is_ready(0.) end
+ end
+ callback
 end
 
 thread.run(
-  every=1., check_if_ready(set_playlist_is_playing, playlist)
+ every=1., check_if_ready(set_playlist_is_playing, playlist)
 )
 ```
 

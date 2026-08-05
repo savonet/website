@@ -20,13 +20,13 @@ Note that some video encoders buffer frames before producing output, which can c
 
 ```liquidsoap
 %ffmpeg(format="mpegts",
-  %audio(
-    codec="libfdk_aac",
-    samplerate=22050,
-    b="32k",
-    afterburner=1,
-    profile="aac_he_v2"
-  )
+ %audio(
+ codec="libfdk_aac",
+ samplerate=22050,
+ b="32k",
+ afterburner=1,
+ profile="aac_he_v2"
+ )
 )
 ```
 
@@ -40,14 +40,14 @@ Note that some video encoders buffer frames before producing output, which can c
 
 ```liquidsoap
 %ffmpeg(
-  format="mpegts",
-  %audio(codec="ac3", channel_coupling=0),
-  %video(
-    codec="libx264",
-    b="2600k",
-    "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
-    preset="ultrafast"
-  )
+ format="mpegts",
+ %audio(codec="ac3", channel_coupling=0),
+ %video(
+ codec="libx264",
+ b="2600k",
+ "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
+ preset="ultrafast"
+ )
 )
 ```
 
@@ -55,14 +55,14 @@ Note that some video encoders buffer frames before producing output, which can c
 
 ```liquidsoap
 %ffmpeg(
-  format="mpegts",
-  %audio.raw(codec="ac3", channel_coupling=0),
-  %video.raw(
-    codec="libx264",
-    b="2600k",
-    "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
-    preset="ultrafast"
-  )
+ format="mpegts",
+ %audio.raw(codec="ac3", channel_coupling=0),
+ %video.raw(
+ codec="libx264",
+ b="2600k",
+ "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
+ preset="ultrafast"
+ )
 )
 ```
 
@@ -70,9 +70,9 @@ Note that some video encoders buffer frames before producing output, which can c
 
 ```liquidsoap
 %ffmpeg(
-  format="mp3",
-  %audio(codec="libmp3lame"),
-  %video.copy
+ format="mp3",
+ %audio(codec="libmp3lame"),
+ %video.copy
 )
 ```
 
@@ -80,23 +80,23 @@ The full syntax is as follows:
 
 ```liquidsoap
 %ffmpeg(
-  format=<format>,
-  # Metadata to be passed when initializing the output
-  metadata=[("label","value"), ...],
-  # Audio section
-  %audio(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %audio.raw(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %audio.copy(<option>),
-  # Video section
-  %video(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %video.raw(codec=<codec>, <option_name>=<option_value>, ...),
-  # Or:
-  %video.copy(<option>),
-  # Generic options
-  <option_name>=<option_value>, ...
+ format=<format>,
+ # Metadata to be passed when initializing the output
+ metadata=[("label","value"), ...],
+ # Audio section
+ %audio(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %audio.raw(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %audio.copy(<option>),
+ # Video section
+ %video(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %video.raw(codec=<codec>, <option_name>=<option_value>, ...),
+ # Or:
+ %video.copy(<option>),
+ # Generic options
+ <option_name>=<option_value>, ...
 )
 ```
 
@@ -106,7 +106,7 @@ Where:
 - `<codec>` is a string value (e.g. `"libmp3lame"`), as returned by the `ffmpeg -codecs` command.
 - `<option_name>` is any syntactically valid variable name or string. Strings are used for option names of the form `foo-bar`.
 - `%audio(...)` sets options for the audio codec. Unused options raise an exception. Any option supported by `ffmpeg` may be passed. Streams encoded with `%audio` use liquidsoap's internal frame format.
-- `%audio.raw(...)` behaves like `%audio` but keeps audio data in ffmpeg's internal format. This avoids data copies and is required for [ffmpeg filters](ffmpeg_filters.html).
+- `%audio.raw(...)` behaves like `%audio` but keeps audio data in ffmpeg's internal format. This avoids data copies and is required for [ffmpeg filters](./ffmpeg_filters.md).
 - `%audio.copy` passes data through without decoding or re-encoding. This avoids CPU usage but the data cannot be processed by operators like `fade.{in,out}` or `smart_cross`. All streams must share the same data format.
 - `%video(...)` sets options for the video codec. Unused options raise an exception. Any option supported by `ffmpeg` may be passed.
 - `%video.raw` and `%video.copy` behave like their `%audio` counterparts.
@@ -125,7 +125,7 @@ Some formats, such as `mp4`, require rewinding the stream to write a header afte
 The `%audio.copy` and `%video.copy` encoders have two mutually exclusive options to handle keyframes:
 
 - `%audio.copy(wait_for_keyframe)` and `%video.copy(wait_for_keyframe)`: Wait until at least one keyframe has been passed to start passing
-  encoded packets from a new stream.
+ encoded packets from a new stream.
 - `%audio.copy(ignore_keyframe)` and `%video.copy(ignore_keyframe)`: Ignore all keyframes.
 
 These options are useful when switching between encoded streams.
@@ -157,12 +157,12 @@ Here's an example:
 
 ```liquidsoap
 enc = %ffmpeg(
-  format="mpegts",
-  %video(
-    hwaccel="device",
-    hwaccel_device="/dev/...",
-    ...
-  )
+ format="mpegts",
+ %video(
+ hwaccel="device",
+ hwaccel_device="/dev/...",
+ ...
+ )
 )
 ```
 

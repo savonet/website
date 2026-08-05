@@ -5,7 +5,7 @@ sidebar_label: "Customize metadata"
 ---
 Liquidsoap has several mechanism for manipulating the metadata attached to your
 stream. In this page we quickly detail and compare the different operators, see
-the [language reference](reference.html) for full details about them.
+the [language reference](./reference/index.mdx) for full details about them.
 
 **Warning**. The protocol used by Shoutcast and Icecast before version 2 does
 not support many fields. It mainly support one: `song`. So, if you
@@ -38,11 +38,11 @@ A simple example using it:
 ```liquidsoap
 # A function applied to each metadata chunk
 def append_title(m) =
-  # Grab the current title
-  title = m["title"]
+ # Grab the current title
+ title = m["title"]
 
-  # Return a new title metadata
-  [("title","#{title} - www.station.com")]
+ # Return a new title metadata
+ [("title","#{title} - www.station.com")]
 end
 
 # Apply metadata.map to s using append_title
@@ -97,14 +97,14 @@ s = insert_metadata(s)
 
 # Handler for OSC events (gets pairs of strings)
 def on_meta(m) =
-  # Extract the label
-  label = fst(m)
-  # Extract the value
-  value = snd(m)
-  # A debug message
-  print("Insert metadata #{label} = #{value}")
-  # Insert the metadata
-  s.insert_metadata([(label,value)])
+ # Extract the label
+ label = fst(m)
+ # Extract the value
+ value = snd(m)
+ # A debug message
+ print("Insert metadata #{label} = #{value}")
+ # Insert the metadata
+ s.insert_metadata([(label,value)])
 end
 
 # Call the above handler when we have a pair of strings on /metadata

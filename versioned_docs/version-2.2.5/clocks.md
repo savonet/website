@@ -2,8 +2,8 @@
 title: "Clocks"
 description: "In the quickstart and in the introduction to liquidsoap sources, we have described a simple world in which sources communicate with each other,…"
 ---
-In the [quickstart](quick_start.html) and in the introduction to liquidsoap
-[sources](sources.html), we have described a simple world in which sources
+In the [quickstart](./quick_start.md) and in the introduction to liquidsoap
+[sources](./sources.md), we have described a simple world in which sources
 communicate with each other, creating and transforming data that
 composes multimedia streams.
 In this simple view, all sources produce data at the same rate,
@@ -162,9 +162,9 @@ create two jingle sources, one for each clock:
 
 ```liquidsoap
 music = rotate([1,10],[playlist("jingles.lst"),
-                       playlist("remote.lst")])
-safe  = rotate([1,10],[playlist("jingles.lst"),
-                       single("local.ogg")])
+ playlist("remote.lst")])
+safe = rotate([1,10],[playlist("jingles.lst"),
+ single("local.ogg")])
 q = fallback([crossfade(music),safe])
 ```
 
@@ -269,8 +269,8 @@ output.icecast(%mp3,mount="blah",icecast_source)
 
 # File output:
 output.file(
-  %mp3,"record-%Y-%m-%d-%H-%M-%S.mp3",
-  input)
+ %mp3,"record-%Y-%m-%d-%H-%M-%S.mp3",
+ input)
 ```
 
 Here, the soundcard input and file output end up in the OSS
@@ -305,9 +305,9 @@ and observe that it fully exploits two cores:
 
 ```liquidsoap
 def one()
-  s = single(argv(1))
-  clock.assign_new(sync="none",[s])
-  output.file(%mp3,"/dev/null",s)
+ s = single(argv(1))
+ clock.assign_new(sync="none",[s])
+ output.file(%mp3,"/dev/null",s)
 end
 one()
 one()

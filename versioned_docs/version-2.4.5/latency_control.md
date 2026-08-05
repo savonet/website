@@ -15,7 +15,7 @@ But if it takes **more than 0.04 seconds**, Liquidsoap starts to fall behind. Wh
 
 > **We must catchup 1.42 sec**
 
-⏱️ This means the system is **too slow** and needs to produce data faster to get back on track.
+ This means the system is **too slow** and needs to produce data faster to get back on track.
 
 ### Who Controls Time? {#who-controls-time}
 
@@ -27,8 +27,8 @@ Some sources or outputs are **self-synchronized**: they _block_ until it’s tim
 
 Examples of self-sync components:
 
-- 🎧 Sound cards (e.g. `output.ao`, `input.alsa`, etc..)
-- 🌐 Streaming inputs (e.g. `input.srt`, or `input.ffmpeg` (depending on its source))
+- Sound cards (e.g. `output.ao`, `input.alsa`, etc..)
+- Streaming inputs (e.g. `input.srt`, or `input.ffmpeg` (depending on its source))
 
 In these cases, Liquidsoap doesn't need to check the clock—it just lets the source or output drive the latency.
 
@@ -41,7 +41,7 @@ Examples:
 - Audio files (`single`, `playlist`, etc.)
 - Icecast or shoutcast streaming (`output.icecast`, `output.shoutcast`)
 
-### Switching Between Time Sources 🔀 {#switching-between-time-sources-}
+### Switching Between Time Sources {#switching-between-time-sources-}
 
 Your stream may involve switching between multiple types of sources. For example:
 
@@ -60,7 +60,7 @@ that will be used to produce data in the next round of the streaming loop.
 For instance, in the above, only one of the two sources will ever be used to produce data. If it is `single`, the source
 is CPU-controled, otherwise it is `self-sync`.
 
-### Synchronization conflicts ⚠️ {#synchronization-conflicts-}
+### Synchronization conflicts {#synchronization-conflicts-}
 
 In some cases, you may have to fix synchronization conflicts. For instance:
 
@@ -86,32 +86,32 @@ output.ao(fallible=true, input.srt("...", self_sync=false))
 
 This tells Liquidsoap to follow the timing of the AO output.
 
-### Diagnosing Latency Issues 🧪 {#diagnosing-latency-issues-}
+### Diagnosing Latency Issues {#diagnosing-latency-issues-}
 
 When you see a `"We must catchup"` message, here’s how to go about diagnosing the issue:
 
-#### ✅ 1. Is latency CPU-controlled? {#is-latency-cpu-controlled}
+#### 1. Is latency CPU-controlled? {#is-latency-cpu-controlled}
 
 If no self-synchronized component is active, Liquidsoap must use the CPU clock to manage time. That means _any delay in computation_ causes the system to fall behind.
 
-#### ✅ 2. Should a source be self-synchronized? {#should-a-source-be-self-synchronized}
+#### 2. Should a source be self-synchronized? {#should-a-source-be-self-synchronized}
 
 In some cases such as when using `input.ffmpeg`, you may need to manually set it as `self_sync`. Typically, `input.ffmpeg` should be self-sync
 when decoding a `libsrt` or `rtmp` input.
 
-#### ✅ 3. Can the system keep up? {#can-the-system-keep-up}
+#### 3. Can the system keep up? {#can-the-system-keep-up}
 
 If timing is CPU-controlled, then Liquidsoap needs to generate chunks fast enough to stay on schedule. If it can’t, you’ll see the catchup warning.
 
 **Common culprits:**
 
-- 🧮 CPU isn’t fast enough to decode/encode in real-time.
-- 💽 Disk access is slow—especially with network-based filesystems like NFS.
-- 🔄 Blocking code inside the streaming loop.
+- CPU isn’t fast enough to decode/encode in real-time.
+- Disk access is slow—especially with network-based filesystems like NFS.
+- Blocking code inside the streaming loop.
 
-💡 **Pro Tip:** Before version 2.4.0, all callbacks in Liquidsoap were synchronous (blocking). Since 2.4.0, most callbacks are **asynchronous** by default.
+ **Pro Tip:** Before version 2.4.0, all callbacks in Liquidsoap were synchronous (blocking). Since 2.4.0, most callbacks are **asynchronous** by default.
 
-#### ✅ 4. Are other processes slowing things down? {#are-other-processes-slowing-things-down}
+#### 4. Are other processes slowing things down? {#are-other-processes-slowing-things-down}
 
 Sometimes it's not Liquidsoap's fault. Other system tasks—like `cron` jobs or background processes—can momentarily hog CPU or disk resources and cause temporary latency.
 

@@ -55,8 +55,8 @@ need to disable `cue_in_metadata` and `cue_out_metadat` either when creating new
 ### Harbor HTTP server and SSL support {#harbor-http-server-and-ssl-support}
 
 The API for registering HTTP server endpoint and using SSL was completely rewritten. It should be more flexible and
-provide node/express like API for registering endpoints and middleware. You can checkout [the harbor HTTP documentation](harbor_http.html)
-for more details. The [Https support](harbor_http.html#https-support) section also explains the new SSL/TLS API.
+provide node/express like API for registering endpoints and middleware. You can checkout [the harbor HTTP documentation](./harbor_http.md)
+for more details. The [Https support](./harbor_http.md#https-support) section also explains the new SSL/TLS API.
 
 ### Timeout {#timeout}
 
@@ -147,7 +147,7 @@ output.file({time.string("/path/to/file%H%M%S.wav")}, ...)
 
 ### Regular expressions {#regular-expressions}
 
-First-class [regular expression](language.html#regular-expressions) are introduced and are used to replace the following operators:
+First-class [regular expression](./language.md#regular-expressions) are introduced and are used to replace the following operators:
 
 - `string.match(pattern=<regexp>, <string>` is replaced by: `r/<regexp>/.test(<string>)`
 - `string.extract(pattern=<regexp>, <string>)` is replaced by: `r/<regexp>/.exec(<string>)`
@@ -168,7 +168,7 @@ with
 
 ```liquidsoap
 def add(x,y) =
-  x + y
+ x + y
 end
 ```
 
@@ -190,14 +190,14 @@ or
 
 ```liquidsoap
 def suc(x) =
-  add(1, x)
+ add(1, x)
 end
 ```
 
 ### JSON parsing {#json-parsing}
 
 JSON parsing was greatly improved and is now much more user-friendly.
-You can check out our detailed presentation [here](json.html).
+You can check out our detailed presentation [here](./json.md).
 
 ### Runtime evaluation {#runtime-evaluation}
 
@@ -237,7 +237,7 @@ The type of the `auth` function in `input.harbor` has changed. Where before, you
 
 ```liquidsoap
 def auth(user, password) =
-  ...
+ ...
 end
 ```
 
@@ -245,9 +245,9 @@ You would now do:
 
 ```liquidsoap
 def auth(params)
-  user     = params.user
-  password = params.password
-  ...
+ user = params.user
+ password = params.password
+ ...
 end
 ```
 
@@ -259,45 +259,45 @@ Now that sources have their own methods, the actual list of methods attached to 
 ```liquidsoap
 At script.liq, line xxx, char yyy-zzz:
 Error 5: this value has type
-  _ * source(audio=?A, video=?B, midi=?C)
-  .{
-    time : () -> float,
-    shutdown : () -> unit,
-    fallible : bool,
-    skip : () -> unit,
-    seek : (float) -> float,
-    is_active : () -> bool,
-    is_up : () -> bool,
-    log :
-    {level : (() -> int?).{set : ((int) -> unit)}
-    },
-    self_sync : () -> bool,
-    duration : () -> float,
-    elapsed : () -> float,
-    remaining : () -> float,
-    on_track : ((([string * string]) -> unit)) -> unit,
-    on_leave : ((() -> unit)) -> unit,
-    on_shutdown : ((() -> unit)) -> unit,
-    on_metadata : ((([string * string]) -> unit)) -> unit,
-    is_ready : () -> bool,
-    id : () -> string,
-    selected : (() -> source(audio=?D, video=?E, midi=?F)?)
-  }
+ _ * source(audio=?A, video=?B, midi=?C)
+ .{
+ time : () -> float,
+ shutdown : () -> unit,
+ fallible : bool,
+ skip : () -> unit,
+ seek : (float) -> float,
+ is_active : () -> bool,
+ is_up : () -> bool,
+ log :
+ {level : (() -> int?).{set : ((int) -> unit)}
+ },
+ self_sync : () -> bool,
+ duration : () -> float,
+ elapsed : () -> float,
+ remaining : () -> float,
+ on_track : ((([string * string]) -> unit)) -> unit,
+ on_leave : ((() -> unit)) -> unit,
+ on_shutdown : ((() -> unit)) -> unit,
+ on_metadata : ((([string * string]) -> unit)) -> unit,
+ is_ready : () -> bool,
+ id : () -> string,
+ selected : (() -> source(audio=?D, video=?E, midi=?F)?)
+ }
 but it should be a subtype of the type of the value at radio.liq, line 122, char 2-21
-  _ * _.{reload : _}
+ _ * _.{reload : _}
 ```
 
 In such cases, we recommend to give a little nudge to the typechecker by using the `(s:source)` type annotation where a list of source is causing the issue. For instance:
 
 ```liquidsoap
 s = fallback([
-  (s1:source),
-  (s2:source),
-  (s3:source)
+ (s1:source),
+ (s2:source),
+ (s3:source)
 ])
 ```
 
-This tells the type checker not to worry about the source methods and just focus on what matters, that they are actually sources.. 🙂
+This tells the type checker not to worry about the source methods and just focus on what matters, that they are actually sources..
 
 ### Http input and operators {#http-input-and-operators}
 
@@ -316,9 +316,9 @@ related to the ending and starting track, those are regrouped into a single reco
 
 ```liquidsoap
 def transition(
-  ending_dB_level, starting_dB_level,
-  ending_metadata, starting_metadata,
-  ending_source,   starting_source) =
+ ending_dB_level, starting_dB_level,
+ ending_metadata, starting_metadata,
+ ending_source, starting_source) =
 ...
 end
 ```
@@ -327,9 +327,9 @@ You would now do:
 
 ```liquidsoap
 def transition(ending, starting) =
-  # Now you can use:
-  #  - ending.db_level, ending.metadata, ending.source
-  #  - starting.db_level, starting.metadata, starting.source
+ # Now you can use:
+ # - ending.db_level, ending.metadata, ending.source
+ # - starting.db_level, starting.metadata, starting.source
 ...
 end
 ```
@@ -417,7 +417,7 @@ and set their own queue of requests.
 `json_of` has been renamed `json.stringify` and `of_json` has been renamed `json.parse`.
 
 JSON export has been enhanced with a new generic json object export. Associative lists of type `(string, 'a)` are now
-exported as lists. See our [JSON documentation page](json.html) for more details.
+exported as lists. See our [JSON documentation page](./json.md) for more details.
 
 Convenience functions have been added to convert metadata to and from JSON object format: `metadata.json.stringify` and
 `metadata.json.parse`.

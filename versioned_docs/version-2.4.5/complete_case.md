@@ -16,7 +16,7 @@ Once you can describe what you want in such a modular way, you're halfway there.
 
 ![Graph for 'radio.liq'](/assets/img/liqgraph.png)
 
-Now here is how to write that in [Liquidsoap](index.html).
+Now here is how to write that in [Liquidsoap](./index.md).
 
 ```liquidsoap title="complete-case.liq"
 #!/usr/bin/liquidsoap
@@ -44,13 +44,13 @@ clock = single("~/radio/clock.ogg")
 # Play user requests if there are any, otherwise one of our playlists, and the
 # default file if anything goes wrong.
 radio =
-  fallback(
-    [
-      request.queue(id="request"),
-      switch([({6h-22h}, day), ({22h-6h}, night)]),
-      default
-    ]
-  )
+ fallback(
+ [
+ request.queue(id="request"),
+ switch([({6h-22h}, day), ({22h-6h}, night)]),
+ default
+ ]
+ )
 
 # Add the normal jingles
 radio = random(weights=[1, 5], [jingles, radio])
@@ -62,45 +62,45 @@ radio = mksafe(radio)
 
 # Add the ability to relay live shows
 full =
-  fallback(
-    track_sensitive=false,
-    [input.http("http://localhost:8000/live.ogg"), radio]
-  )
+ fallback(
+ track_sensitive=false,
+ [input.http("http://localhost:8000/live.ogg"), radio]
+ )
 
 # Output the full stream in OGG and MP3
 output.icecast(
-  %mp3,
-  host="localhost",
-  port=8000,
-  password="hackme",
-  mount="radio",
-  full
+ %mp3,
+ host="localhost",
+ port=8000,
+ password="hackme",
+ mount="radio",
+ full
 )
 output.icecast(
-  %vorbis,
-  host="localhost",
-  port=8000,
-  password="hackme",
-  mount="radio.ogg",
-  full
+ %vorbis,
+ host="localhost",
+ port=8000,
+ password="hackme",
+ mount="radio.ogg",
+ full
 )
 
 # Output the stream without live in OGG
 output.icecast(
-  %vorbis,
-  host="localhost",
-  port=8000,
-  password="hackme",
-  mount="radio_nolive.ogg",
-  radio
+ %vorbis,
+ host="localhost",
+ port=8000,
+ password="hackme",
+ mount="radio_nolive.ogg",
+ radio
 )
 ```
 
 To try this example, you'll need to edit the file names. To see the playlist switch in action, adjust the time intervals — if it's currently 16:42, try `0h-16h45` and `16h45-24h` instead of `6h-22h` and `22h-6h`. To test the hourly jingle, you can trigger it every minute by using the `0s` interval instead of `0m0s`.
 
-To test the transition to a live show, start a new stream on the `live.ogg` mount of your server. You can use the examples from the [quickstart](quick_start.html) to stream a playlist to it. To start a real live show from soundcard input, use `darkice`, or simply liquidsoap if you have a working ALSA input:
+To test the transition to a live show, start a new stream on the `live.ogg` mount of your server. You can use the examples from the [quickstart](./quick_start.md) to stream a playlist to it. To start a real live show from soundcard input, use `darkice`, or simply liquidsoap if you have a working ALSA input:
 
 ```liquidsoap
 liquidsoap 'output.icecast(%vorbis, \
-  mount="live.ogg",host="...",password="...",input.alsa())'
+ mount="live.ogg",host="...",password="...",input.alsa())'
 ```

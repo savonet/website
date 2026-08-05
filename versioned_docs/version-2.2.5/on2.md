@@ -16,15 +16,15 @@ guiding you through solving them and discussing various solutions.
 Get to know liquidsoap, playing with audio streams to get used
 to the main concepts in liquidsoap.
 Learn to run liquidsoap is various modes, from one-liners to daemon.
-[More...](on2_part1.html)
+[More...](./on2_part1.md)
 
 **2. Typical netradio examples**:
 We will go through typical needs for netradios, covering transitions,
 complex playlists, live show handling, blank detection, metadata handling,
 etc.
-[More...](on2_part2.html)
+[More...](./on2_part2.md)
 
 **3. Beyond audio**:
 For those who are interested, we can go through more advanced examples
 exploring the possibilities of video and midi support in liquidsoap.
-[More...](on2_part3.html)
+[More...](./on2_part3.md)

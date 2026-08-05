@@ -25,7 +25,7 @@ _i.e._, there should be a valid decoder for it.
 Each request gets assigned a request identifier (RID) which is used by
 various sources to identify which request(s) they are using. Knowing
 this number, you can monitor a request, even after it's been destroyed
-(see setting `request.grace_time`). Two [server](server.html)
+(see setting `request.grace_time`). Two [server](./server.md)
 commands are available: `request.trace` shows a log of
 the resolution process and `request.metadata` shows the
 current request metadata. In addition, server commands are available
@@ -45,7 +45,7 @@ requests and currently playing requests (respectively
 - ANNOTATE for manually setting metadata, typically used in ` annotate:nick="alice",message="for bob":/some/track/uri`
 
 The extra metadata can then be synthesized in the audio stream, or merged into the standard metadata fields, or used on a rich web interface...
-It is also possible to add a new protocol from the script, as it is done with [Beets](beets.html) for getting songs from a database query.
+It is also possible to add a new protocol from the script, as it is done with [Beets](./beets.md) for getting songs from a database query.
 
 ## Currently supported formats {#currently-supported-formats}
 

@@ -5,18 +5,18 @@ description: "Liquidsoap may reject a script with a series of errors of the form
 ## Contents {#contents}
 
 - [Error messages](#error-messages)
-  - [Type error](#type-error)
-  - [That source is fallible!](#that-source-is-fallible)
-  - [Clock error](#clock-error)
-  - [We must catchup x.xx!](#we-must-catchup-xxx)
-  - [Unable to decode a file](#unable-to-decode-a-file)
-  - [Runtime exceptions](#runtime-exceptions)
-  - [Crashes](#crashes)
+ - [Type error](#type-error)
+ - [That source is fallible!](#that-source-is-fallible)
+ - [Clock error](#clock-error)
+ - [We must catchup x.xx!](#we-must-catchup-xxx)
+ - [Unable to decode a file](#unable-to-decode-a-file)
+ - [Runtime exceptions](#runtime-exceptions)
+ - [Crashes](#crashes)
 - [Troubleshooting](#troubleshooting)
-  - [PulseAudio](#pulseaudio)
-  - [Listeners are disconnected at the end of every track](#listeners-are-disconnected-at-the-end-of-every-track)
-  - [Encoding blank](#encoding-blank)
-  - [Temporary files](#temporary-files)
+ - [PulseAudio](#pulseaudio)
+ - [Listeners are disconnected at the end of every track](#listeners-are-disconnected-at-the-end-of-every-track)
+ - [Encoding blank](#encoding-blank)
+ - [Temporary files](#temporary-files)
 
 ## Error messages {#error-messages}
 
@@ -31,9 +31,9 @@ A type error can also indicate that you're trying to use a source of a certain c
 ```
 At ...:
 Error 5: this value has type
-  source(video=canvas(_),...)
+ source(video=canvas(_),...)
 but it should be a subtype of
-  source(audio=pcm(_),...)
+ source(audio=pcm(_),...)
 ```
 
 Sometimes, a type error indicates a mistake in the order or labels of arguments. For example, given `output.icecast(mount="foo.ogg",source)` liquidsoap will complain that the second argument is a source (`source(?A)`) but should be a format (`format(?A)`): indeed, the first unlabelled argument is expected to be the encoding format, e.g., `%vorbis`, and the source comes second.
@@ -43,20 +43,20 @@ Finally, a type error can indicate that you have forgotten to pass a mandatory p
 ```
 At line ...:
 Error 5: this value has type
-  [(?id : _, audio : _) -> _]
+ [(?id : _, audio : _) -> _]
 but it should be a subtype of the type of the value at ../libs/switches.liq, line 11, char 11-18
-  [source(_)] (inferred at ../libs/list.liq, line 102, char 29)
+ [source(_)] (inferred at ../libs/list.liq, line 102, char 29)
 ```
 
 Indeed, `fallback` expects a source, but `source.mux.audio(x)` is still a function expecting the `audio` parameter.
 
 ### That source is fallible! {#that-source-is-fallible}
 
-See the [quickstart](quick_start.html), or read more about [sources](sources.html).
+See the [quickstart](./quick_start.md), or read more about [sources](./sources.md).
 
 ### Clock error {#clock-error}
 
-Read about [clocks](clocks.html) for the errors
+Read about [clocks](./clocks.md) for the errors
 `a source cannot belong to two clocks`
 and
 `cannot unify two nested clocks`.
@@ -86,7 +86,7 @@ lags will result in glitches.
 In some situations, it is possible to isolate parts of a script from the
 latency caused by other parts. For example, you can produce a clean stream
 and back it up to a file, independently of the output to Icecast (which is
-sensitive to network lag). For more details, read about [clocks](clocks.html).
+sensitive to network lag). For more details, read about [clocks](./clocks.md).
 
 ### Unable to decode a file {#unable-to-decode-a-file}
 
@@ -111,7 +111,7 @@ type: not_found, message: "File not found!"
 ```
 
 These are errors that a script can catch and handle — they typically occur
-when trying to read a file that does not exist. The [language page](language.html)
+when trying to read a file that does not exist. The [language page](./language.md)
 has more details about errors, how to raise them, and how to catch them.
 
 ### Crashes {#crashes}
@@ -156,8 +156,8 @@ There are two ways to address this:
 ```
 **** List of PLAYBACK Hardware Devices ****
 card 0: Intel [HDA Intel], device 0: STAC92xx Analog [STAC92xx Analog]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
+ Subdevices: 1/1
+ Subdevice #0: subdevice #0
 ```
 
 In this case the card is device `0`, subdevice `0`, i.e. `hw:0,0`. Create a file
@@ -165,8 +165,8 @@ In this case the card is device `0`, subdevice `0`, i.e. `hw:0,0`. Create a file
 
 ```liquidsoap
 pcm.liquidsoap {
-        type plug
-        slave { pcm "hw:0,0" }
+ type plug
+ slave { pcm "hw:0,0" }
 }
 ```
 

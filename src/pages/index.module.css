@@ -1,0 +1,159 @@
+.hero {
+  padding: 4rem 0 3.5rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  background: linear-gradient(160deg, var(--ifm-color-primary-lightest) 0%, transparent 60%);
+}
+
+[data-theme='dark'] .hero {
+  background: linear-gradient(160deg, var(--ifm-color-primary-darkest) 0%, transparent 60%);
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 3rem;
+  align-items: center;
+  max-width: var(--ifm-container-width-xl);
+  margin: 0 auto;
+  padding: 0 var(--ifm-spacing-horizontal);
+}
+
+.title {
+  margin: 0.75rem 0 0;
+  font-size: 3.25rem;
+  line-height: 1.1;
+}
+
+.tagline {
+  margin: 1rem 0 2rem;
+  font-size: 1.25rem;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* The sample is the point of the hero, so let it keep its own scroll rather than
+   squeezing the code or pushing the page sideways. */
+.sample > div {
+  margin-bottom: 0;
+}
+
+.section {
+  padding: 3.5rem var(--ifm-spacing-horizontal);
+}
+
+.section > * {
+  max-width: var(--ifm-container-width-xl);
+  margin-inline: auto;
+}
+
+.tinted {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.sectionTitle {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.lead {
+  margin-bottom: 2rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.sectionTitle + .grid2,
+.sectionTitle + .grid3 {
+  margin-top: 2rem;
+}
+
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid2 {
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+
+.grid3 {
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.pillarTitle {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: var(--ifm-color-primary);
+}
+
+.card {
+  padding: 1.5rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+}
+
+.cardTitle {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.users {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem 3rem;
+  align-items: center;
+  padding: 0;
+  /* `.section > *` centres its children; a bare `margin: 0` here left the logo row
+     misaligned with the heading above it. */
+  margin: 0 auto;
+  list-style: none;
+}
+
+/* The marks range from wordmarks to icons, so a fixed height is what makes the row read
+   as one line rather than uniform width. They keep their colours: several are mostly
+   colour, and greyscale turns them to mud.
+   The height must be definite rather than a max: LibreTime's SVG carries a viewBox but no
+   intrinsic width or height, and collapses to nothing against `max-height` alone. */
+.users img {
+  height: 3.5rem;
+  width: auto;
+  max-width: 11rem;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: opacity var(--ifm-transition-fast), transform var(--ifm-transition-fast);
+}
+
+.users a:hover img {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Logos in dark mode: most of these are dark-on-transparent. */
+[data-theme='dark'] .users img {
+  background: #fff;
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+}
+
+.also {
+  max-width: var(--ifm-container-width-xl);
+  margin: 2rem auto 0;
+  font-size: 0.9375rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+@media (max-width: 996px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+}

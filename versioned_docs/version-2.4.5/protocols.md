@@ -39,7 +39,7 @@ The syntax is `file:///path/to/file`.
 
 ### gtts {#gtts}
 
-Generate speech synthesis using Google translate's text-to-speech API. This requires the `gtts-cli` binary.  Result may be mono.
+Generate speech synthesis using Google translate's text-to-speech API. This requires the `gtts-cli` binary. Result may be mono.
 
 The syntax is `gtts:Text to read`.
 

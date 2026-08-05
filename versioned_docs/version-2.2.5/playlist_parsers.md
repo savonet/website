@@ -15,15 +15,15 @@ All formats are identified by their _mime-type_ or _content-type_. Supported for
 
 - Text formats:
 
-  - `audio/x-scpls`: [PLS format](http://en.wikipedia.org/wiki/PLS_%28file_format%29), **strict**
-  - `application/x-cue`: [CUE format](http://en.wikipedia.org/wiki/.cue), **strict**. This format's usage is described below.
-  - `audio/x-mpegurl`, `audio/mpegurl`: [M3U](http://en.wikipedia.org/wiki/M3u), **non strict**
+ - `audio/x-scpls`: [PLS format](http://en.wikipedia.org/wiki/PLS_%28file_format%29), **strict**
+ - `application/x-cue`: [CUE format](http://en.wikipedia.org/wiki/.cue), **strict**. This format's usage is described below.
+ - `audio/x-mpegurl`, `audio/mpegurl`: [M3U](http://en.wikipedia.org/wiki/M3u), **non strict**
 
 - Xml formats:
-  - `video/x-ms-asf`, `audio/x-ms-asx`: [ASX](http://en.wikipedia.org/wiki/Advanced_Stream_Redirector), **strict**
-  - `application/smil`, `application/smil+xml`, [SMIL](http://en.wikipedia.org/wiki/Synchronized_Multimedia_Integration_Language), **strict**
-  - `application/xspf+xml`, [XSPF](http://en.wikipedia.org/wiki/Xspf), **strict**
-  - `application/rss+xml`, [Podcast](http://en.wikipedia.org/wiki/Podcast), **strict**
+ - `video/x-ms-asf`, `audio/x-ms-asx`: [ASX](http://en.wikipedia.org/wiki/Advanced_Stream_Redirector), **strict**
+ - `application/smil`, `application/smil+xml`, [SMIL](http://en.wikipedia.org/wiki/Synchronized_Multimedia_Integration_Language), **strict**
+ - `application/xspf+xml`, [XSPF](http://en.wikipedia.org/wiki/Xspf), **strict**
+ - `application/rss+xml`, [Podcast](http://en.wikipedia.org/wiki/Podcast), **strict**
 
 ## Usage {#usage}
 

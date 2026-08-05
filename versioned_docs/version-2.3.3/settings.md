@@ -1080,7 +1080,7 @@ settings.fade.out.type := "lin"
 settings.fade.out.curve := 10.0
 ```
 
-##  {#section}
+## {#section}
 
 ### All available autocue implementations {#all-available-autocue-implementations}
 
@@ -1088,7 +1088,7 @@ settings.fade.out.curve := 10.0
 settings.autocue.implementations := [("internal", <fun>)]
 ```
 
-###  {#section-1}
+### {#section-1}
 
 #### Priority for the autocue metadata resolver. Default value allows it to override both file and request metadata. {#priority-for-the-autocue-metadata-resolver.-default-value-allows-it-to-override-both-file-and-request-metadata.}
 
@@ -1103,10 +1103,10 @@ settings.autocue.preferred := "internal"
 ```
 
 ### How to proceed with loudness adjustment. Set to `"override"` to always prefer {#how-to-proceed-with-loudness-adjustment.-set-to-override-to-always-prefer}
-      the value provided by the `autocue` provider. Set to `"ignore"` to ignore all
-      loudness correction provided via the `autocue` provider. Set to
-      `"keep"` to always prefer user-provided values (via request annotation or file tags)
-      over values provided by the `autocue` provider.
+ the value provided by the `autocue` provider. Set to `"ignore"` to ignore all
+ loudness correction provided via the `autocue` provider. Set to
+ `"keep"` to always prefer user-provided values (via request annotation or file tags)
+ over values provided by the `autocue` provider.
 
 ```liquidsoap
 settings.autocue.amplify_behavior := "override"
@@ -1118,7 +1118,7 @@ settings.autocue.amplify_behavior := "override"
 settings.autocue.amplify_aliases := ["replaygain_track_gain"]
 ```
 
-###  {#section-2}
+### {#section-2}
 
 #### Disable processing when one of these metadata is found {#disable-processing-when-one-of-these-metadata-is-found}
 
@@ -1402,25 +1402,25 @@ settings.video.converter.preferred := "ffmpeg"
 settings.video.text := "sdl"
 ```
 
-##  {#section-3}
+## {#section-3}
 
 ```liquidsoap
 settings.make := <fun>.{external=<fun>, protocol=<fun>, void=fun (~comments="",_) -> {comments=comments, description=description}}
 ```
 
-###  {#section-4}
+### {#section-4}
 
 ```liquidsoap
 settings.make.void := fun (~comments="",_) -> {comments=comments, description=description}
 ```
 
-###  {#section-5}
+### {#section-5}
 
 ```liquidsoap
 settings.make.protocol := <fun>
 ```
 
-###  {#section-6}
+### {#section-6}
 
 ```liquidsoap
 settings.make.external := <fun>

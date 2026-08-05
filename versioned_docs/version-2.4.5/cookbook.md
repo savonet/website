@@ -17,34 +17,34 @@ recipe = # <fill this>
 output(recipe)
 ```
 
-See the [quickstart guide](quick_start.html) for more information on how to run [Liquidsoap](index.html), on what is this `output(..)` operator, etc.
+See the [quickstart guide](./quick_start.md) for more information on how to run [Liquidsoap](./index.md), on what is this `output(..)` operator, etc.
 
-See also the [ffmpeg cookbook](ffmpeg_cookbook.html) for examples specific to the ffmpeg support.
+See also the [ffmpeg cookbook](./ffmpeg_cookbook.md) for examples specific to the ffmpeg support.
 
 ## Contents {#contents}
 
 - [Sources](#sources)
-  - [Single file](#single-file)
-  - [Playlists](#playlists)
-  - [Generating playlists from a media library](#generating-playlists-from-a-media-library)
-  - [Dynamic requests](#dynamic-requests)
-  - [Dynamic input with harbor](#dynamic-input-with-harbor)
+ - [Single file](#single-file)
+ - [Playlists](#playlists)
+ - [Generating playlists from a media library](#generating-playlists-from-a-media-library)
+ - [Dynamic requests](#dynamic-requests)
+ - [Dynamic input with harbor](#dynamic-input-with-harbor)
 - [Scheduling](#scheduling)
-  - [Fallback and scheduling](#fallback-and-scheduling)
-  - [Periodic playlists](#periodic-playlists)
-  - [Play a jingle at a fixed time](#play-a-jingle-at-a-fixed-time)
-  - [Mixing and switching](#mixing-and-switching)
+ - [Fallback and scheduling](#fallback-and-scheduling)
+ - [Periodic playlists](#periodic-playlists)
+ - [Play a jingle at a fixed time](#play-a-jingle-at-a-fixed-time)
+ - [Mixing and switching](#mixing-and-switching)
 - [Transitions](#transitions)
 - [Encoding and streaming](#encoding-and-streaming)
-  - [Transcoding](#transcoding)
-  - [Re-encoding a file](#re-encoding-a-file)
-  - [RTMP server](#rtmp-server)
-  - [Transmitting signal](#transmitting-signal)
+ - [Transcoding](#transcoding)
+ - [Re-encoding a file](#re-encoding-a-file)
+ - [RTMP server](#rtmp-server)
+ - [Transmitting signal](#transmitting-signal)
 - [Recording](#recording)
-  - [Generating CUE files](#generating-cue-files)
-  - [Dumping a stream into segmented files](#dumping-a-stream-into-segmented-files)
+ - [Generating CUE files](#generating-cue-files)
+ - [Dumping a stream into segmented files](#dumping-a-stream-into-segmented-files)
 - [Hardware](#hardware)
-  - [ALSA output delay](#alsa-output-delay)
+ - [ALSA output delay](#alsa-output-delay)
 
 ## Sources {#sources}
 
@@ -96,10 +96,10 @@ The parameters of the `find` method follow this convention:
 
 - `artist="XXX"` looks for files where the artist tag is exactly the given one
 - `artist_contains="XXX"` looks for files where the artist tag contains the
-  given string as substring
+ given string as substring
 - `artist_matches="XXX"` looks for files where the artist tag matches the given
-  regular expression (for instance `artist_matches="(a)+.*(b)+"` looks for files
-  where the artist contains an `a` followed by a `b`).
+ regular expression (for instance `artist_matches="(a)+.*(b)+"` looks for files
+ where the artist contains an `a` followed by a `b`).
 
 The tags for which such parameters are provided are: `artist`, `title`, `album`
 and `filename`.
@@ -123,7 +123,7 @@ length 5:
 
 ```liquidsoap title="medialib-predicate.liq"
 def p(m) =
-  string.length(m["artist"]) == 5
+ string.length(m["artist"]) == 5
 end
 l = m.find(predicate=p)
 
@@ -141,33 +141,33 @@ l = list.shuffle(l)
 output(playlist.list(l))
 ```
 
-(we also support more advanced uses of [databases](database.html)).
+(we also support more advanced uses of [databases](./database.md)).
 
 ### Dynamic requests {#dynamic-requests}
 
 Liquidsoap can create a source that uses files provided by the result of the execution of any arbitrary function of your own.
-This is explained in the documentation for [request-based sources](request_sources.html).
+This is explained in the documentation for [request-based sources](./request_sources.md).
 
 For instance, the following snippet defines a source which repeatedly plays the first valid URI in the playlist:
 
 ```liquidsoap title="request.dynamic.liq"
 files =
-  process.read.lines(
-    "cat " ^
-      process.quote("playlist.pls")
-  )
+ process.read.lines(
+ "cat " ^
+ process.quote("playlist.pls")
+ )
 pos = ref(0)
 
 def get_next() =
-  if
-    files == []
-  then
-    null
-  else
-    file = list.nth(files, pos())
-    pos := pos() + 1 mod list.length(files)
-    request.create(file)
-  end
+ if
+ files == []
+ then
+ null
+ else
+ file = list.nth(files, pos())
+ pos := pos() + 1 mod list.length(files)
+ request.create(file)
+ end
 end
 
 s = request.dynamic(get_next)
@@ -180,13 +180,13 @@ Another way of using an external program is to define a new protocol which uses 
 
 ```liquidsoap title="beets-protocol-short.liq"
 protocol.add(
-  "beets",
-  fun (~rlog:_, ~maxtime:_, arg) ->
-    list.hd(
-      process.read.lines(
-        "/home/me/path/to/beet random -f '$path' #{arg}"
-      )
-    )
+ "beets",
+ fun (~rlog:_, ~maxtime:_, arg) ->
+ list.hd(
+ process.read.lines(
+ "/home/me/path/to/beet random -f '$path' #{arg}"
+ )
+ )
 )
 ```
 
@@ -237,43 +237,43 @@ should_append = ref(false)
 
 # Append 5. of silence when needed.
 fallback_source =
-  append(
-    playlist_source,
-    fun (_) ->
-      if
-        should_append()
-      then
-        should_append := false
-        blank(duration=5.)
-      else
-        source.fail()
-      end
-  )
+ append(
+ playlist_source,
+ fun (_) ->
+ if
+ should_append()
+ then
+ should_append := false
+ blank(duration=5.)
+ else
+ source.fail()
+ end
+ )
 
 # Transition to live
 def to_live(playlist, live) =
-  sequence([playlist, live])
+ sequence([playlist, live])
 end
 
 # Transition back to playlist
 def to_playlist(live, playlist) =
-  # Ask to insert a silent track.
-  should_append := true
+ # Ask to insert a silent track.
+ should_append := true
 
-  # Cancel current track. This will also set the playlist to play a new
-  # track. If needed, `cancel_pending` can be used to for a new silent track
-  # without skipping the playlist current track.
-  fallback_source.skip()
+ # Cancel current track. This will also set the playlist to play a new
+ # track. If needed, `cancel_pending` can be used to for a new silent track
+ # without skipping the playlist current track.
+ fallback_source.skip()
 
-  sequence([live, playlist])
+ sequence([live, playlist])
 end
 
 radio =
-  fallback(
-    track_sensitive=false,
-    transitions=[to_live, to_playlist],
-    [live_source, fallback_source]
-  )
+ fallback(
+ track_sensitive=false,
+ transitions=[to_live, to_playlist],
+ [live_source, fallback_source]
+ )
 
 ```
 
@@ -353,10 +353,10 @@ The `cross.simple` operator provides a ready-to-use crossfade transition suitabl
 ```liquidsoap title="cross.custom.liq"
 # A function to add a source_tag metadata to a source:
 def source_tag(s, tag) =
-  def f(_) =
-    [("source_tag", (tag : string))]
-  end
-  metadata.map(id=tag, insert_missing=true, f, s)
+ def f(_) =
+ [("source_tag", (tag : string))]
+ end
+ metadata.map(id=tag, insert_missing=true, f, s)
 end
 
 # Tag our sources
@@ -368,15 +368,15 @@ radio = rotate(weights=[1, 3], [jingles, music])
 
 # Now a custom crossfade transition:
 def transition(a, b) =
-  # If old or new source is not music, no fade
-  if
-    a.metadata["source_tag"] != "music" or a.metadata["source_tag"] != "music"
-  then
-    sequence([a.source, b.source])
-  else
-    # Else, apply the standard transition
-    cross.simple(a.source, b.source)
-  end
+ # If old or new source is not music, no fade
+ if
+ a.metadata["source_tag"] != "music" or a.metadata["source_tag"] != "music"
+ then
+ sequence([a.source, b.source])
+ else
+ # Else, apply the standard transition
+ cross.simple(a.source, b.source)
+ end
 end
 
 # Apply it!
@@ -388,7 +388,7 @@ radio = cross(duration=5., transition, radio)
 
 ### Transcoding {#transcoding}
 
-[Liquidsoap](index.html) can achieve basic streaming tasks like transcoding with ease. You input any number of "source" streams using `input.http`, and then transcode them to any number of formats / bitrates / etc. The only limitation is your hardware: encoding and decoding are both heavy on CPU. If you want to get the best use of CPUs (multicore, memory footprint etc.) when encoding media with Liquidsoap, we recommend using the `%ffmpeg` encoders.
+[Liquidsoap](./index.md) can achieve basic streaming tasks like transcoding with ease. You input any number of "source" streams using `input.http`, and then transcode them to any number of formats / bitrates / etc. The only limitation is your hardware: encoding and decoding are both heavy on CPU. If you want to get the best use of CPUs (multicore, memory footprint etc.) when encoding media with Liquidsoap, we recommend using the `%ffmpeg` encoders.
 
 ```liquidsoap title="transcoding.liq"
 # Input the stream from an Icecast server or any other source
@@ -398,22 +398,22 @@ input = mksafe(input.http(url))
 # First transcoder: mp3 32 kbps. We also degrade the samplerate, and encode in
 # mono Accordingly, a mono conversion is performed on the input stream
 output.icecast(
-  %mp3(bitrate = 32, samplerate = 22050, stereo = false),
-  mount="/your-stream-32.mp3",
-  host="streaming.example.com",
-  port=8000,
-  password="xxx",
-  mean(input)
+ %mp3(bitrate = 32, samplerate = 22050, stereo = false),
+ mount="/your-stream-32.mp3",
+ host="streaming.example.com",
+ port=8000,
+ password="xxx",
+ mean(input)
 )
 
 # Second transcoder: mp3 128 kbps using %ffmpeg
 output.icecast(
-  %ffmpeg(format = "mp3", %audio(codec = "libmp3lame", b = "128k")),
-  mount="/your-stream-128.mp3",
-  host="streaming.example.com",
-  port=8000,
-  password="xxx",
-  input
+ %ffmpeg(format = "mp3", %audio(codec = "libmp3lame", b = "128k")),
+ mount="/your-stream-128.mp3",
+ host="streaming.example.com",
+ port=8000,
+ password="xxx",
+ input
 )
 ```
 
@@ -450,7 +450,7 @@ o.on_stop(synchronous=true, shutdown)
 
 ### RTMP server {#rtmp-server}
 
-With our [FFmpeg support](ffmpeg.html), it is possible to create a simple RTMP server with no re-encoding:
+With our [FFmpeg support](./ffmpeg.md), it is possible to create a simple RTMP server with no re-encoding:
 
 ```liquidsoap title="rtmp.liq"
 s = playlist("my_playlist")
@@ -462,7 +462,7 @@ output.url(url="rtmp://host/app/instance", enc, s)
 
 ### Transmitting signal {#transmitting-signal}
 
-It is possible to send raw PCM signals between two instances using the [FFmpeg encoder](ffmpeg.html). Here's an example using the SRT transport protocol:
+It is possible to send raw PCM signals between two instances using the [FFmpeg encoder](./ffmpeg.md). Here's an example using the SRT transport protocol:
 
 Sender:
 
@@ -475,9 +475,9 @@ Receiver:
 
 ```liquidsoap title="srt-receiver.liq"
 s =
-  input.srt(
-    content_type="application/ffmpeg;format=s16le,ch_layout=stereo,sample_rate=48000"
-  )
+ input.srt(
+ content_type="application/ffmpeg;format=s16le,ch_layout=stereo,sample_rate=48000"
+ )
 
 ```
 
@@ -492,12 +492,12 @@ instance). This can be achieved using the `source.cue` operator:
 
 ```liquidsoap title="source-cue.liq"
 radio =
-  source.cue(
-    title="My stream",
-    file="backup.mp3",
-    "/tmp/backup.cue",
-    radio
-  )
+ source.cue(
+ title="My stream",
+ file="backup.mp3",
+ "/tmp/backup.cue",
+ radio
+ )
 output.file(%mp3, "/tmp/backup.mp3", radio)
 
 ```
@@ -508,14 +508,14 @@ which will generate a CUE file of the following form
 TITLE "My stream"
 PERFORMER "The performer"
 FILE "backup.mp3" MP3
-  TRACK 01 AUDIO
-    TITLE "Title 1"
-    PERFORMER "Artist 1"
-    INDEX 01 00:00:00
-  TRACK 02 AUDIO
-    TITLE "Title 2"
-    PERFORMER "Artist 2"
-    INDEX 01 01:12:67
+ TRACK 01 AUDIO
+ TITLE "Title 1"
+ PERFORMER "Artist 1"
+ INDEX 01 00:00:00
+ TRACK 02 AUDIO
+ TITLE "Title 2"
+ PERFORMER "Artist 2"
+ INDEX 01 01:12:67
 ```
 
 ### Dumping a stream into segmented files {#dumping-a-stream-into-segmented-files}
@@ -530,10 +530,10 @@ save a file per hour in wav format, the following script can be used:
 
 # Dump the stream
 output.file(
-  %wav,
-  {time.string("/archive/%Y-%m-%d/%Y-%m-%d-%H_%M_%S.mp3")},
-  s,
-  reopen_when={0m}
+ %wav,
+ {time.string("/archive/%Y-%m-%d/%Y-%m-%d-%H_%M_%S.mp3")},
+ s,
+ reopen_when={0m}
 )
 ```
 
@@ -547,16 +547,16 @@ coming from `s`:
 
 ```liquidsoap title="dump-hourly2.liq"
 filename =
-  {
-    time.string(
-      '/archive/$(if $(title),"$(title)","Unknown \
-       archive")-%Y-%m-%d/%Y-%m-%d-%H_%M_%S.mp3'
-    )
-  }
+ {
+ time.string(
+ '/archive/$(if $(title),"$(title)","Unknown \
+ archive")-%Y-%m-%d/%Y-%m-%d-%H_%M_%S.mp3'
+ )
+ }
 output.file(%mp3, filename, s, reopen_on_metadata=fun (_) -> true)
 ```
 
-In the two examples we use [string interpolation](language.html) and time
+In the two examples we use [string interpolation](./language.md) and time
 literals to generate the output file name.
 
 In order to limit the disk space used by this archive, on unix systems we can
@@ -565,20 +565,20 @@ recordings:
 
 ```liquidsoap title="archive-cleaner.liq"
 thread.run(
-  every=3600.,
-  {
-    list.iter(
-      fun (msg) -> log(msg, label="archive_cleaner"),
-      list.append(
-        process.read.lines(
-          "find /archive/* -type f -mtime +31 -delete"
-        ),
-        process.read.lines(
-          "find /archive/* -type d -empty -delete"
-        )
-      )
-    )
-  }
+ every=3600.,
+ {
+ list.iter(
+ fun (msg) -> log(msg, label="archive_cleaner"),
+ list.append(
+ process.read.lines(
+ "find /archive/* -type f -mtime +31 -delete"
+ ),
+ process.read.lines(
+ "find /archive/* -type d -empty -delete"
+ )
+ )
+ )
+ }
 )
 ```
 
@@ -586,7 +586,7 @@ thread.run(
 
 ### ALSA output delay {#alsa-output-delay}
 
-You can use [Liquidsoap](index.html) to capture and play through ALSA with minimal delay. This is particularly useful when running a live show from your computer, allowing you to capture and play audio through external speakers without audible delay.
+You can use [Liquidsoap](./index.md) to capture and play through ALSA with minimal delay. This is particularly useful when running a live show from your computer, allowing you to capture and play audio through external speakers without audible delay.
 
 This configuration is not trivial since it depends on your hardware. Some hardware allows both recording and playing at the same time, some only one at once, and some none at all. These notes describe what works for us — your mileage may vary.
 

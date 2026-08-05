@@ -17,24 +17,24 @@ Here's an example:
 ```liquidsoap
 s =
 '<bla param="1" bla="true">
-  <foo opt="12.3">gni</foo>
-  <bar />
-  <bar>bla</bar>
-  <blo>1.23</blo>
-  <blu>false</blu>
-  <ble>123</ble>
+ <foo opt="12.3">gni</foo>
+ <bar />
+ <bar>bla</bar>
+ <blo>1.23</blo>
+ <blu>false</blu>
+ <ble>123</ble>
 </bla>'
 
 let xml.parse (x :
 {
-  bla: {
-    foo: string.{ xml_params: {opt: float} },
-    bar: (unit * string),
-    blo: float,
-    blu: bool,
-    ble: int,
-    xml_params: { bla: bool }
-  }
+ bla: {
+ foo: string.{ xml_params: {opt: float} },
+ bar: (unit * string),
+ blo: float,
+ blu: bool,
+ ble: int,
+ xml_params: { bla: bool }
+ }
 }
 ) = s
 
@@ -57,11 +57,11 @@ XML element names often contain characters like hyphens that aren't valid Liquid
 s = '<config><listen-socket><port>8000</port></listen-socket></config>'
 
 let xml.parse (config :
-  {
-    config: {
-      "listen-socket" as listen_socket: {port: int}
-    }
-  }
+ {
+ config: {
+ "listen-socket" as listen_socket: {port: int}
+ }
+ }
 ) = s
 
 print("Port is: #{config.config.listen_socket.port}")
@@ -94,70 +94,70 @@ Here's an example:
 ```liquidsoap
 s =
 '<bla param="1" bla="true">
-  <foo opt="12.3">gni</foo>
-  <bar />
-  <bar>bla</bar>
-  <blo>1.23</blo>
-  <blu>false</blu>
-  <ble>123</ble>
+ <foo opt="12.3">gni</foo>
+ <bar />
+ <bar>bla</bar>
+ <blo>1.23</blo>
+ <blu>false</blu>
+ <ble>123</ble>
 </bla>'
 
 let xml.parse (x :
-  (
-    string
-    *
-    {
-      xml_params: [(string * string)],
-      xml_children: [
-        (
-          string
-          *
-          {
-            xml_params: [(string * string)],
-            xml_children: [(string * {xml_text: string})]
-          }
-        )
-      ]
-    }
-  )
+ (
+ string
+ *
+ {
+ xml_params: [(string * string)],
+ xml_children: [
+ (
+ string
+ *
+ {
+ xml_params: [(string * string)],
+ xml_children: [(string * {xml_text: string})]
+ }
+ )
+ ]
+ }
+ )
 ) = s
 
 # x contains:
 (
-  "bla",
-  {
-    xml_children=
-      [
-        (
-          "foo",
-          {
-            xml_children=[("xml_text", {xml_text="gni"})],
-            xml_params=[("opt", "12.3")]
-          }
-        ),
-        ("bar", {xml_children=[], xml_params=[]}),
-        (
-          "bar",
-          {
-            xml_children=[("xml_text", {xml_text="bla"})],
-            xml_params=[("option", "aab")]
-          }
-        ),
-        (
-          "blo",
-          {xml_children=[("xml_text", {xml_text="1.23"})], xml_params=[]}
-        ),
-        (
-          "blu",
-          {xml_children=[("xml_text", {xml_text="false"})], xml_params=[]}
-        ),
-        (
-          "ble",
-          {xml_children=[("xml_text", {xml_text="123"})], xml_params=[]}
-        )
-      ],
-    xml_params=[("param", "1"), ("bla", "true")]
-  }
+ "bla",
+ {
+ xml_children=
+ [
+ (
+ "foo",
+ {
+ xml_children=[("xml_text", {xml_text="gni"})],
+ xml_params=[("opt", "12.3")]
+ }
+ ),
+ ("bar", {xml_children=[], xml_params=[]}),
+ (
+ "bar",
+ {
+ xml_children=[("xml_text", {xml_text="bla"})],
+ xml_params=[("option", "aab")]
+ }
+ ),
+ (
+ "blo",
+ {xml_children=[("xml_text", {xml_text="1.23"})], xml_params=[]}
+ ),
+ (
+ "blu",
+ {xml_children=[("xml_text", {xml_text="false"})], xml_params=[]}
+ ),
+ (
+ "ble",
+ {xml_children=[("xml_text", {xml_text="123"})], xml_params=[]}
+ )
+ ],
+ xml_params=[("param", "1"), ("bla", "true")]
+ }
 )
 ```
 
@@ -167,9 +167,9 @@ Things to note:
 
 - XML nodes are represented by a pair of the form: `(<tag name>, <tag properties>)`
 - `<tag properties>` is a record containing the following methods:
-  - `xml_params`, represented as a list of pairs `(string * string)`
-  - `xml_children`, containing a list of the XML node's children. Each entry in the list is a node in the formal XML representation.
-  - `xml_text`, present when the node is a text node. In this case, `xml_params` and `xm_children` are empty.
+ - `xml_params`, represented as a list of pairs `(string * string)`
+ - `xml_children`, containing a list of the XML node's children. Each entry in the list is a node in the formal XML representation.
+ - `xml_text`, present when the node is a text node. In this case, `xml_params` and `xm_children` are empty.
 - By convention, text nodes are labelled `xml_text` and are of the form: `{ xml_text: "node content" }`
 
 ### Rendering XML values {#rendering-xml-values}

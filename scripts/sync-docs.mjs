@@ -14,6 +14,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolveIncludes } from './lib/includes.mjs';
 import { addExplicitAnchors, slug } from './lib/anchors.mjs';
+import { stripEmoji } from './lib/emoji.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -359,6 +360,7 @@ for (const entry of fs.readdirSync(content, { withFileTypes: true })) {
 
   const id = entry.name.replace(/\.md$/, '');
   md = addExplicitAnchors(md).md;
+  md = stripEmoji(md);
   md = addFrontmatter(md, id, labels[id]);
   // Docusaurus would treat index.md as the version root and emit /doc-<v>.html. The
   // current site publishes /doc-<v>/index.html (and serves /doc-<v>/ from it), so the
@@ -369,6 +371,53 @@ for (const entry of fs.readdirSync(content, { withFileTypes: true })) {
 }
 
 fs.rmSync(root, { recursive: true, force: true });
+
+// --- cross-page links -----------------------------------------------------------------
+
+// Pages link to each other as `[quickstart](quick_start.html)`, which the pandoc build
+// resolved by filename. Those still land on a real file here, but Docusaurus resolves
+// links against routes, which are extensionless, so it cannot verify them -- 167 unusable
+// warnings per version, and real breakage hidden among them. Rewriting to `./page.md`
+// makes them first-class: checked at build time and routed client-side.
+{
+  let rewritten = 0;
+  // Docusaurus resolves a markdown link by the file it names, so the extension has to be
+  // the real one: reference indexes are .mdx (they host the search component).
+  const resolve = (id) => {
+    for (const ext of ['.md', '.mdx']) if (fs.existsSync(path.join(OUT, id + ext))) return id + ext;
+    return null;
+  };
+
+  for (const entry of fs.readdirSync(OUT, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith('.md')) continue;
+    const file = path.join(OUT, entry.name);
+    const before = fs.readFileSync(file, 'utf8');
+
+    const after = before.replace(/\]\(([\w.-]+)\.html(#[^)]*)?\)/g, (whole, target, hash = '') => {
+      // The reference pages were split, so a link into them has to name the category page
+      // that now owns the anchor.
+      if (anchorMaps[target]) {
+        const anchor = hash.slice(1);
+        const page = anchorMaps[target][anchor];
+        const file = page ? resolve(`${target}/${page}`) : resolve(`${target}/index`);
+        if (file) {
+          rewritten++;
+          return `](./${file}${page ? `#${anchor}` : ''})`;
+        }
+      }
+      const file = resolve(target);
+      if (file) {
+        rewritten++;
+        return `](./${file}${hash})`;
+      }
+      warn(`${entry.name}: link to "${target}.html", which has no page in ${VERSION}`);
+      return whole;
+    });
+
+    if (after !== before) fs.writeFileSync(file, after);
+  }
+  console.log(`  rewrote ${rewritten} cross-page links`);
+}
 
 // A pandoc-include directive that the fence regex fails to match produces no warning at
 // all -- it just silently survives into the output. Assert none did.
