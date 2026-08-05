@@ -131,6 +131,9 @@ const config: Config = {
       },
       items: [
         { type: 'docSidebar', sidebarId: 'docs', position: 'left', label: 'Documentation' },
+        // Searches the core and extra API of the version being read. Not a substitute
+        // for site-wide search; it only covers the function reference.
+        { type: 'custom-apiSearch', position: 'right' },
         { type: 'docsVersionDropdown', position: 'right' },
         { href: 'https://github.com/savonet/liquidsoap', label: 'GitHub', position: 'right' },
       ],
