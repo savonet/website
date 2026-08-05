@@ -1,0 +1,19 @@
+{
+  "name": "prism-liquidsoap",
+  "version": "0.1.0",
+  "description": "Prism syntax highlighting for the Liquidsoap scripting language",
+  "main": "liquidsoap.js",
+  "files": ["liquidsoap.js", "README.md"],
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": ["prism", "prismjs", "liquidsoap", "syntax", "highlighting", "streaming"],
+  "license": "GPL-2.0-or-later",
+  "peerDependencies": {
+    "prismjs": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/savonet/prism-liquidsoap.git"
+  }
+}
