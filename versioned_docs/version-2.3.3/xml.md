@@ -1,7 +1,7 @@
 ---
 title: "Importing/exporting XML values"
 description: "Support for XML parsing and rendering was first added in liquidsoap 2.3.1."
-sidebar_label: "XML import/export"
+sidebar_label: "XML"
 ---
 Support for XML parsing and rendering was first added in liquidsoap `2.3.1`.
 

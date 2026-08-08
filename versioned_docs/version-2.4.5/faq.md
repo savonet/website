@@ -1,6 +1,7 @@
 ---
 title: "Frequently Asked Questions"
 description: "Liquidsoap may reject a script with a series of errors of the form this value has type ... but it should be a subtype of .... Usually the last error…"
+sidebar_label: "FAQ"
 ---
 ## Contents {#contents}
 

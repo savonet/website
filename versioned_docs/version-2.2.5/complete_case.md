@@ -1,7 +1,7 @@
 ---
 title: "A complete case analysis"
 description: "We will develop here a more complex example, according to the following specifications:"
-sidebar_label: "Complete case analysis"
+sidebar_label: "A complete case"
 ---
 We will develop here a more complex example, according to the following specifications:
 

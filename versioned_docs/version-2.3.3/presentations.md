@@ -1,7 +1,7 @@
 ---
 title: "Presentations about Liquidsoap"
 description: "In January 2021, we organized the Liquidshop, a workshop around Liquidsoap, where you can find lots of presentations around Liquidsoap."
-sidebar_label: "Video Presentations"
+sidebar_label: "Presentations"
 ---
 ## Liquidshop {#liquidshop}
 

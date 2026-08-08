@@ -1,7 +1,7 @@
 ---
 title: "The theory behind Liquidsoap"
 description: "Many of the advanced features of the Liquidsoap language are described in Liquidsoap: a High-Level Programming Language for Multimedia Streaming. The…"
-sidebar_label: "Some presentations and publications"
+sidebar_label: "Publications"
 ---
 
 ## Publications {#publications}

@@ -1,5 +1,5 @@
 ---
-title: "Dynamic source creation"
+title: "Dynamic sources"
 description: "Liquidsoap supports dynamic creation and destruction of sources during the execution of a script. The following gives an example of this."
 ---
 Liquidsoap supports dynamic creation and destruction of sources

@@ -1,6 +1,7 @@
 ---
 title: "Protocols"
 description: "Protocols in liquidsoap are used to resolve requests URIs. The syntax is: protocol:arguments, for instance: http://www.example.com, say:Something to…"
+sidebar_label: "How protocols work"
 ---
 Protocols in liquidsoap are used to resolve requests URIs. The syntax is: `protocol:arguments`,
 for instance: `http://www.example.com`, `say:Something to say` etc.

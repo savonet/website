@@ -1,7 +1,7 @@
 ---
 title: "Working with JSON in Liquidsoap"
 description: "Liquidsoap makes it easy—and safe—to work with JSON data directly in your scripts. Whether you're loading configuration files, interfacing with APIs,…"
-sidebar_label: "JSON import/export"
+sidebar_label: "JSON"
 ---
 Liquidsoap makes it easy—and safe—to work with JSON data directly in your scripts. Whether you're loading configuration files, interfacing with APIs, or managing playlist metadata, JSON is a powerful format to master.
 

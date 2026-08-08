@@ -1,7 +1,7 @@
 ---
 title: "Setting up frame size and positions"
 description: "Basically streaming videos does not change anything compared to streaming audio: you just have to use video files instead of sound files! For instance,…"
-sidebar_label: "Videos streams"
+sidebar_label: "Video streams"
 ---
 
 Basically streaming videos does not change anything compared to streaming audio:
@@ -234,7 +234,7 @@ present on your system.
 
 There are many of effects that you can use to add some fun to your videos:
 `video.greyscale`, `video.sepia`, `video.lomo`, etc. [Read the
-documentation](./reference/index.mdx) to find out about them. If you have compiled
+documentation](reference.html) to find out about them. If you have compiled
 Liquidsoap with [frei0r](http://www.piksel.org/frei0r/) support, and have
 installed frei0r plugins, they will be named `video.frei0r.*`. You can have a
 list of those supported on your installation as usual, using `liquidsoap --list-plugins`.

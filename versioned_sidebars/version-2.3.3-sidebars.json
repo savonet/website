@@ -2,44 +2,18 @@
   "docs": [
     {
       "type": "category",
-      "label": "Install",
-      "collapsed": true,
+      "label": "Getting started",
+      "collapsed": false,
       "items": [
         {
           "type": "doc",
-          "id": "migrating",
-          "label": "Migrating from previous versions"
-        }
-      ],
-      "link": {
-        "type": "doc",
-        "id": "install"
-      }
-    },
-    {
-      "type": "category",
-      "label": "Starters",
-      "collapsed": true,
-      "items": [
-        {
-          "type": "doc",
-          "id": "book",
-          "label": "The book"
+          "id": "install",
+          "label": "Install"
         },
         {
           "type": "doc",
-          "id": "presentations",
-          "label": "Video Presentations"
-        },
-        {
-          "type": "doc",
-          "id": "help",
-          "label": "How to find help"
-        },
-        {
-          "type": "doc",
-          "id": "faq",
-          "label": "Frequently Asked Questions"
+          "id": "build",
+          "label": "Build from source"
         },
         {
           "type": "doc",
@@ -49,19 +23,38 @@
         {
           "type": "doc",
           "id": "complete_case",
-          "label": "Complete case analysis"
+          "label": "A complete case"
         },
         {
           "type": "doc",
-          "id": "cookbook",
-          "label": "Cookbook"
+          "id": "help",
+          "label": "Getting help"
+        },
+        {
+          "type": "doc",
+          "id": "faq",
+          "label": "FAQ"
+        },
+        {
+          "type": "doc",
+          "id": "book",
+          "label": "The Liquidsoap book"
+        },
+        {
+          "type": "doc",
+          "id": "presentations",
+          "label": "Presentations"
+        },
+        {
+          "type": "doc",
+          "id": "migrating",
+          "label": "Migrating versions"
         }
       ]
     },
     {
       "type": "category",
-      "label": "Core",
-      "collapsed": true,
+      "label": "Core concepts",
       "items": [
         {
           "type": "doc",
@@ -70,18 +63,13 @@
         },
         {
           "type": "doc",
-          "id": "clocks",
-          "label": "Clocks"
-        },
-        {
-          "type": "doc",
           "id": "requests",
           "label": "Requests"
         },
         {
           "type": "doc",
-          "id": "protocols-presentation",
-          "label": "Protocols"
+          "id": "clocks",
+          "label": "Clocks"
         },
         {
           "type": "doc",
@@ -90,13 +78,13 @@
         },
         {
           "type": "doc",
-          "id": "strings_encoding",
-          "label": "Strings encoding"
+          "id": "multitrack",
+          "label": "Multitrack"
         },
         {
           "type": "doc",
-          "id": "script_loading",
-          "label": "Script loading"
+          "id": "protocols-presentation",
+          "label": "How protocols work"
         },
         {
           "type": "doc",
@@ -107,135 +95,48 @@
     },
     {
       "type": "category",
-      "label": "Reference",
-      "collapsed": true,
+      "label": "The language",
       "items": [
         {
           "type": "doc",
           "id": "language",
-          "label": "Script language"
+          "label": "Scripting language"
         },
         {
           "type": "doc",
-          "id": "reference/index",
-          "label": "Core API"
+          "id": "script_loading",
+          "label": "Script loading"
         },
         {
           "type": "doc",
-          "id": "reference-extras/index",
-          "label": "Extra API"
-        },
-        {
-          "type": "doc",
-          "id": "reference-deprecated/index",
-          "label": "Deprecated API"
-        },
-        {
-          "type": "doc",
-          "id": "multitrack",
-          "label": "Multitrack"
-        },
-        {
-          "type": "doc",
-          "id": "protocols",
-          "label": "Protocols"
-        },
-        {
-          "type": "doc",
-          "id": "settings",
-          "label": "Settings"
-        },
-        {
-          "type": "doc",
-          "id": "ffmpeg",
-          "label": "FFmpeg support"
-        },
-        {
-          "type": "doc",
-          "id": "encoding_formats",
-          "label": "Encoding formats"
-        },
-        {
-          "type": "doc",
-          "id": "video",
-          "label": "Videos streams"
-        },
-        {
-          "type": "doc",
-          "id": "memory",
-          "label": "Memory management"
+          "id": "strings_encoding",
+          "label": "Strings encoding"
         },
         {
           "type": "doc",
           "id": "json",
-          "label": "JSON import/export"
+          "label": "JSON"
         },
         {
           "type": "doc",
           "id": "xml",
-          "label": "XML import/export"
+          "label": "XML"
         },
         {
           "type": "doc",
           "id": "yaml",
-          "label": "YAML import/export"
-        },
-        {
-          "type": "doc",
-          "id": "ladspa",
-          "label": "LADSPA plugins"
-        },
-        {
-          "type": "doc",
-          "id": "playlist_parsers",
-          "label": "Playlist parsers"
+          "label": "YAML"
         }
       ]
     },
     {
       "type": "category",
-      "label": "Specific tutorials",
-      "collapsed": true,
+      "label": "Input and output",
       "items": [
         {
           "type": "doc",
-          "id": "harbor_http",
-          "label": "Using the HTTP server"
-        },
-        {
-          "type": "doc",
-          "id": "blank",
-          "label": "Blank detection"
-        },
-        {
-          "type": "doc",
-          "id": "metadata",
-          "label": "Customize metadata"
-        },
-        {
-          "type": "doc",
-          "id": "seek",
-          "label": "Seek and cue support"
-        },
-        {
-          "type": "doc",
-          "id": "external_decoders",
-          "label": "External decoders"
-        },
-        {
-          "type": "doc",
-          "id": "external_streams",
-          "label": "External streams"
-        },
-        {
-          "type": "doc",
-          "id": "external_encoders",
-          "label": "External encoders"
-        },
-        {
-          "type": "doc",
-          "id": "hls_output",
-          "label": "HLS output"
+          "id": "harbor",
+          "label": "Harbor input"
         },
         {
           "type": "doc",
@@ -244,33 +145,28 @@
         },
         {
           "type": "doc",
-          "id": "harbor",
-          "label": "Harbor input"
-        },
-        {
-          "type": "doc",
-          "id": "stereotool",
-          "label": "Stereotool"
-        },
-        {
-          "type": "doc",
-          "id": "server",
-          "label": "Using the telnet server"
-        },
-        {
-          "type": "doc",
-          "id": "icy_metadata",
-          "label": "ICY metadata update"
-        },
-        {
-          "type": "doc",
-          "id": "replay_gain",
-          "label": "Normalization and replay gain"
+          "id": "external_streams",
+          "label": "External streams"
         },
         {
           "type": "doc",
           "id": "request_sources",
-          "label": "Requests-based sources"
+          "label": "Request-based sources"
+        },
+        {
+          "type": "doc",
+          "id": "dynamic_sources",
+          "label": "Dynamic sources"
+        },
+        {
+          "type": "doc",
+          "id": "playlist_parsers",
+          "label": "Playlist parsers"
+        },
+        {
+          "type": "doc",
+          "id": "hls_output",
+          "label": "HLS output"
         },
         {
           "type": "doc",
@@ -279,8 +175,29 @@
         },
         {
           "type": "doc",
-          "id": "dynamic_sources",
-          "label": "Dynamic source creation"
+          "id": "icy_metadata",
+          "label": "ICY metadata"
+        },
+        {
+          "type": "doc",
+          "id": "harbor_http",
+          "label": "Harbor as HTTP server"
+        },
+        {
+          "type": "doc",
+          "id": "server",
+          "label": "Telnet server"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Media processing",
+      "items": [
+        {
+          "type": "doc",
+          "id": "encoding_formats",
+          "label": "Encoding formats"
         },
         {
           "type": "doc",
@@ -289,15 +206,127 @@
         },
         {
           "type": "doc",
-          "id": "in_production",
-          "label": "Using in production"
+          "id": "blank",
+          "label": "Blank detection"
+        },
+        {
+          "type": "doc",
+          "id": "replay_gain",
+          "label": "Replay gain"
+        },
+        {
+          "type": "doc",
+          "id": "metadata",
+          "label": "Metadata"
+        },
+        {
+          "type": "doc",
+          "id": "seek",
+          "label": "Seek and cue"
+        },
+        {
+          "type": "doc",
+          "id": "video",
+          "label": "Video streams"
+        },
+        {
+          "type": "doc",
+          "id": "ladspa",
+          "label": "LADSPA plugins"
+        },
+        {
+          "type": "doc",
+          "id": "stereotool",
+          "label": "Stereotool"
+        },
+        {
+          "type": "doc",
+          "id": "external_decoders",
+          "label": "External decoders"
+        },
+        {
+          "type": "doc",
+          "id": "external_encoders",
+          "label": "External encoders"
         }
       ]
     },
     {
       "type": "category",
-      "label": "User scripts",
-      "collapsed": true,
+      "label": "FFmpeg",
+      "items": [
+        {
+          "type": "doc",
+          "id": "ffmpeg",
+          "label": "FFmpeg support"
+        },
+        {
+          "type": "doc",
+          "id": "ffmpeg_encoder",
+          "label": "FFmpeg encoder"
+        },
+        {
+          "type": "doc",
+          "id": "ffmpeg_filters",
+          "label": "FFmpeg filters"
+        },
+        {
+          "type": "doc",
+          "id": "ffmpeg_cookbook",
+          "label": "FFmpeg cookbook"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Scripting and automation",
+      "items": [
+        {
+          "type": "doc",
+          "id": "cookbook",
+          "label": "Cookbook"
+        },
+        {
+          "type": "doc",
+          "id": "database",
+          "label": "Databases"
+        },
+        {
+          "type": "doc",
+          "id": "custom-path",
+          "label": "Custom paths"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Running in production",
+      "items": [
+        {
+          "type": "doc",
+          "id": "in_production",
+          "label": "In production"
+        },
+        {
+          "type": "doc",
+          "id": "memory",
+          "label": "Memory management"
+        },
+        {
+          "type": "doc",
+          "id": "profiling",
+          "label": "Profiling"
+        },
+        {
+          "type": "doc",
+          "id": "prometheus",
+          "label": "Prometheus metrics"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Examples",
       "items": [
         {
           "type": "doc",
@@ -322,7 +351,7 @@
         {
           "type": "doc",
           "id": "video-static",
-          "label": "Video with a single static image"
+          "label": "Video with a static image"
         },
         {
           "type": "doc",
@@ -334,12 +363,11 @@
     {
       "type": "category",
       "label": "Behind the curtains",
-      "collapsed": true,
       "items": [
         {
           "type": "doc",
           "id": "publications",
-          "label": "Some presentations and publications"
+          "label": "Publications"
         }
       ]
     }

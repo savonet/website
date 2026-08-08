@@ -1,6 +1,7 @@
 ---
 title: "The Gstreamer encoder"
 description: "The %gstreamer encoder can be used to encode streams using the gstreamer multimedia framework. This encoder extends liquidsoap with all available…"
+sidebar_label: "GStreamer encoder"
 ---
 The `%gstreamer` encoder can be used to encode streams using the `gstreamer` multimedia framework.
 This encoder extends liquidsoap with all available GStreamer formats (provided they are

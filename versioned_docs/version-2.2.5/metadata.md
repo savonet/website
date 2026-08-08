@@ -1,11 +1,11 @@
 ---
 title: "Customize metadata using Liquidsoap"
 description: "Liquidsoap has several mechanism for manipulating the metadata attached to your stream. In this page we quickly detail and compare the different…"
-sidebar_label: "Customize metadata"
+sidebar_label: "Metadata"
 ---
 Liquidsoap has several mechanism for manipulating the metadata attached to your
 stream. In this page we quickly detail and compare the different operators, see
-the [language reference](./reference/index.mdx) for full details about them.
+the [language reference](reference.html) for full details about them.
 
 **Warning**. The protocol used by Shoutcast and Icecast before version 2 does
 not support many fields. It mainly support one: `song`. So, if you

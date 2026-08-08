@@ -1,6 +1,7 @@
 ---
 title: "Prometheus reporting"
 description: "When compiled with optional support for mirage/prometheus, liquidsoap can export prometheus metrics."
+sidebar_label: "Prometheus metrics"
 ---
 When compiled with optional support for [mirage/prometheus](https://github.com/mirage/prometheus),
 `liquidsoap` can export [prometheus](https://prometheus.io/) metrics.

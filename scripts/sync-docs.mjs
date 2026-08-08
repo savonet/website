@@ -34,9 +34,9 @@ const isDev = VERSION === 'dev';
 const OUT = isDev ? path.join(ROOT, 'docs') : path.join(ROOT, `versioned_docs/version-${VERSION}`);
 const STATIC_OUT = path.join(ROOT, 'static', `doc-${VERSION}`);
 
-// The old per-version templates carry curated nav labels; they are better page titles
-// than a generic leading heading, and they keep the nav wording stable.
-const sidebarFile = path.join(ROOT, `sidebars/version-${VERSION}.json`);
+// One curated navigation for every version, filtered below against the pages this version
+// actually has. Its labels double as page titles where a heading is too generic.
+const sidebarFile = path.join(ROOT, 'sidebars/base.json');
 const curatedSidebar = fs.existsSync(sidebarFile)
   ? JSON.parse(fs.readFileSync(sidebarFile, 'utf8'))
   : { docs: [] };

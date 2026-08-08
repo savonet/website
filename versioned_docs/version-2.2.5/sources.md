@@ -21,7 +21,7 @@ from output functions, because outputting a stream is the only reason why you
 want to compute it.
 
 All sources, operators and outputs are listed in the
-[scripting API reference](./reference/index.mdx).
+[scripting API reference](reference.html).
 
 ## How does it work? {#how-does-it-work}
 

@@ -1,7 +1,7 @@
 ---
 title: "Common parameters"
 description: "Playing files is the most common way to build an audio stream. In liquidsoap, files are accessed through requests, which combine the retrieval of a…"
-sidebar_label: "Requests-based sources"
+sidebar_label: "Request-based sources"
 ---
 Playing files is the most common way to build an audio stream.
 In liquidsoap, files are accessed through [requests](./requests.md),

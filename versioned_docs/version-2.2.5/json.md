@@ -1,7 +1,7 @@
 ---
 title: "Importing JSON values"
 description: "Note: If you are reading this page for the first time, you might want to skip directly to the explicit type annotation below as this is the recommended…"
-sidebar_label: "JSON import/export"
+sidebar_label: "JSON"
 ---
 _Note:_ If you are reading this page for the first time, you might want to skip directly to the
 explicit type annotation below as this is the recommended way of parsing JSON data. The content

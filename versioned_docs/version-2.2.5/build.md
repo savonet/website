@@ -1,6 +1,7 @@
 ---
 title: "Building Liquidsoap"
 description: "Installing liquidsoap can be a difficult task. The software relies on a up-to date OCaml compiler, as well as a bunch of OCaml modules and, for most of…"
+sidebar_label: "Build from source"
 ---
 ## Forewords {#forewords}
 

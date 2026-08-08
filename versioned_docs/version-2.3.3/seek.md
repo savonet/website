@@ -1,7 +1,7 @@
 ---
 title: "Seeking in liquidsoap"
 description: "Starting with Liquidsoap 1.0.0-beta2, it is now possible to seek within sources! Not all sources support seeking though: currently, they are mostly…"
-sidebar_label: "Seek and cue support"
+sidebar_label: "Seek and cue"
 ---
 Starting with Liquidsoap `1.0.0-beta2`, it is now possible to seek within sources!
 Not all sources support seeking though: currently, they are mostly file-based sources

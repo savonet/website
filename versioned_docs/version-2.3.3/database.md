@@ -1,6 +1,7 @@
 ---
 title: "Database support"
 description: "Liquidsoap supports SQL databases through the sqlite library. If you build Liquidsoap by yourself, you should install the SQLite3-OCaml library, e.g.…"
+sidebar_label: "Databases"
 ---
 Liquidsoap supports SQL databases through the sqlite library. If you build
 Liquidsoap by yourself, you should install the

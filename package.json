@@ -15,7 +15,6 @@
     "typecheck": "tsc",
     "sync": "node scripts/sync-docs.mjs",
     "sync:dev": "node scripts/sync-docs.mjs --version dev",
-    "sidebars": "node scripts/template-to-sidebar.mjs ../liquidsoap-full/website",
     "test:prism": "node vendor/prism-liquidsoap/test.js"
   },
   "dependencies": {

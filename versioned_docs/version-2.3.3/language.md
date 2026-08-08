@@ -1,7 +1,7 @@
 ---
 title: "Liquidsoap's scripting language"
 description: "The following is adapted from the Liquidsoap book. The reader is avised to check out the whole chapter in the book for more details about the…"
-sidebar_label: "Script language"
+sidebar_label: "Scripting language"
 ---
 _The following is adapted from the [Liquidsoap book](./book.md). The reader is avised to check out the whole
 chapter in the book for more details about the liquidsoap language_

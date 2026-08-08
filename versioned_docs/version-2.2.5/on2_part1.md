@@ -22,8 +22,8 @@ liquidsoap 'out(sine())'
 
 Did it work? If so, try to modify it:
 
-- Change the pitch. Hint: get the doc of `sine` using `liquidsoap -h sine` or [online](./reference/index.mdx).
-- Use a different wave shape, or perhaps some white noise. Hint: look-up the [API](./reference/index.mdx) in the `Source / Input` section.
+- Change the pitch. Hint: get the doc of `sine` using `liquidsoap -h sine` or [online](reference.html).
+- Use a different wave shape, or perhaps some white noise. Hint: look-up the [API](reference.html) in the `Source / Input` section.
 
 ## Play a remote stream, discover fallibility {#play-a-remote-stream-discover-fallibility}
 

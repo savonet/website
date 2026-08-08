@@ -6,7 +6,7 @@ description: "If you downloaded a source tarball of liquidsoap, you may first re
 learn [how to find help](./help.md). Then it's as you like: go for another
 [general tutorial](#general), or a [specific example](#specific), pick a [basic
 notion](#core), or some examples from the [cookbook](./cookbook.md). If you've
-understood all you need, just browse the [reference](./reference/index.mdx) and compose
+understood all you need, just browse the [reference](reference.html) and compose
 your dream stream.
 
 If you downloaded a source tarball of liquidsoap, you may first read the
@@ -28,10 +28,10 @@ If you are migrating from a previous version, you might want to checkout
 ## Reference {#reference}
 
 - [Script language](./language.md): A more detailed presentation.
-- [Core API](./reference/index.mdx): The core liquidsoap API
+- [Core API](reference.html): The core liquidsoap API
 - [Extra API](reference-extra.html): Extra functions and libraries.
-- [Protocols](./protocols.md): List of protocols supported by liquidsoap.
-- [Settings](./settings.md): The list of available settings for liquidsoap.
+- [Protocols](protocols.html): List of protocols supported by liquidsoap.
+- [Settings](settings.html): The list of available settings for liquidsoap.
 - [FFmpeg](./ffmpeg.md): FFmpeg support documentation.
 - [Encoding formats](./encoding_formats.md): The available formats for encoding outputs.
 - [Videos streams](./video.md): Use `liquidsoap` for video streams

@@ -1,5 +1,5 @@
 ---
-title: "Basics"
+title: "Custom paths"
 description: "Starting with version 1.0.1, it is possible to build a liquidsoap binary that can load all its dependencies from any arbitrary path. This is very…"
 ---
 Starting with version `1.0.1`, it is possible to build a liquidsoap binary that can load

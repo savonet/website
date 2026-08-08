@@ -1,6 +1,7 @@
 ---
 title: "Installing Liquidsoap"
 description: "You can install liquidsoap using binary builds, with OPAM or from source."
+sidebar_label: "Install"
 ---
 You can install liquidsoap using binary builds, with OPAM or from source.
 

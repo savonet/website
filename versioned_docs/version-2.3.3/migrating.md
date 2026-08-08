@@ -1,7 +1,7 @@
 ---
 title: "Migrating to a new Liquidsoap version"
 description: "In this page, we list the most common catches when migrating to a new version of Liquidsoap."
-sidebar_label: "Migrating from previous versions"
+sidebar_label: "Migrating versions"
 ---
 In this page, we list the most common catches when migrating to a new version of
 Liquidsoap.

@@ -1,7 +1,7 @@
 ---
 title: "A simple video script"
 description: "The other day, I wanted to prepare some videos of my favorite reggae and soul tunes for uploading them to YouTube. My goal was very simple: prepare a…"
-sidebar_label: "Video with a single static image"
+sidebar_label: "Video with a static image"
 ---
 The other day, I wanted to prepare some videos of my favorite reggae and soul
 tunes for uploading them to YouTube.

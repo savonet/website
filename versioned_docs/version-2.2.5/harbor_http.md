@@ -1,7 +1,6 @@
 ---
 title: "Harbor as HTTP server"
 description: "The harbor server can be used as a HTTP server. We provide two type of APIs for this:"
-sidebar_label: "Using the HTTP server"
 ---
 The harbor server can be used as a HTTP server. We provide two type of APIs for this:
 

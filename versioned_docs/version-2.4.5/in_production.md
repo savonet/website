@@ -1,6 +1,7 @@
 ---
 title: "Using in production"
 description: "The full installation of liquidsoap will typically install /etc/liquidsoap, /etc/init.d/liquidsoap and /var/log/liquidsoap. All these are meant for a…"
+sidebar_label: "In production"
 ---
 The full installation of liquidsoap will typically install
 `/etc/liquidsoap`, `/etc/init.d/liquidsoap` and `/var/log/liquidsoap`.

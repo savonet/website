@@ -1,7 +1,6 @@
 ---
 title: "ICY metadata"
 description: "ICY metadata is the name for the mechanism used to update metadata in icecast's source streams. The techniques is primarily intended for data formats…"
-sidebar_label: "ICY metadata update"
 ---
 _ICY metadata_ is the name for the mechanism used to update
 metadata in icecast's source streams.

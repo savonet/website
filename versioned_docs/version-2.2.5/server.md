@@ -1,7 +1,7 @@
 ---
 title: "Interaction with the server"
 description: "Liquidsoap starts with one or several scripts as its configuration, and then streams forever if everything goes well. Once started, you can still…"
-sidebar_label: "Using the telnet server"
+sidebar_label: "Telnet server"
 ---
 Liquidsoap starts with one or several scripts as its configuration, and then
 streams forever if everything goes well. Once started, you can still interact

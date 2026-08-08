@@ -138,7 +138,7 @@ See detailed [ffmpeg filters](./ffmpeg_filters.md) article.
 
 FFmpeg bitstream filters modify the binary content of _encoded data_. They adjust codec and container aspects for specific uses, such as rtmp/flv output. They are particularly important for live switches on encoded content (see the [Examples](#examples) section).
 
-All bitstream filters are listed in the [FFmpeg documentation](https://www.ffmpeg.org/ffmpeg-bitstream-filters.html) and our [extra API reference](./reference-extras/index.mdx). Here is an example:
+All bitstream filters are listed in the [FFmpeg documentation](https://www.ffmpeg.org/ffmpeg-bitstream-filters.html) and our [extra API reference](reference-extras.html). Here is an example:
 
 ```liquidsoap
 % liquidsoap -h ffmpeg.filter.bitstream.h264_mp4toannexb

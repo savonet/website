@@ -26,7 +26,7 @@ check out the external [autocue](https://github.com/Moonbase59/autocue) implemen
 You can also define your own crossfade transitions if you want to be more specific about them! The base `cross` operator accepts a scripted transition function that,
 according to the average volume level (in dB) computed on the end of the ending track and the beginning of the new one, returns the transition that is desired.
 
-You can find its documentation in the [language reference](./reference/index.mdx).
+You can find its documentation in the [language reference](reference.html).
 
 Here's an example:
 

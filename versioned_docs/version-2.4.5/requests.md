@@ -13,7 +13,7 @@ A **request** in Liquidsoap is simply a way of saying:
 
 > “Here’s something to play — figure out where it is and how to handle it.”
 
-You create a request with [`request.create`](./reference/liquidsoap.md#request.create), passing a **URI**.
+You create a request with [`request.create`](reference.html#request.create), passing a **URI**.
 
 A URI can be:
 

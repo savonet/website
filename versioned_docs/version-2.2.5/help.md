@@ -1,7 +1,7 @@
 ---
 title: "Get help"
 description: "Liquidsoap is a self-documented application, which means that it can provide help about several of its aspects. You will learn here how to get help by…"
-sidebar_label: "How to find help"
+sidebar_label: "Getting help"
 ---
 Liquidsoap is a self-documented application,
 which means that it can provide help about several of its aspects.
@@ -100,7 +100,7 @@ Methods:
 ```
 
 Of course if you do not know what function you need, you'd better go
-through the [API reference](./reference/index.mdx).
+through the [API reference](reference.html).
 
 Please note that some functions
 in that list are optional and may not be available with your local `liquidsoap`
@@ -134,4 +134,4 @@ The output of these commands is a valid liquidsoap script,
 which you can edit to set the values that you want,
 and load it ([implicitly](./script_loading.md) or not) before you other scripts.
 
-You can browse online the [list of available settings](./settings.md).
+You can browse online the [list of available settings](settings.html).
