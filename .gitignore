@@ -9,3 +9,4 @@ static/doc-dev/
 # Fetched from the liquidsoap CI artifact.
 static/try/
 sidebars.dev.json
+dev-version.json

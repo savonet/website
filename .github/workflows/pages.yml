@@ -12,6 +12,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Fired by savonet/liquidsoap when main is built, carrying the run id of the workflow
+  # whose doc bundle should be published as the in-development version.
+  repository_dispatch:
+    types: [liquidsoap-main]
 
 permissions:
   contents: read
@@ -36,8 +40,40 @@ jobs:
 
       - run: npm ci
 
-      # Documentation for released versions is committed under versioned_docs, so the
-      # build needs no docker image and no network beyond npm.
+      # Documentation for released versions is committed under versioned_docs. Only the
+      # in-development version is fetched, from the liquidsoap run that triggered this
+      # build -- or, for a manual run, from the most recent successful one.
+      - name: Fetch the liquidsoap doc bundle
+        id: bundle
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.LIQUIDSOAP_READ_TOKEN }}
+          RUN_ID: ${{ github.event.client_payload.run_id }}
+        run: |
+          set -euo pipefail
+          if [ -z "${RUN_ID}" ]; then
+            echo "No run id in the payload; looking up the latest successful build of main."
+            RUN_ID=$(gh run list -R savonet/liquidsoap -w ci.yml -b main -s success \
+              -L 1 --json databaseId -q '.[0].databaseId')
+          fi
+          echo "Using liquidsoap run ${RUN_ID}"
+          gh run download -R savonet/liquidsoap "${RUN_ID}" -n liquidsoap-doc -D bundle
+          test -d bundle/content
+
+      # A missing or not-yet-published bundle must not block a deploy: the site simply
+      # builds without the in-development version, which docusaurus.config.ts allows for.
+      - name: Sync the in-development version
+        if: steps.bundle.outcome == 'success'
+        run: npm run sync -- --version dev --bundle bundle
+
+      - name: Report what will be published
+        run: |
+          if [ -d docs ] && ls docs/*.md >/dev/null 2>&1; then
+            echo "dev: $(ls docs/*.md | wc -l) pages"
+          else
+            echo "::warning::No dev bundle; publishing released versions only."
+          fi
+
       - name: Build
         env:
           BASE_URL: /${{ github.event.repository.name }}/

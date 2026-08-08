@@ -10,6 +10,13 @@ const lastVersion = versions[0];
 // `npm run sync:dev` to populate it.
 const hasDev = fs.existsSync('./docs') && fs.readdirSync('./docs').some((f) => f.endsWith('.md'));
 
+// Written by sync-docs from liquidsoap's own dune-project version, so the in-development
+// label follows the series on its own: 2.5.x today, 2.6.x the day main bumps. Absent when
+// the bundle predates this, in which case the neutral "dev" is used.
+const devLabel: string = fs.existsSync('./dev-version.json')
+  ? JSON.parse(fs.readFileSync('./dev-version.json', 'utf8')).label
+  : 'dev';
+
 // Set BASE_URL=/website/ to publish under a subpath, e.g. for a preview deploy.
 const baseUrl = process.env.BASE_URL ?? '/';
 
@@ -21,7 +28,11 @@ const only = process.env.ONLY_VERSIONS?.split(',').map((v) => (v === 'dev' ? 'cu
 // deliberate: letting it collapse to a bare /clocks would mint a URL that never existed
 // and create a duplicate-content pair.
 const versionConfig = Object.fromEntries([
-  ...(hasDev ? [['current', { label: 'dev', path: 'doc-dev', banner: 'unreleased' as const }]] : []),
+  // Tracks liquidsoap main. The path stays doc-dev so existing /doc-dev/ links keep
+  // working; the label is derived, not hardcoded.
+  ...(hasDev
+    ? [['current', { label: devLabel, path: 'doc-dev', banner: 'unreleased' as const }]]
+    : []),
   ...versions.map((v, i) => [
     v,
     {
@@ -53,7 +64,6 @@ const config: Config = {
   // Emits /doc-2.4.5/clocks.html rather than /doc-2.4.5/clocks/index.html.
   trailingSlash: false,
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
 
   future: {
     // Rspack + SWC + lightningcss. The doc set is ~1900 pages across 13 versions, which
@@ -64,6 +74,12 @@ const config: Config = {
   },
 
   markdown: {
+    hooks: {
+      // `dev` follows a moving branch, so upstream can introduce a bad link or a missing
+      // image at any time. Neither should be able to take the whole deploy down.
+      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownImages: 'warn',
+    },
     // .md is parsed as CommonMark, .mdx as MDX. Mandatory: the generated reference files
     // contain 550+ bare {...} and 25 bare <tag> constructs from type signatures
     // (`{wait : (?timeout : float?, ...)}`, `<fun>`, `<url>`), each a hard MDX v3 error.
