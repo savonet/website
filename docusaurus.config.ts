@@ -138,11 +138,11 @@ const config: Config = {
       },
       items: [
         { type: 'docSidebar', sidebarId: 'docs', position: 'left', label: 'Documentation' },
-        // The playground is a js_of_ocaml build of Liquidsoap, copied into build/try by
-        // savonet/liquidsoap's doc workflow. It is a static asset rather than a route, so
-        // `pathname://` keeps it out of react-router and out of the broken-link check;
-        // preview builds show a placeholder in its place.
-        { href: 'pathname:///try/', label: 'Playground', target: '_self', position: 'left' },
+        // /try is a page of this site, loading two artifacts that savonet/liquidsoap's doc
+        // workflow copies into build/try. The interpreter hangs itself off window.onload
+        // and keeps global state, so `pathname://` forces a full page load rather than a
+        // client-side transition, and every visit starts from a clean one.
+        { href: 'pathname:///try', label: 'Playground', target: '_self', position: 'left' },
         // Searches the core and extra API of the version being read. Not a substitute
         // for site-wide search; it only covers the function reference.
         { type: 'custom-apiSearch', position: 'right' },

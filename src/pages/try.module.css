@@ -1,0 +1,217 @@
+/* Infima variables throughout, so the playground follows the site's theme and its
+   light/dark toggle rather than carrying its own palette. */
+
+.page {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.missing {
+  border: 1px solid var(--ifm-color-warning-dark);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  background: var(--ifm-color-warning-contrast-background);
+  color: var(--ifm-color-warning-contrast-foreground);
+}
+
+.panes {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 997px) {
+  .panes {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pane {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.paneTitle {
+  margin-bottom: 0.4rem;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.editor {
+  height: 60vh;
+  min-height: 320px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.editor textarea {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-font-color-base);
+  font: 14px/1.6 var(--ifm-font-family-monospace);
+}
+
+/* The editor mounts inside #input and needs a height to scroll within. */
+.editor :global(.cm-editor) {
+  height: 100%;
+}
+
+.editor :global(.cm-scroller) {
+  overflow: auto;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.toolbar button,
+.toolbar select {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.toolbar select {
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.toolbar button:hover:not(:disabled) {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.toolbar button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Execute is the primary action, Format secondary, Clear quiet until hovered. */
+.primary {
+  background: var(--ifm-color-primary) !important;
+  border-color: var(--ifm-color-primary) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark) !important;
+  border-color: var(--ifm-color-primary-dark) !important;
+}
+
+.quiet {
+  color: var(--ifm-color-emphasis-600) !important;
+}
+
+.quiet:hover:not(:disabled) {
+  border-color: var(--ifm-color-danger) !important;
+  color: var(--ifm-color-danger) !important;
+}
+
+.hint {
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.8rem;
+}
+
+.kbd {
+  padding: 0 0.3rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.75rem;
+}
+
+/* `display` from a class beats the hidden attribute's UA rule, and these are toggled
+   by attribute as the interpreter comes up. */
+.loading[hidden],
+.hint[hidden] {
+  display: none;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.875rem;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-top-color: var(--ifm-color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
+/* One pane at a time below the breakpoint the site itself uses for its navbar. */
+.switcher {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.switcher button {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+@media (min-width: 997px) {
+  .switcher {
+    display: none;
+  }
+
+  .hiddenSmall {
+    display: flex;
+  }
+}
+
+@media (max-width: 996px) {
+  .hiddenSmall {
+    display: none;
+  }
+}
