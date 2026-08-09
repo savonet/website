@@ -129,6 +129,16 @@ const config: Config = {
 
   themeConfig: {
     image: 'assets/img/og-liquidsoap.png',
+    algolia: {
+      appId: '933N0GMR62',
+      // Search-only key. Public by design -- it ships to every visitor. The admin key
+      // belongs to the crawler and must never appear here.
+      apiKey: '1e7ea3cd32825b8586050ee29234bffd',
+      indexName: 'Liquidsoap Documentation Website',
+      // Every page exists once per version, so without this a search returns the same
+      // result four times. It filters on the docusaurus_tag the pages already carry.
+      contextualSearch: true,
+    },
     navbar: {
       title: 'Liquidsoap',
       logo: {
