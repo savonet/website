@@ -159,7 +159,12 @@ function install(outDir, contentDir, source) {
     // artifact is validated rather than the exit code.
     const body = fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : '';
     if (body.trim().length < 100) throw new Error(`${source}: ${t.file} came back empty`);
-    const prefix = t.header && fs.existsSync(header) ? fs.readFileSync(header, 'utf8') + '\n\n' : '';
+    // Docker runs the binary, whose output starts at the first category. A bundle comes
+    // from dune, which prepends the header itself -- prefixing it again gave the page two
+    // H1s, and the duplicate earned a `{#...-1}` anchor, which an .mdx index parses as a
+    // JSX expression and refuses to compile.
+    const headerText = t.header && fs.existsSync(header) ? fs.readFileSync(header, 'utf8').trim() : '';
+    const prefix = headerText && !body.trimStart().startsWith(headerText) ? headerText + '\n\n' : '';
     fs.writeFileSync(path.join(contentDir, t.file), prefix + body);
   }
 }
@@ -367,7 +372,13 @@ function splitReference(md, name, outDir, anchorMap) {
   // The index is .mdx so it can host the search component; `markdown.format: 'detect'`
   // keeps every other reference page on CommonMark. The generated bullet list of
   // categories is dropped -- the component renders them as a grid with counts.
-  const body = intro.replace(/^\s*-\s+\[.*\]\(#.*\)\s*$/gm, '').replace(/\n{3,}/g, '\n\n');
+  // Explicit anchors go too: MDX reads `{...}` as an expression and fails to compile.
+  // Nothing deep-links to a heading on this page -- the function anchors are all on the
+  // category pages, which are .md.
+  const body = intro
+    .replace(/^\s*-\s+\[.*\]\(#.*\)\s*$/gm, '')
+    .replace(/[ \t]*\{#[\w.-]+\}[ \t]*$/gm, '')
+    .replace(/\n{3,}/g, '\n\n');
   const index = addFrontmatter(
     `${body.trim()}\n\n<ApiIndex src="/doc-${VERSION}/${name}-index.json" />\n`,
     name
