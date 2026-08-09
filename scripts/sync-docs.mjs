@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolveIncludes } from './lib/includes.mjs';
 import { addExplicitAnchors, slug } from './lib/anchors.mjs';
@@ -28,6 +28,10 @@ const GENERATED = arg('generated');
 const BUNDLE = arg('bundle');
 const STRICT = args.includes('--strict');
 const SKIP_DOCKER = args.includes('--skip-docker');
+const WATCH = args.includes('--watch');
+// Re-syncs under --watch overwrite in place. Wiping the tree first makes the Docusaurus
+// dev server tear down and re-add every route, which exhausts its file descriptors.
+const NO_CLEAN = args.includes('--no-clean');
 if (!VERSION) throw new Error('usage: sync-docs.mjs --version <dev|X.Y.Z> [--strict]');
 
 const isDev = VERSION === 'dev';
@@ -63,9 +67,12 @@ function useBundle(dir) {
   if (!fs.existsSync(src)) throw new Error(`${resolved}: no content/ directory`);
   writeDevLabel(path.join(resolved, 'version'));
   // Copied rather than used in place: the generated files are installed alongside the
-  // prose, and the caller's bundle should not be written to.
+  // prose, and the caller's bundle should not be written to. dereference matters -- a
+  // preview bundle links content at the live doc/content tree, and without it the copy
+  // is the link, so the generated files land in the source tree. Under --watch that also
+  // makes the sync trigger itself.
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'liq-doc-'));
-  fs.cpSync(src, path.join(tmp, 'content'), { recursive: true });
+  fs.cpSync(src, path.join(tmp, 'content'), { recursive: true, dereference: true });
   console.log(`  using bundle ${resolved}`);
   return { root: tmp, content: path.join(tmp, 'content'), generated: resolved };
 }
@@ -358,7 +365,7 @@ function splitReference(md, name, outDir, anchorMap) {
 // --- main ---------------------------------------------------------------------------
 
 console.log(`sync ${VERSION}`);
-fs.rmSync(OUT, { recursive: true, force: true });
+if (!NO_CLEAN) fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 
 const { root, content, generated } = BUNDLE ? useBundle(BUNDLE) : fetchContent();
@@ -556,4 +563,51 @@ if (orphans.length) console.log(`  ${orphans.length} pages in no sidebar: ${orph
 if (STRICT && warnings.length) {
   console.error(`\n${warnings.length} warning(s) with --strict`);
   process.exit(1);
+}
+
+// --- watch ----------------------------------------------------------------------------
+
+// For previewing documentation edits: re-sync whenever the source changes, so the
+// Docusaurus dev server -- which already watches docs/ -- hot-reloads them. The sync is
+// re-run as a child process rather than refactored into a loop, so a crash in one pass
+// cannot leave this one wedged.
+if (WATCH) {
+  if (!BUNDLE) throw new Error('--watch needs --bundle <dir>');
+  // Resolved, because a preview bundle points content at the live doc/content tree by
+  // symlink so that edits there are what we are watching for.
+  const target = fs.realpathSync(path.resolve(BUNDLE, 'content'));
+  console.log(`\nwatching ${target}`);
+
+  let timer = null;
+  let running = false;
+  let again = false;
+
+  const resync = () => {
+    if (running) {
+      again = true;
+      return;
+    }
+    running = true;
+    const rerun = [...args.filter((a) => a !== '--watch'), '--no-clean'];
+    const child = spawn(process.execPath, [fileURLToPath(import.meta.url), ...rerun], {
+      stdio: 'inherit',
+    });
+    child.on('exit', () => {
+      running = false;
+      if (again) {
+        again = false;
+        resync();
+      }
+    });
+  };
+
+  fs.watch(target, { recursive: true }, (_event, file) => {
+    if (!file || !/\.(md|liq|png|jpg|svg)$/.test(file)) return;
+    clearTimeout(timer);
+    // Editors write in bursts; one re-sync per burst is enough.
+    timer = setTimeout(() => {
+      console.log(`\nchanged: ${file}`);
+      resync();
+    }, 300);
+  });
 }
