@@ -3,7 +3,7 @@ import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useActiveDocContext, useLatestVersion } from '@docusaurus/plugin-content-docs/client';
-import { hrefFor, highlight, loadIndex, rank, score, type Hit } from './search';
+import { hrefFor, highlight, loadIndex, rank, type Hit } from './search';
 import { searchDocs, type AlgoliaConfig, type DocHit } from './algolia';
 import styles from './styles.module.css';
 
@@ -105,18 +105,14 @@ export default function ApiSearch(): React.ReactElement {
 
   const fnHits = useMemo(() => rank(functions ?? [], query, 8), [functions, query]);
 
-  // A query that names a function is answered by the reference, so put it first. Anything
-  // vaguer is a prose question.
-  const exactish = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return q ? fnHits.some((fn) => score(fn, q) <= 1) : false;
-  }, [fnHits, query]);
-
+  // Prose first, then functions. A fixed order on purpose: the function index is fetched
+  // when the dialog opens, so anything conditional on it reorders the list under the
+  // reader depending on whether that fetch has landed.
   const rows: Row[] = useMemo(() => {
-    const fns: Row[] = fnHits.map((hit) => ({ kind: 'fn', hit }));
     const prose: Row[] = docs.map((hit) => ({ kind: 'doc', hit }));
-    return exactish ? [...fns, ...prose] : [...prose, ...fns];
-  }, [fnHits, docs, exactish]);
+    const fns: Row[] = fnHits.map((hit) => ({ kind: 'fn', hit }));
+    return [...prose, ...fns];
+  }, [fnHits, docs]);
 
   useEffect(() => {
     setSelected(0);
