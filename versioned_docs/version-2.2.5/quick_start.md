@@ -157,7 +157,7 @@ liquidsoap 'output.alsa(bufferize = false,
 ### Other examples {#other-examples}
 
 You can play with many more examples. Here are a few more. To build your own,
-lookup the [API documentation](reference.html) to check what functions are available, and what parameters they accept.
+lookup the [API documentation](./reference/index.mdx) to check what functions are available, and what parameters they accept.
 
 ```liquidsoap
 # Listen to your playlist, but normalize the volume
@@ -234,7 +234,7 @@ You can first have a look at a [more complex example](./complete_case.md). There
 
 You should definitely learn [how to get help](./help.md).
 If you know enough liquidsoap for your use, you'll only need to refer to the
-[scripting reference](reference.html), or see the [cookbook](./cookbook.md).
+[scripting reference](./reference/index.mdx), or see the [cookbook](./cookbook.md).
 At some point,
 you might read more about Liquidsoap's [scripting language](./language.md).
 For a better understanding of liquidsoap,

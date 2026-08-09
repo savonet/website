@@ -52,9 +52,8 @@ export default function ApiIndex({ src }: { src: string }): React.ReactElement {
   const [failed, setFailed] = useState(false);
   const [query, setQuery] = useState('');
 
-  // `src` and `Index.base` are site-absolute paths baked into committed markdown, so they
-  // cannot know about a subpath deploy. <Link to> applies baseUrl itself, but raw fetch()
-  // and location.replace() do not.
+  // `src` and `Index.base` are baked into committed markdown. <Link to> resolves those
+  // itself, but raw fetch() and location.replace() do not.
   const { withBaseUrl } = useBaseUrlUtils();
 
   useEffect(() => {

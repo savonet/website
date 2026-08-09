@@ -118,6 +118,6 @@ Now that you understand what sources are and how they work, you’ve unlocked th
 
 Want to go deeper?
 
-- Explore the [scripting API reference](reference.html)
+- Explore the [scripting API reference](./reference/index.mdx)
 - Learn about [clocks](./clocks.md)
 - Experiment with your own custom source graphs

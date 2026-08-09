@@ -16,7 +16,7 @@ The low level operator is `cross`. With it, you can register a function that ret
 - source corresponding to previous track
 - source corresponding to next track
 
-You can find its documentation in the [language reference](reference.html).
+You can find its documentation in the [language reference](./reference/index.mdx).
 
 ## Example {#example}
 

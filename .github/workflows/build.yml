@@ -1,10 +1,16 @@
 name: Build
 
-# Pull requests build but never publish. The build is also where the site's own checks
-# run: postBuild fails if the landing page links to a missing page, or if the favicon or
-# share image named in the config was never emitted.
+# This repository never publishes. The site is built and published by savonet/liquidsoap's
+# doc workflow, which is the only place the in-development version can be generated -- see
+# .github/workflows/doc.yml there. Here we only prove the tree still builds.
+#
+# The build is also where the site's own checks run: postBuild fails if the landing page
+# links to a missing page, or if the favicon or share image named in the config was never
+# emitted.
 
 on:
+  push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 

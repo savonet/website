@@ -33,8 +33,8 @@ export default function ApiSearch(): React.ReactElement {
       REFERENCES.map(async ({ file, source }) => {
         const index = await loadIndex(`${versionPath}/${file}-index.json`);
         // A version that does not publish a given reference simply contributes nothing.
-        // The index's own `base` is ignored: it is site-absolute and predates subpath
-        // deploys, whereas versionPath already has baseUrl applied.
+        // The index's own `base` is ignored in favour of versionPath, which is the one
+        // the router agrees with.
         return index
           ? index.functions.map((fn) => ({ ...fn, base: `${versionPath}/${file}`, source }))
           : [];

@@ -22,7 +22,7 @@ In each case, the prefix before the `:` is the protocol, and the part after it i
 
 ## Built-in and custom protocols {#built-in-and-custom-protocols}
 
-Liquidsoap already ships with many ready-made protocols, written in the Liquidsoap scripting language. You can explore them in the [protocol reference](protocols.html). But the real power comes when you define your own.
+Liquidsoap already ships with many ready-made protocols, written in the Liquidsoap scripting language. You can explore them in the [protocol reference](./protocols.md). But the real power comes when you define your own.
 
 ## The anatomy of a protocol {#the-anatomy-of-a-protocol}
 

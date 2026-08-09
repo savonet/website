@@ -100,7 +100,7 @@ Methods:
 ```
 
 Of course if you do not know what function you need, you'd better go
-through the [API reference](reference.html).
+through the [API reference](./reference/index.mdx).
 
 Please note that some functions
 in that list are optional and may not be available with your local `liquidsoap`
@@ -134,4 +134,4 @@ The output of these commands is a valid liquidsoap script,
 which you can edit to set the values that you want,
 and load it ([implicitly](./script_loading.md) or not) before you other scripts.
 
-You can browse online the [list of available settings](settings.html).
+You can browse online the [list of available settings](./settings.md).

@@ -17,10 +17,8 @@ already builds Liquidsoap, so it has both the prose and the binary, clones this
 repository, and publishes the result to `savonet.github.io`.
 
 That repository is therefore where you go to confirm the site was built, and where a
-production build failure shows up.
-
-This repository's own workflow publishes a preview of the **released versions only** to
-<https://www.liquidsoap.info/website/>, for reviewing changes to the site itself.
+build failure shows up. This repository publishes nothing; its workflow only proves the
+tree still builds. Review changes here with `npm start`.
 
 ## Local development
 

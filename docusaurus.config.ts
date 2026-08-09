@@ -17,9 +17,6 @@ const devLabel: string = fs.existsSync('./dev-version.json')
   ? JSON.parse(fs.readFileSync('./dev-version.json', 'utf8')).label
   : 'dev';
 
-// Set BASE_URL=/website/ to publish under a subpath, e.g. for a preview deploy.
-const baseUrl = process.env.BASE_URL ?? '/';
-
 // Local dev and PR builds only need a couple of versions; a full build is ~13.
 const only = process.env.ONLY_VERSIONS?.split(',').map((v) => (v === 'dev' ? 'current' : v));
 
@@ -51,15 +48,9 @@ const config: Config = {
   // Images all live under /assets/img, matching the front page and the historical site.
   favicon: 'assets/img/favicon.ico',
   url: 'https://www.liquidsoap.info',
-  baseUrl,
+  baseUrl: '/',
   organizationName: 'savonet',
   projectName: 'website',
-
-  // A subpath build is a preview, not the canonical site. Without this it publishes
-  // self-referential canonicals and a sitemap for all of its URLs, which makes it a
-  // duplicate of production on the same domain. robots.txt cannot help: crawlers only
-  // read it at the domain root, and a preview never owns that.
-  noIndex: baseUrl !== '/',
 
   // Emits /doc-2.4.5/clocks.html rather than /doc-2.4.5/clocks/index.html.
   trailingSlash: false,
@@ -147,6 +138,11 @@ const config: Config = {
       },
       items: [
         { type: 'docSidebar', sidebarId: 'docs', position: 'left', label: 'Documentation' },
+        // The playground is a js_of_ocaml build of Liquidsoap, copied into build/try by
+        // savonet/liquidsoap's doc workflow. It is a static asset rather than a route, so
+        // `pathname://` keeps it out of react-router and out of the broken-link check;
+        // preview builds show a placeholder in its place.
+        { href: 'pathname:///try/', label: 'Playground', target: '_self', position: 'left' },
         // Searches the core and extra API of the version being read. Not a substitute
         // for site-wide search; it only covers the function reference.
         { type: 'custom-apiSearch', position: 'right' },

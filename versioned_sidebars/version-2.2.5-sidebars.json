@@ -321,6 +321,37 @@
     },
     {
       "type": "category",
+      "label": "API reference",
+      "items": [
+        {
+          "type": "doc",
+          "id": "reference/index",
+          "label": "Core API"
+        },
+        {
+          "type": "doc",
+          "id": "reference-extras/index",
+          "label": "Extra API"
+        },
+        {
+          "type": "doc",
+          "id": "reference-deprecated/index",
+          "label": "Deprecated API"
+        },
+        {
+          "type": "doc",
+          "id": "protocols",
+          "label": "Protocols"
+        },
+        {
+          "type": "doc",
+          "id": "settings",
+          "label": "Settings"
+        }
+      ]
+    },
+    {
+      "type": "category",
       "label": "Examples",
       "items": [
         {

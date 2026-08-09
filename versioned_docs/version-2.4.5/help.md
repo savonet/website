@@ -99,7 +99,7 @@ Methods:
  Get a source's time, based on its assigned clock.
 ```
 
-If you don't know which function you need, browse the [API reference](reference.html).
+If you don't know which function you need, browse the [API reference](./reference/index.mdx).
 
 Note that some functions are optional and may not be available in your local
 `liquidsoap` install — they require an optional dependency to be enabled. You
@@ -132,4 +132,4 @@ The output is a valid liquidsoap script that you can edit to set the values
 you want, then load it ([implicitly](./script_loading.md) or explicitly) before
 your other scripts.
 
-You can browse online the [list of available settings](settings.html).
+You can browse online the [list of available settings](./settings.md).
