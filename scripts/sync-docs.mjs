@@ -91,6 +91,20 @@ function fetchContent() {
 }
 
 /**
+ * Write only if the content differs. The dev server reloads a whole version when any of
+ * its files change, so a re-sync that rewrote all 129 pages made it reload every version
+ * at once and run out of file descriptors. Editing one page should touch one file.
+ */
+function writeFile(file, data) {
+  try {
+    if (fs.readFileSync(file, 'utf8') === data) return;
+  } catch {
+    // Not there yet, or unreadable: write it.
+  }
+  fs.writeFileSync(file, data);
+}
+
+/**
  * The label for the in-development version, derived from liquidsoap's own dune-project
  * version so that it follows the series without anyone editing it: 2.5.0 -> "2.5.x (dev)",
  * and 2.6.0 the day main bumps. Written to a gitignored file that the config reads.
@@ -302,7 +316,7 @@ function splitReference(md, name, outDir, anchorMap) {
     chunk[0] = `# ${s.heading}`; // promote to page title
     let out = chunk.join('\n');
     out = addFrontmatter(out, s.heading);
-    fs.writeFileSync(path.join(dir, `${pageSlug}.md`), out);
+    writeFile(path.join(dir, `${pageSlug}.md`), out);
     entries.push({ slug: pageSlug, heading: s.heading, count: 0 });
     // Every heading inside this section now lives on this page.
     for (const id of ids.filter((x) => x.level >= 2)) {
@@ -336,7 +350,7 @@ function splitReference(md, name, outDir, anchorMap) {
   }
 
   fs.mkdirSync(STATIC_OUT, { recursive: true });
-  fs.writeFileSync(
+  writeFile(
     path.join(STATIC_OUT, `${name}-index.json`),
     JSON.stringify({
       base: `/doc-${VERSION}/${name}`,
@@ -358,7 +372,7 @@ function splitReference(md, name, outDir, anchorMap) {
     `${body.trim()}\n\n<ApiIndex src="/doc-${VERSION}/${name}-index.json" />\n`,
     name
   ).replace(/^(---\n[\s\S]*?\n---\n)/, `$1\nimport ApiIndex from '@site/src/components/ApiIndex';\n\n`);
-  fs.writeFileSync(path.join(dir, 'index.mdx'), index);
+  writeFile(path.join(dir, 'index.mdx'), index);
   return entries;
 }
 
@@ -441,7 +455,7 @@ for (const entry of fs.readdirSync(content, { withFileTypes: true })) {
   // current site publishes /doc-<v>/index.html (and serves /doc-<v>/ from it), so the
   // slug is pinned to keep that URL.
   if (id === 'index') md = md.replace(/^---\n/, '---\nslug: /index.html\n');
-  fs.writeFileSync(path.join(OUT, entry.name), md);
+  writeFile(path.join(OUT, entry.name), md);
   pages++;
 }
 
@@ -555,7 +569,7 @@ const sidebarOut = isDev
   ? path.join(ROOT, 'sidebars.dev.json')
   : path.join(ROOT, `versioned_sidebars/version-${VERSION}-sidebars.json`);
 fs.mkdirSync(path.dirname(sidebarOut), { recursive: true });
-fs.writeFileSync(sidebarOut, JSON.stringify({ docs: sidebar }, null, 2) + '\n');
+writeFile(sidebarOut, JSON.stringify({ docs: sidebar }, null, 2) + '\n');
 
 console.log(`  ${pages} pages, ${warnings.length} warnings`);
 console.log(`  sidebar: ${sidebar.length} categories, ${linked.size} entries, ${dropped} dropped`);
