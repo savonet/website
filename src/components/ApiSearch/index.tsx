@@ -103,16 +103,29 @@ export default function ApiSearch(): React.ReactElement {
     };
   }, [algolia, query, version.name]);
 
-  const fnHits = useMemo(() => rank(functions ?? [], query, 8), [functions, query]);
+  // Ranked within each reference rather than across both, so that the core API always
+  // comes first: sorting the two together would let a weak core match outrank an exact
+  // one from the extras, or the other way round.
+  const core = useMemo(
+    () => rank((functions ?? []).filter((fn) => fn.source === 'Core'), query, 6),
+    [functions, query]
+  );
+  const extras = useMemo(
+    () => rank((functions ?? []).filter((fn) => fn.source === 'Extra'), query, 4),
+    [functions, query]
+  );
 
-  // Prose first, then functions. A fixed order on purpose: the function index is fetched
-  // when the dialog opens, so anything conditional on it reorders the list under the
-  // reader depending on whether that fetch has landed.
-  const rows: Row[] = useMemo(() => {
-    const prose: Row[] = docs.map((hit) => ({ kind: 'doc', hit }));
-    const fns: Row[] = fnHits.map((hit) => ({ kind: 'fn', hit }));
-    return [...prose, ...fns];
-  }, [fnHits, docs]);
+  // Prose, then core, then extras. A fixed order on purpose: the function index is
+  // fetched when the dialog opens, so anything conditional on it reorders the list under
+  // the reader depending on whether that fetch has landed.
+  const rows: Row[] = useMemo(
+    () => [
+      ...docs.map((hit): Row => ({ kind: 'doc', hit })),
+      ...core.map((hit): Row => ({ kind: 'fn', hit })),
+      ...extras.map((hit): Row => ({ kind: 'fn', hit })),
+    ],
+    [core, extras, docs]
+  );
 
   useEffect(() => {
     setSelected(0);
@@ -139,11 +152,14 @@ export default function ApiSearch(): React.ReactElement {
     }
   };
 
-  // Group headings, rendered where the group actually starts.
+  // Group headings, rendered where the group actually starts. Functions split by which
+  // reference they come from.
+  const groupOf = (row: Row): string =>
+    row.kind === 'doc' ? 'Documentation' : row.hit.source === 'Extra' ? 'Extra functions' : 'Functions';
+
   const headingFor = (i: number): string | null => {
-    const kind = rows[i].kind;
-    if (i > 0 && rows[i - 1].kind === kind) return null;
-    return kind === 'fn' ? 'Functions' : 'Documentation';
+    const group = groupOf(rows[i]);
+    return i > 0 && groupOf(rows[i - 1]) === group ? null : group;
   };
 
   return (
