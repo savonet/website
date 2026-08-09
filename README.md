@@ -27,20 +27,34 @@ npm ci
 npm start
 ```
 
-That serves the released versions. To include the in-development version you need a
-Liquidsoap checkout that has been built:
+That serves the released versions only.
+
+### Working on the documentation itself
+
+If you are editing pages in `doc/content` of a Liquidsoap checkout, drive it from there
+instead — that is where the reference can be generated:
 
 ```bash
 # in a liquidsoap checkout
-dune build @doc
+LIQUIDSOAP_WEBSITE=/path/to/this/repo dune build @doc/serve-website
+```
 
-# here — bundle = doc/content plus the five generated files plus the version
+That builds the reference, syncs it here, and starts this dev server with the
+documentation live: editing a page under `doc/content` re-syncs and reloads it. Without
+`LIQUIDSOAP_WEBSITE` it clones its own copy of this repository, which is what someone
+working only on the documentation wants.
+
+### By hand
+
+The same thing without the dune target, if you have already run `dune build @doc`:
+
+```bash
 mkdir -p /tmp/bundle
 cp -RL <liquidsoap>/doc/content /tmp/bundle/content        # -L: images is a symlink
 cp <liquidsoap>/_build/default/doc/{reference,reference-extras,reference-deprecated,protocols,settings}.md /tmp/bundle/
 sed -n 's/^(version \(.*\))$/\1/p' <liquidsoap>/dune-project > /tmp/bundle/version
 
-npm run sync -- --version dev --bundle /tmp/bundle
+npm run sync -- --version dev --bundle /tmp/bundle   # add --watch to re-sync on edits
 npm start
 ```
 
