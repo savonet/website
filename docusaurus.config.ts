@@ -153,9 +153,9 @@ const config: Config = {
         // and keeps global state, so `pathname://` forces a full page load rather than a
         // client-side transition, and every visit starts from a clean one.
         { href: 'pathname:///try', label: 'Playground', target: '_self', position: 'left' },
-        // Searches the core and extra API of the version being read. Not a substitute
-        // for site-wide search; it only covers the function reference.
-        { type: 'custom-apiSearch', position: 'right' },
+        // Explicit, so it leads the right-hand side; left to itself the theme appends the
+        // search bar after everything else.
+        { type: 'search', position: 'right' },
         { type: 'docsVersionDropdown', position: 'right' },
         { href: 'https://github.com/savonet/liquidsoap', label: 'GitHub', position: 'right' },
       ],
