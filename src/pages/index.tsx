@@ -197,7 +197,11 @@ export default function Home(): React.ReactElement {
     >
       <Hero docs={docs} />
 
+      {/* Search crawlers extract from <article>: DocSearch's Docusaurus template selects
+          lvl1, lvl2 and text inside one, and reports a page without it as having no
+          content at all. Doc pages get theirs from the theme; this page did not. */}
       <main>
+        <article>
         <section className={styles.section}>
           <div className={styles.grid3}>
             {PILLARS.map((p) => (
@@ -294,6 +298,7 @@ export default function Home(): React.ReactElement {
             </div>
           </div>
         </section>
+        </article>
       </main>
     </Layout>
   );
