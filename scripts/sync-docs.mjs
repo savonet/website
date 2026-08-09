@@ -402,8 +402,12 @@ for (const entry of fs.readdirSync(content, { withFileTypes: true })) {
   }
 
   // Assets are not always under images/: main keeps jack-patchbay.png beside jack.md and
-  // references it relatively. Anything that is not markdown is carried across as-is.
+  // references it relatively. Anything that is not markdown is carried across as-is --
+  // except dotfiles, which belong to liquidsoap's repository, not to the docs. Copying
+  // doc/content/.gitignore, which lists the generated files, quietly stopped protocols.md
+  // and settings.md from being committed here and broke the build.
   if (!entry.name.endsWith('.md')) {
+    if (entry.name.startsWith('.')) continue;
     fs.copyFileSync(src, path.join(OUT, entry.name));
     continue;
   }
