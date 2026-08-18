@@ -31,6 +31,7 @@
         { "type": "doc", "id": "requests", "label": "Requests" },
         { "type": "doc", "id": "clocks", "label": "Clocks" },
         { "type": "doc", "id": "composition", "label": "Source composition" },
+        { "type": "doc", "id": "callbacks", "label": "Callbacks" },
         { "type": "doc", "id": "stream_content", "label": "Stream contents" },
         { "type": "doc", "id": "multitrack", "label": "Multitrack" },
         { "type": "doc", "id": "latency_control", "label": "Latency control" },
