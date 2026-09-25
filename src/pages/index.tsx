@@ -95,6 +95,8 @@ const USE_CASES = [
 
 // Every entry here is evidenced: an official repository, a documented integration, or a
 // Liquidshop talk by the people who run it. Please keep that bar if you add to it.
+//
+// Small community radios are the heart of this list, so give them as much room as the big names.
 const USERS = [
   {
     name: 'Radio France',
@@ -115,6 +117,18 @@ const USERS = [
     img: 'assets/img/users/libretime.svg',
   },
   {
+    name: 'Live365',
+    what: 'US internet radio network, thousands of stations',
+    href: 'https://live365.com/',
+    img: 'assets/img/users/live365.svg',
+  },
+  {
+    name: 'Radio Bern RaBe',
+    what: 'Community radio, Bern',
+    href: 'https://rabe.ch/',
+    img: 'assets/img/users/rabe.svg',
+  },
+  {
     name: 'WHIV-LP 102.3 FM',
     what: 'Community radio, New Orleans',
     href: 'https://whivfm.org/listen',
@@ -127,10 +141,28 @@ const USERS = [
     img: 'assets/img/users/kpiss.png',
   },
   {
+    name: 'ZuidWest FM',
+    what: 'Regional radio, West Brabant',
+    href: 'https://www.zuidwestfm.nl/',
+    img: 'assets/img/users/zuidwest.png',
+  },
+  {
     name: 'Lahmacun Radio',
     what: 'Community radio, Budapest',
     href: 'https://lahmacun.hu/',
     img: 'assets/img/users/lahmacun.png',
+  },
+  {
+    name: 'Radio Campus Grenoble',
+    what: 'Campus and community radio, Grenoble',
+    href: 'https://campusgrenoble.org/',
+    img: 'assets/img/users/campusgrenoble.png',
+  },
+  {
+    name: 'Alicia Radio',
+    what: 'Cultural community radio, Mexico City',
+    href: 'https://multiforoalicia.org/alicia-radio/',
+    img: 'assets/img/users/alicia.png',
   },
   {
     name: 'Radiotomate',
@@ -143,6 +175,42 @@ const USERS = [
     what: 'Netradio and netlabel',
     href: 'https://datafruits.fm/',
     img: 'assets/img/users/datafruits.png',
+  },
+  {
+    name: 'WUVT-FM 90.7',
+    what: 'College radio, Virginia Tech',
+    href: 'https://www.wuvt.vt.edu/',
+    img: 'assets/img/users/wuvt.svg',
+  },
+  {
+    name: 'Dial Radio',
+    what: 'Worldwide playlist broadcasting',
+    href: 'https://dialradio.live/',
+    img: 'assets/img/users/dialradio.png',
+  },
+  {
+    name: 'Radio Aktywne',
+    what: 'Student radio, Warsaw',
+    href: 'https://radioaktywne.pl/',
+    img: 'assets/img/users/radioaktywne.svg',
+  },
+  {
+    name: 'Rainwave',
+    what: 'Video game music radio',
+    href: 'https://rainwave.cc/',
+    img: 'assets/img/users/rainwave.png',
+  },
+  {
+    name: 'Livemasjid',
+    what: 'Community mosque broadcasting, South Africa',
+    href: 'https://www.livemasjid.com/',
+    img: 'assets/img/users/livemasjid.png',
+  },
+  {
+    name: 'omFM',
+    what: 'Internet radio with a handful of genre streams',
+    href: 'https://omfm.ru/',
+    img: 'assets/img/users/omfm.svg',
   },
 ];
 
