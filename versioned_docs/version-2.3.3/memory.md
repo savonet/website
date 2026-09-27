@@ -34,8 +34,8 @@ Typically, to change the garbage collector parameters, one can do:
 ```liquidsoap title="space_overhead.liq"
 # This code was contributed by AzuraCast. Possible settings:
 # - less memory: space_overhead = 20
-# - less cpu: space_overhead = 140
-# - balanced: space_overhead = 80
+# - less cpu:    space_overhead = 140
+# - balanced:    space_overhead = 80
 
 # Optimize for memory usage over CPU: this results in a slightly increased CPU
 # usage and reduced memory usage.

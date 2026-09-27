@@ -103,17 +103,17 @@ For advanced setups, Liquidsoap gives you tools to inspect and manipulate clocks
 
 - Access a source’s clock:
 
- ```liquidsoap
- c = s.clock
- ```
+  ```liquidsoap
+  c = s.clock
+  ```
 
 - If methods are missing, rewrap your source and clock:
 
- ```liquidsoap
- s = source.methods(s)
- c = clock(s.clock)
- print("source #{s.id()} belongs to clock id: #{c.id()}")
- ```
+  ```liquidsoap
+  s = source.methods(s)
+  c = clock(s.clock)
+  print("source #{s.id()} belongs to clock id: #{c.id()}")
+  ```
 
 You can even create new clocks and assign sources to them:
 

@@ -168,7 +168,7 @@ with
 
 ```liquidsoap
 def add(x,y) =
- x + y
+  x + y
 end
 ```
 
@@ -190,7 +190,7 @@ or
 
 ```liquidsoap
 def suc(x) =
- add(1, x)
+  add(1, x)
 end
 ```
 
@@ -237,7 +237,7 @@ The type of the `auth` function in `input.harbor` has changed. Where before, you
 
 ```liquidsoap
 def auth(user, password) =
- ...
+  ...
 end
 ```
 
@@ -245,9 +245,9 @@ You would now do:
 
 ```liquidsoap
 def auth(params)
- user = params.user
- password = params.password
- ...
+  user     = params.user
+  password = params.password
+  ...
 end
 ```
 
@@ -259,41 +259,41 @@ Now that sources have their own methods, the actual list of methods attached to 
 ```liquidsoap
 At script.liq, line xxx, char yyy-zzz:
 Error 5: this value has type
- _ * source(audio=?A, video=?B, midi=?C)
- .{
- time : () -> float,
- shutdown : () -> unit,
- fallible : bool,
- skip : () -> unit,
- seek : (float) -> float,
- is_active : () -> bool,
- is_up : () -> bool,
- log :
- {level : (() -> int?).{set : ((int) -> unit)}
- },
- self_sync : () -> bool,
- duration : () -> float,
- elapsed : () -> float,
- remaining : () -> float,
- on_track : ((([string * string]) -> unit)) -> unit,
- on_leave : ((() -> unit)) -> unit,
- on_shutdown : ((() -> unit)) -> unit,
- on_metadata : ((([string * string]) -> unit)) -> unit,
- is_ready : () -> bool,
- id : () -> string,
- selected : (() -> source(audio=?D, video=?E, midi=?F)?)
- }
+  _ * source(audio=?A, video=?B, midi=?C)
+  .{
+    time : () -> float,
+    shutdown : () -> unit,
+    fallible : bool,
+    skip : () -> unit,
+    seek : (float) -> float,
+    is_active : () -> bool,
+    is_up : () -> bool,
+    log :
+    {level : (() -> int?).{set : ((int) -> unit)}
+    },
+    self_sync : () -> bool,
+    duration : () -> float,
+    elapsed : () -> float,
+    remaining : () -> float,
+    on_track : ((([string * string]) -> unit)) -> unit,
+    on_leave : ((() -> unit)) -> unit,
+    on_shutdown : ((() -> unit)) -> unit,
+    on_metadata : ((([string * string]) -> unit)) -> unit,
+    is_ready : () -> bool,
+    id : () -> string,
+    selected : (() -> source(audio=?D, video=?E, midi=?F)?)
+  }
 but it should be a subtype of the type of the value at radio.liq, line 122, char 2-21
- _ * _.{reload : _}
+  _ * _.{reload : _}
 ```
 
 In such cases, we recommend to give a little nudge to the typechecker by using the `(s:source)` type annotation where a list of source is causing the issue. For instance:
 
 ```liquidsoap
 s = fallback([
- (s1:source),
- (s2:source),
- (s3:source)
+  (s1:source),
+  (s2:source),
+  (s3:source)
 ])
 ```
 
@@ -316,9 +316,9 @@ related to the ending and starting track, those are regrouped into a single reco
 
 ```liquidsoap
 def transition(
- ending_dB_level, starting_dB_level,
- ending_metadata, starting_metadata,
- ending_source, starting_source) =
+  ending_dB_level, starting_dB_level,
+  ending_metadata, starting_metadata,
+  ending_source,   starting_source) =
 ...
 end
 ```
@@ -327,9 +327,9 @@ You would now do:
 
 ```liquidsoap
 def transition(ending, starting) =
- # Now you can use:
- # - ending.db_level, ending.metadata, ending.source
- # - starting.db_level, starting.metadata, starting.source
+  # Now you can use:
+  #  - ending.db_level, ending.metadata, ending.source
+  #  - starting.db_level, starting.metadata, starting.source
 ...
 end
 ```

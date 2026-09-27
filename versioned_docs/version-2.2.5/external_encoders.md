@@ -20,10 +20,10 @@ Its syntax is:
 
 ```liquidsoap
 %external(channels=2,samplerate=44100,header=true,
- restart_on_crash=false,
- restart_on_metadata,
- restart_after_delay=30,
- process="progname")
+          restart_on_crash=false,
+          restart_on_metadata,
+          restart_after_delay=30,
+          process="progname")
 ```
 
 The available options are:
@@ -57,6 +57,6 @@ used. For instance, a compressed avi file can be generated with `ffmpeg` using
 
 ```liquidsoap
 output.file(
- %external(process="ffmpeg -i pipe:0 -f avi pipe:1",video=true),
- "/tmp/test.avi", s)
+  %external(process="ffmpeg -i pipe:0 -f avi pipe:1",video=true),
+  "/tmp/test.avi", s)
 ```

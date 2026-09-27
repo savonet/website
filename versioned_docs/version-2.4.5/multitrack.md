@@ -23,7 +23,7 @@ In Liquidsoap, these tracks are made accessible through operators that let you m
 
 Some multitrack features rely on FFmpeg, while others don't:
 
-| Feature | Requires FFmpeg? |
+| Feature                                         | Requires FFmpeg?                 |
 | ----------------------------------------------- | -------------------------------- |
 | Track-level encode/decode | Yes |
 | Encode or decode multiple audio or video tracks | Yes |
@@ -72,13 +72,13 @@ What if you want to **keep both audio tracks**, re-encoding the second one to st
 
 ```liquidsoap
 output.file(
- %ffmpeg(
- %audio.copy,
- %audio_2(channels=2, codec="aac"),
- %video.copy
- ),
- "/path/to/copy.mkv",
- s
+  %ffmpeg(
+    %audio.copy,
+    %audio_2(channels=2, codec="aac"),
+    %video.copy
+  ),
+  "/path/to/copy.mkv",
+  s
 )
 ```
 
@@ -105,10 +105,10 @@ s = playlist("/path/to/playlist")
 
 ```liquidsoap
 output.file(
- fallible=true,
- %ffmpeg(%audio.copy, %audio_2(...), %video.copy),
- "/path/to/copy.mkv",
- s
+  fallible=true,
+  %ffmpeg(%audio.copy, %audio_2(...), %video.copy),
+  "/path/to/copy.mkv",
+  s
 )
 ```
 
@@ -147,10 +147,10 @@ You can then remix these into a new source:
 
 ```liquidsoap
 s = source({
- audio = audio,
- video = video,
- metadata = metadata,
- track_marks = track_marks
+  audio = audio,
+  video = video,
+  metadata = metadata,
+  track_marks = track_marks
 })
 ```
 
@@ -194,9 +194,9 @@ encoded = track.ffmpeg.encode.audio(%ffmpeg(%audio(codec="aac")), audio_track)
 let encoded_audio = track.ffmpeg.encode.audio(..., audio)
 
 s = source({
- audio = encoded_audio,
- metadata = track.metadata(encoded_audio),
- track_marks = track.track_marks(encoded_audio)
+  audio = encoded_audio,
+  metadata = track.metadata(encoded_audio),
+  track_marks = track.track_marks(encoded_audio)
 })
 ```
 
@@ -215,13 +215,13 @@ Priority order:
 
 ```liquidsoap
 output.file(
- %ffmpeg(
- %en(audio_content, codec=audio_codec),
- %fr(codec="aac"),
- %director_cut(video_content, codec=video_codec)
- ),
- "/path/to/copy.mkv",
- s
+  %ffmpeg(
+    %en(audio_content, codec=audio_codec),
+    %fr(codec="aac"),
+    %director_cut(video_content, codec=video_codec)
+  ),
+  "/path/to/copy.mkv",
+  s
 )
 ```
 

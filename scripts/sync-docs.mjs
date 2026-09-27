@@ -175,11 +175,29 @@ function generateFromDocker(contentDir) {
   const script = generatedTargets(VERSION)
     .map((t) => `liquidsoap ${t.cmd} > /out/${t.file}`)
     .join('\n');
+  // The image runs as its own `liquidsoap` user, whose HOME shows up in documented
+  // defaults, so the directory is opened up to it and the user is kept.
   const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'liq-gen-'));
+  fs.chmodSync(outDir, 0o777);
   console.log(`  generating ${FILES.length} files from ${image}`);
+  // SELinux hosts refuse the bind mount unless labelling is disabled.
   execFileSync(
     'docker',
-    ['run', '--rm', '-e', 'PAGER=none', '-v', `${outDir}:/out`, '--entrypoint', 'sh', image, '-c', script],
+    [
+      'run',
+      '--rm',
+      '--security-opt',
+      'label=disable',
+      '-e',
+      'PAGER=none',
+      '-v',
+      `${outDir}:/out`,
+      '--entrypoint',
+      'sh',
+      image,
+      '-c',
+      script,
+    ],
     { stdio: ['ignore', 'inherit', 'inherit'] }
   );
   install(outDir, contentDir, image);

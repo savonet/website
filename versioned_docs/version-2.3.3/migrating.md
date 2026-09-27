@@ -46,7 +46,7 @@ location and then run `liquidsoap --cache-only`:
 ENV LIQ_CACHE_USER_DIR=/path/to/liquidsoap/cache
 
 RUN mkdir -p $LIQ_CACHE_USER_DIR && \
- liquidsoap --cache-only /path/to/script.liq
+    liquidsoap --cache-only /path/to/script.liq
 ```
 
 See [the language page](./language.md#caching) for more details!
@@ -65,7 +65,7 @@ that your transition function is fallible! For instance, this silly transition f
 
 ```liquidsoap
 def transition(_, _) =
- blank(duration=2.)
+  blank(duration=2.)
 end
 ```
 
@@ -75,25 +75,25 @@ Typically, to insert a jingle you would do:
 
 ```liquidsoap
 def transition(old, new) =
- sequence([old.source, single("/path/to/jingle.mp3"), new.source])
+  sequence([old.source, single("/path/to/jingle.mp3"), new.source])
 end
 ```
 
 ### Replaygain {#replaygain}
 
 - There is a new `metadata.replaygain` function that extracts the replay gain value in _dB_ from the metadata.
- It handles both `r128_track_gain` and `replaygain_track_gain` internally and returns a single unified gain value.
+  It handles both `r128_track_gain` and `replaygain_track_gain` internally and returns a single unified gain value.
 
 - The `file.replaygain` function now takes a new compute parameter:
- `file.replaygain(~id=null(), ~compute=true, ~ratio=50., file_name)`.
- The compute parameter determines if gain should be calculated when the metadata does not already contain replaygain tags.
+  `file.replaygain(~id=null(), ~compute=true, ~ratio=50., file_name)`.
+  The compute parameter determines if gain should be calculated when the metadata does not already contain replaygain tags.
 
 - The `enable_replaygain_metadata` function now accepts a compute parameter to control replaygain calculation.
 
 - The `replaygain` function no longer takes an `ebu_r128` parameter. The signature is now simply: `replaygain(~id=null(), s)`.
- Previously, `ebu_r128` allowed controlling whether EBU R128 or standard replaygain was used.
- However, EBU R128 data is now extracted directly from metadata when available.
- So `replaygain` cannot control the gain type via this parameter anymore.
+  Previously, `ebu_r128` allowed controlling whether EBU R128 or standard replaygain was used.
+  However, EBU R128 data is now extracted directly from metadata when available.
+  So `replaygain` cannot control the gain type via this parameter anymore.
 
 ### Regular expressions {#regular-expressions}
 
@@ -172,7 +172,7 @@ To prevent any further breakage of this function, its arguments have been change
 
 ```liquidsoap
 def segment_name(metadata) =
- "#{metadata.stream_name}_#{metadata.position}.#{metadata.extname}"
+  "#{metadata.stream_name}_#{metadata.position}.#{metadata.extname}"
 end
 ```
 
@@ -380,7 +380,7 @@ with
 
 ```liquidsoap
 def add(x,y) =
- x + y
+  x + y
 end
 ```
 
@@ -402,7 +402,7 @@ or
 
 ```liquidsoap
 def suc(x) =
- add(1, x)
+  add(1, x)
 end
 ```
 
@@ -449,7 +449,7 @@ The type of the `auth` function in `input.harbor` has changed. Where before, you
 
 ```liquidsoap
 def auth(user, password) =
- ...
+  ...
 end
 ```
 
@@ -457,9 +457,9 @@ You would now do:
 
 ```liquidsoap
 def auth(params)
- user = params.user
- password = params.password
- ...
+  user     = params.user
+  password = params.password
+  ...
 end
 ```
 
@@ -471,41 +471,41 @@ Now that sources have their own methods, the actual list of methods attached to 
 ```liquidsoap
 At script.liq, line xxx, char yyy-zzz:
 Error 5: this value has type
- _ * source(audio=?A, video=?B, midi=?C)
- .{
- time : () -> float,
- shutdown : () -> unit,
- fallible : bool,
- skip : () -> unit,
- seek : (float) -> float,
- is_active : () -> bool,
- is_up : () -> bool,
- log :
- {level : (() -> int?).{set : ((int) -> unit)}
- },
- self_sync : () -> bool,
- duration : () -> float,
- elapsed : () -> float,
- remaining : () -> float,
- on_track : ((([string * string]) -> unit)) -> unit,
- on_leave : ((() -> unit)) -> unit,
- on_shutdown : ((() -> unit)) -> unit,
- on_metadata : ((([string * string]) -> unit)) -> unit,
- is_ready : () -> bool,
- id : () -> string,
- selected : (() -> source(audio=?D, video=?E, midi=?F)?)
- }
+  _ * source(audio=?A, video=?B, midi=?C)
+  .{
+    time : () -> float,
+    shutdown : () -> unit,
+    fallible : bool,
+    skip : () -> unit,
+    seek : (float) -> float,
+    is_active : () -> bool,
+    is_up : () -> bool,
+    log :
+    {level : (() -> int?).{set : ((int) -> unit)}
+    },
+    self_sync : () -> bool,
+    duration : () -> float,
+    elapsed : () -> float,
+    remaining : () -> float,
+    on_track : ((([string * string]) -> unit)) -> unit,
+    on_leave : ((() -> unit)) -> unit,
+    on_shutdown : ((() -> unit)) -> unit,
+    on_metadata : ((([string * string]) -> unit)) -> unit,
+    is_ready : () -> bool,
+    id : () -> string,
+    selected : (() -> source(audio=?D, video=?E, midi=?F)?)
+  }
 but it should be a subtype of the type of the value at radio.liq, line 122, char 2-21
- _ * _.{reload : _}
+  _ * _.{reload : _}
 ```
 
 In such cases, we recommend to give a little nudge to the typechecker by using the `(s:source)` type annotation where a list of source is causing the issue. For instance:
 
 ```liquidsoap
 s = fallback([
- (s1:source),
- (s2:source),
- (s3:source)
+  (s1:source),
+  (s2:source),
+  (s3:source)
 ])
 ```
 
@@ -528,9 +528,9 @@ related to the ending and starting track, those are regrouped into a single reco
 
 ```liquidsoap
 def transition(
- ending_dB_level, starting_dB_level,
- ending_metadata, starting_metadata,
- ending_source, starting_source) =
+  ending_dB_level, starting_dB_level,
+  ending_metadata, starting_metadata,
+  ending_source,   starting_source) =
 ...
 end
 ```
@@ -539,9 +539,9 @@ You would now do:
 
 ```liquidsoap
 def transition(ending, starting) =
- # Now you can use:
- # - ending.db_level, ending.metadata, ending.source
- # - starting.db_level, starting.metadata, starting.source
+  # Now you can use:
+  #  - ending.db_level, ending.metadata, ending.source
+  #  - starting.db_level, starting.metadata, starting.source
 ...
 end
 ```

@@ -60,17 +60,17 @@ input = mksafe(input.http(url))
 # We also degrade the samplerate, and encode in mono
 # Accordingly, a mono conversion is performed on the input stream
 output.icecast(
- %mp3(bitrate=32, samplerate=22050, stereo=false),
- mount="/your-stream-32.mp3",
- host="streaming.example.com", port=8000, password="xxx",
- mean(input))
+  %mp3(bitrate=32, samplerate=22050, stereo=false),
+  mount="/your-stream-32.mp3",
+  host="streaming.example.com", port=8000, password="xxx",
+  mean(input))
 
 # Second transcoder : MP3 128 kbps using %ffmpeg
 output.icecast(
- %ffmpeg(format="mp3", %audio(codec="libmp3lame", b="128k")),
- mount="/your-stream-128.mp3",
- host="streaming.example.com", port=8000, password="xxx",
- input)
+  %ffmpeg(format="mp3", %audio(codec="libmp3lame", b="128k")),
+  mount="/your-stream-128.mp3",
+  host="streaming.example.com", port=8000, password="xxx",
+  input)
 ```
 
 ## Re-encoding a file {#re-encoding-a-file}
@@ -102,7 +102,7 @@ clock.assign_new(sync="none",[source])
 # Finally, we output the source to an
 # ogg/vorbis file
 output.file(%vorbis, output,fallible=true,
- on_stop=shutdown,source)
+                     on_stop=shutdown,source)
 ```
 
 ## RTMP server {#rtmp-server}
@@ -113,10 +113,10 @@ With our [FFmpeg support](./ffmpeg.md), it is possible to create a simple RTMP s
 s = playlist("...")
 
 enc = %ffmpeg(
- format="flv",
- listen=1,
- %audio.copy,
- %video.copy
+  format="flv",
+  listen=1,
+  %audio.copy,
+  %video.copy
 )
 
 output.url(url="rtmp://host/app/instance", enc, s)
@@ -131,12 +131,12 @@ Sender:
 
 ```liquidsoap
 enc = %ffmpeg(
- format="s16le",
- %audio(
- codec="pcm_s16le",
- ac=2,
- ar=48000
- )
+  format="s16le",
+  %audio(
+    codec="pcm_s16le",
+    ac=2,
+    ar=48000
+  )
 )
 output.srt(enc, s)
 ```
@@ -145,7 +145,7 @@ Receiver:
 
 ```liquidsoap
 s = input.srt(
- content_type="application/ffmpeg;format=s16le,ch_layout=stereo,sample_rate=48000"
+  content_type="application/ffmpeg;format=s16le,ch_layout=stereo,sample_rate=48000"
 )
 ```
 
@@ -154,7 +154,7 @@ s = input.srt(
 ```liquidsoap
 # A fallback switch
 fallback([playlist("http://my/playlist"),
- single("/my/jingle.ogg")])
+          single("/my/jingle.ogg")])
 
 # A scheduler,
 # assuming you have defined the night and day sources
@@ -183,10 +183,10 @@ The parameter of the `find` method follow the following convention:
 
 - `artist="XXX"` looks for files where the artist tag is exactly the given one
 - `artist_contains="XXX"` looks for files where the artist tag contains the
- given string as substring
+  given string as substring
 - `artist_matches="XXX"` looks for files where the artist tag matches the given
- regular expression (for instance `artist_matches="(a)+.*(b)+"` looks for files
- where the artist contains an `a` followed by a `b`).
+  regular expression (for instance `artist_matches="(a)+.*(b)+"` looks for files
+  where the artist contains an `a` followed by a `b`).
 
 The tags for which such parameters are provided are: `artist`, `title`, `album`
 and `filename` (feel free to ask if you need more).
@@ -210,7 +210,7 @@ length 5:
 
 ```liquidsoap
 def p(m)
- string.length(m["artist"]) == 5
+  string.length(m["artist"]) == 5
 end
 l = m.find(predicate=p)
 ```
@@ -259,10 +259,10 @@ Switch to a live show as soon as one is available. Make the show unavailable whe
 
 ```liquidsoap
 stripped_stream =
- blank.strip(input.http("http://myicecast:8080/live.ogg"))
+  blank.strip(input.http("http://myicecast:8080/live.ogg"))
 
 fallback(track_sensitive=false,
- [stripped_stream,blank.strip(normal)])
+         [stripped_stream,blank.strip(normal)])
 ```
 
 Without the `track_sensitive=false` the fallback would wait the end of a track to switch to the live. When using the blank detection operators, make sure to fine-tune their `threshold` and `length` (float) parameters.
@@ -276,9 +276,9 @@ For instance, the following snippet defines a source which repeatedly plays the 
 
 ```liquidsoap
 request.dynamic.list(
- { [request.create("bar:foo",
- indicators=
- process.read.lines("cat "^quote("playlist.pls")))] })
+  { [request.create("bar:foo",
+      indicators=
+        process.read.lines("cat "^quote("playlist.pls")))] })
 ```
 
 Of course a more interesting behaviour is obtained with a more interesting program than `cat`, see [Beets](beet.html) for example.
@@ -287,9 +287,9 @@ Another way of using an external program is to define a new protocol which uses 
 
 ```liquidsoap
 protocol.add("beets", fun(~rlog,~maxtime,arg) ->
- process.read.lines(
- "/home/me/path/to/beet random -f '$path' #{arg}"
- )
+  process.read.lines(
+    "/home/me/path/to/beet random -f '$path' #{arg}"
+  )
 )
 ```
 
@@ -320,14 +320,14 @@ live = input.harbor("live",port=8080,password="hackme")
 
 # fallback
 radio = fallback(track_sensitive=false,
- [live,playlist,emergency])
+                 [live,playlist,emergency])
 
 # output it
 output.icecast(
- %vorbis,
- mount="test",
- host="host",
- radio)
+  %vorbis,
+  mount="test",
+  host="host",
+  radio)
 ```
 
 This script, when launched, will start a local server, here bound to "0.0.0.0". This means that it will listen on any IP address available on the machine for a connection coming from any IP address. The server will wait for any source stream on mount point "/live" to login.
@@ -354,38 +354,38 @@ should_append = ref(false)
 
 # Append 5. of silence when needed.
 fallback_source = append(
- playlist_source, fun (_) ->
- if should_append() then
- should_append := false
- blank(duration=5.)
- else
- source.fail()
- end
+  playlist_source, fun (_) ->
+    if should_append() then
+      should_append := false
+      blank(duration=5.)
+    else
+      source.fail()
+    end
 )
 
 # Transition to live
 def to_live(playlist, live) =
- sequence([playlist,live])
+  sequence([playlist,live])
 end
 
 # Transition back to playlist
 def to_playlist(live, playlist) =
- # Ask to insert a silent track.
- should_append := true
+  # Ask to insert a silent track.
+  should_append := true
 
- # Cancel current track. This will also set the playlist
- # to play a new track. If needed, `cancel_pending` can
- # be used to for a new silent track without skipping the
- # playlist current track.
- fallback_source.skip()
+  # Cancel current track. This will also set the playlist
+  # to play a new track. If needed, `cancel_pending` can
+  # be used to for a new silent track without skipping the
+  # playlist current track.
+  fallback_source.skip()
 
- sequence([live, playlist])
+  sequence([live, playlist])
 end
 
 radio = fallback(
- track_sensitive=false,
- transitions=[to_live, to_playlist],
- [live_source, fallback_source]
+  track_sensitive=false,
+  transitions=[to_live, to_playlist],
+  [live_source, fallback_source]
 )
 ```
 
@@ -420,12 +420,12 @@ recording :
 
 ```liquidsoap
 thread.when(every=3600., pred={ true },
- fun () -> list.iter(fun(msg) -> log(msg, label="archive_cleaner"),
- list.append(
- process.read.lines("find /archive/* -type f -mtime +31 -delete"),
- process.read.lines("find /archive/* -type d -empty -delete")
- )
- )
+    fun () -> list.iter(fun(msg) -> log(msg, label="archive_cleaner"),
+        list.append(
+            process.read.lines("find /archive/* -type f -mtime +31 -delete"),
+            process.read.lines("find /archive/* -type d -empty -delete")
+        )
+    )
 )
 ```
 
@@ -448,10 +448,10 @@ We provide a default operator named `smart_cross` which may be suitable for most
 ```liquidsoap
 # A function to add a source_tag metadata to a source:
 def source_tag(s,tag) =
- def f(_)
- [("source_tag",(tag:string))]
- end
- metadata.map(id=tag,insert_missing=true,f,s)
+  def f(_)
+    [("source_tag",(tag:string))]
+  end
+  metadata.map(id=tag,insert_missing=true,f,s)
 end
 
 # Tag our sources
@@ -463,13 +463,13 @@ radio = rotate(weights = [1,3],[jingles,music])
 
 # Now a custom crossfade transition:
 def transition(a,b)
- # If old or new source is not music, no fade
- if a.metadata["source_tag"] != "music" or a.metadata["source_tag"] != "music" then
- sequence([a.source, b.source])
- else
- # Else, apply the standard smart transition
- cross.smart(a, b)
- end
+  # If old or new source is not music, no fade
+  if a.metadata["source_tag"] != "music" or a.metadata["source_tag"] != "music" then
+    sequence([a.source, b.source])
+  else
+    # Else, apply the standard smart transition
+    cross.smart(a, b)
+  end
 end
 
 # Apply it!

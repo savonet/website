@@ -32,13 +32,13 @@ You can build complex behaviors from simple building blocks. For example:
 
 ```liquidsoap
 radio =
- output.icecast(
- %vorbis, mount="test.ogg",
- random([
- jingle,
- fallback([playlist1, playlist2, playlist3])
- ])
- )
+  output.icecast(
+    %vorbis, mount="test.ogg",
+    random([
+      jingle,
+      fallback([playlist1, playlist2, playlist3])
+    ])
+  )
 ```
 
 Here’s what’s happening:

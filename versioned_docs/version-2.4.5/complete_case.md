@@ -44,13 +44,13 @@ clock = single("~/radio/clock.ogg")
 # Play user requests if there are any, otherwise one of our playlists, and the
 # default file if anything goes wrong.
 radio =
- fallback(
- [
- request.queue(id="request"),
- switch([({6h-22h}, day), ({22h-6h}, night)]),
- default
- ]
- )
+  fallback(
+    [
+      request.queue(id="request"),
+      switch([({6h-22h}, day), ({22h-6h}, night)]),
+      default
+    ]
+  )
 
 # Add the normal jingles
 radio = random(weights=[1, 5], [jingles, radio])
@@ -62,37 +62,37 @@ radio = mksafe(radio)
 
 # Add the ability to relay live shows
 full =
- fallback(
- track_sensitive=false,
- [input.http("http://localhost:8000/live.ogg"), radio]
- )
+  fallback(
+    track_sensitive=false,
+    [input.http("http://localhost:8000/live.ogg"), radio]
+  )
 
 # Output the full stream in OGG and MP3
 output.icecast(
- %mp3,
- host="localhost",
- port=8000,
- password="hackme",
- mount="radio",
- full
+  %mp3,
+  host="localhost",
+  port=8000,
+  password="hackme",
+  mount="radio",
+  full
 )
 output.icecast(
- %vorbis,
- host="localhost",
- port=8000,
- password="hackme",
- mount="radio.ogg",
- full
+  %vorbis,
+  host="localhost",
+  port=8000,
+  password="hackme",
+  mount="radio.ogg",
+  full
 )
 
 # Output the stream without live in OGG
 output.icecast(
- %vorbis,
- host="localhost",
- port=8000,
- password="hackme",
- mount="radio_nolive.ogg",
- radio
+  %vorbis,
+  host="localhost",
+  port=8000,
+  password="hackme",
+  mount="radio_nolive.ogg",
+  radio
 )
 ```
 
@@ -102,5 +102,5 @@ To test the transition to a live show, start a new stream on the `live.ogg` moun
 
 ```liquidsoap
 liquidsoap 'output.icecast(%vorbis, \
- mount="live.ogg",host="...",password="...",input.alsa())'
+  mount="live.ogg",host="...",password="...",input.alsa())'
 ```

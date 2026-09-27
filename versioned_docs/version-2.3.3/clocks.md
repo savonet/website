@@ -162,9 +162,9 @@ create two jingle sources, one for each clock:
 
 ```liquidsoap
 music = rotate([1,10],[playlist("jingles.lst"),
- playlist("remote.lst")])
-safe = rotate([1,10],[playlist("jingles.lst"),
- single("local.ogg")])
+                       playlist("remote.lst")])
+safe  = rotate([1,10],[playlist("jingles.lst"),
+                       single("local.ogg")])
 q = fallback([crossfade(music),safe])
 ```
 
@@ -269,8 +269,8 @@ output.icecast(%mp3,mount="blah",icecast_source)
 
 # File output:
 output.file(
- %mp3,{time.string("record-%Y-%m-%d-%H-%M-%S.mp3")},
- input)
+  %mp3,{time.string("record-%Y-%m-%d-%H-%M-%S.mp3")},
+  input)
 ```
 
 Here, the soundcard input and file output end up in the OSS
@@ -305,9 +305,9 @@ and observe that it fully exploits two cores:
 
 ```liquidsoap
 def one()
- s = single(argv(1))
- clock.assign_new(sync="none",[s])
- output.file(%mp3,"/dev/null",s)
+  s = single(argv(1))
+  clock.assign_new(sync="none",[s])
+  output.file(%mp3,"/dev/null",s)
 end
 one()
 one()

@@ -13,16 +13,16 @@ vorbis as codecs for audio and video) you can simply type:
 s = single("video.mp4")
 
 output.icecast(
- %ffmpeg(
- format = "ogg",
- %audio(codec = "libvorbis"),
- %video(codec = "libtheora")
- ),
- host="localhost",
- port=8000,
- password="hackme",
- mount="/videostream",
- s
+  %ffmpeg(
+    format = "ogg",
+    %audio(codec = "libvorbis"),
+    %video(codec = "libtheora")
+  ),
+  host="localhost",
+  port=8000,
+  password="hackme",
+  mount="/videostream",
+  s
 )
 ```
 
@@ -54,23 +54,23 @@ We provide some default values. They are all `16:9` ratio using a virtual canvas
 # Standard video canvas based off a `10k` virtual canvas.
 # @category Source / Video processing
 def video.canvas.virtual_10k =
- def make(width, height) =
- video.canvas.make(
- virtual_width=10000,
- actual_size={width=width, height=height},
- font_size=160
- )
- end
+  def make(width, height) =
+    video.canvas.make(
+      virtual_width=10000,
+      actual_size={width=width, height=height},
+      font_size=160
+    )
+  end
 
- {
- actual_360p=make(640, 360),
- actual_480p=make(640, 480),
- actual_720p=make(1280, 720),
- actual_1080p=make(1920, 1080),
- actual_1440p=make(2560, 1440),
- actual_4k=make(3840, 2160),
- actual_8k=make(7680, 4320)
- }
+  {
+    actual_360p=make(640, 360),
+    actual_480p=make(640, 480),
+    actual_720p=make(1280, 720),
+    actual_1080p=make(1920, 1080),
+    actual_1440p=make(2560, 1440),
+    actual_4k=make(3840, 2160),
+    actual_8k=make(7680, 4320)
+  }
 end
 ```
 
@@ -99,25 +99,25 @@ video.frame.width := width
 video.frame.height := height
 
 background =
- video.add_image(
- x=0.3 @ vw,
- y=0.01 @ vh,
- width=1562 @ px,
- height=1562 @ px,
- file="/path/to/cover.jpg",
- background
- )
+  video.add_image(
+    x=0.3 @ vw,
+    y=0.01 @ vh,
+    width=1562 @ px,
+    height=1562 @ px,
+    file="/path/to/cover.jpg",
+    background
+  )
 
 background =
- video.add_text(
- color=0xFCB900,
- speed=0,
- x=234 @ px,
- y=4437 @ px,
- size=1.5 @ rem,
- "Some text",
- background
- )
+  video.add_text(
+    color=0xFCB900,
+    speed=0,
+    x=234 @ px,
+    y=4437 @ px,
+    size=1.5 @ rem,
+    "Some text",
+    background
+  )
 # END
 
 output.dummy(fallible=true, background)
@@ -135,26 +135,26 @@ The syntax for the encoder is detailed in the [encoders page](./encoding_formats
 ```liquidsoap
 # AC3 audio and H264 video encapsulated in a MPEG-TS bitstream
 %ffmpeg(format="mpegts",
- %audio(codec="ac3",channel_coupling=0),
- %video(codec="libx264",b="2600k",
- "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
- preset="ultrafast"))
+  %audio(codec="ac3",channel_coupling=0),
+  %video(codec="libx264",b="2600k",
+         "x264-params"="scenecut=0:open_gop=0:min-keyint=150:keyint=150",
+         preset="ultrafast"))
 
 # AAC audio and H264 video encapsulated in a mp4 file (to use with
 # `output.file` only, mp4 container cannot be streamed!
 %ffmpeg(format="mp4",
- %audio(codec="aac"),
- %video(codec="libx264",b="2600k"))
+  %audio(codec="aac"),
+  %video(codec="libx264",b="2600k"))
 
 # Ogg opus and theora encappsulated in an ogg bitstream
 %ffmpeg(format="ogg",
- %audio(codec="libopus"),
- %video(codec="libtheora"))
+  %audio(codec="libopus"),
+  %video(codec="libtheora"))
 
 # Ogg opus and VP8 video encapsulated in a webm bitstream
 %ffmpeg(format="webm",
- %audio(codec="libopus"),
- %video(codec="libvpx"))
+  %audio(codec="libopus"),
+  %video(codec="libvpx"))
 ```
 
 ### Streaming with FFmpeg {#streaming-with-ffmpeg}
@@ -219,11 +219,11 @@ Adding scrolling text at the bottom of your video is as easy as
 ```liquidsoap title="video-text.liq"
 s = blank()
 s =
- video.add_text.sdl(
- font="/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
- "Hello world!",
- s
- )
+  video.add_text.sdl(
+    font="/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
+    "Hello world!",
+    s
+  )
 output.dummy(fallible=true, s)
 ```
 
@@ -279,10 +279,10 @@ unmask = video.frei0r.invert0r(mask)
 
 # Put the pixellized face over the video
 s =
- video.frei0r.addition(
- video.frei0r.multiply(mask, censored),
- video.frei0r.multiply(unmask, cam)
- )
+  video.frei0r.addition(
+    video.frei0r.multiply(mask, censored),
+    video.frei0r.multiply(unmask, cam)
+  )
 
 # We have to bufferize the source
 s = buffer(buffer=0.1, mksafe(s))

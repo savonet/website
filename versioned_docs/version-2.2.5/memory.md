@@ -42,8 +42,8 @@ Typically, to change the garbage collector parameters, one can do:
 # This results in a slightly increased
 # CPU usage and reduced memory usage.
 runtime.gc.set(runtime.gc.get().{
- space_overhead = 20,
- allocation_policy = 2
+  space_overhead = 20,
+  allocation_policy = 2
 })
 ```
 

@@ -35,68 +35,68 @@ Category: Source / Input
 Parameters:
 
  * id : string? (default: null)
- Force the value of the source ID.
+     Force the value of the source ID.
 
  * amplitude : {float} (default: 1.)
- Maximal value of the waveform.
+     Maximal value of the waveform.
 
  * duration : float (default: -1.)
- Duration in seconds (negative means infinite).
+     Duration in seconds (negative means infinite).
 
  * (unlabeled) : {float} (default: 440.)
- Frequency of the sine.
+     Frequency of the sine.
 
 Methods:
 
  * fallible : bool
- Indicate if a source may fail, i.e. may not be ready to stream.
+     Indicate if a source may fail, i.e. may not be ready to stream.
 
  * id : () -> string
- Identifier of the source.
+     Identifier of the source.
 
  * is_active : () -> bool
- `true` if the source is active, i.e. it is continuously animated by its
- own clock whenever it is ready. Typically, `true` for outputs and
- sources such as `input.http`.
+     `true` if the source is active, i.e. it is continuously animated by its
+     own clock whenever it is ready. Typically, `true` for outputs and
+     sources such as `input.http`.
 
  * is_ready : () -> bool
- Indicate if a source is ready to stream. This does not mean that the
- source is currently streaming, just that its resources are all properly
- initialized.
+     Indicate if a source is ready to stream. This does not mean that the
+     source is currently streaming, just that its resources are all properly
+     initialized.
 
  * is_up : () -> bool
- Indicate that the source can be asked to produce some data at any time.
- This is `true` when the source is currently being used or if it could be
- used at any time, typically inside a `switch` or `fallback`.
+     Indicate that the source can be asked to produce some data at any time.
+     This is `true` when the source is currently being used or if it could be
+     used at any time, typically inside a `switch` or `fallback`.
 
  * on_leave : ((() -> unit)) -> unit
- Register a function to be called when source is not used anymore by
- another source.
+     Register a function to be called when source is not used anymore by
+     another source.
 
  * on_metadata : ((([string * string]) -> unit)) -> unit
- Call a given handler on metadata packets.
+     Call a given handler on metadata packets.
 
  * on_shutdown : ((() -> unit)) -> unit
- Register a function to be called when source shuts down.
+     Register a function to be called when source shuts down.
 
  * on_track : ((([string * string]) -> unit)) -> unit
- Call a given handler on new tracks.
+     Call a given handler on new tracks.
 
  * remaining : () -> float
- Estimation of remaining time in the current track.
+     Estimation of remaining time in the current track.
 
  * seek : (float) -> float
- Seek forward, in seconds (returns the amount of time effectively
- seeked).
+     Seek forward, in seconds (returns the amount of time effectively
+     seeked).
 
  * self_sync : () -> bool
- Is the source currently controlling its own real-time loop.
+     Is the source currently controlling its own real-time loop.
 
  * skip : () -> unit
- Skip to the next track.
+     Skip to the next track.
 
  * time : () -> float
- Get a source's time, based on its assigned clock.
+     Get a source's time, based on its assigned clock.
 ```
 
 Of course if you do not know what function you need, you'd better go

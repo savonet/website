@@ -6,18 +6,18 @@ sidebar_label: "FAQ"
 ## Contents {#contents}
 
 - [Error messages](#error-messages)
- - [Type error](#type-error)
- - [That source is fallible!](#that-source-is-fallible)
- - [Clock error](#clock-error)
- - [We must catchup x.xx!](#we-must-catchup-xxx)
- - [Unable to decode a file](#unable-to-decode-a-file)
- - [Runtime exceptions](#runtime-exceptions)
- - [Crashes](#crashes)
+  - [Type error](#type-error)
+  - [That source is fallible!](#that-source-is-fallible)
+  - [Clock error](#clock-error)
+  - [We must catchup x.xx!](#we-must-catchup-xxx)
+  - [Unable to decode a file](#unable-to-decode-a-file)
+  - [Runtime exceptions](#runtime-exceptions)
+  - [Crashes](#crashes)
 - [Troubleshooting](#troubleshooting)
- - [PulseAudio](#pulseaudio)
- - [Listeners are disconnected at the end of every track](#listeners-are-disconnected-at-the-end-of-every-track)
- - [Encoding blank](#encoding-blank)
- - [Temporary files](#temporary-files)
+  - [PulseAudio](#pulseaudio)
+  - [Listeners are disconnected at the end of every track](#listeners-are-disconnected-at-the-end-of-every-track)
+  - [Encoding blank](#encoding-blank)
+  - [Temporary files](#temporary-files)
 
 ## Error messages {#error-messages}
 
@@ -32,9 +32,9 @@ A type error can also indicate that you're trying to use a source of a certain c
 ```
 At ...:
 Error 5: this value has type
- source(video=canvas(_),...)
+  source(video=canvas(_),...)
 but it should be a subtype of
- source(audio=pcm(_),...)
+  source(audio=pcm(_),...)
 ```
 
 Sometimes, a type error indicates a mistake in the order or labels of arguments. For example, given `output.icecast(mount="foo.ogg",source)` liquidsoap will complain that the second argument is a source (`source(?A)`) but should be a format (`format(?A)`): indeed, the first unlabelled argument is expected to be the encoding format, e.g., `%vorbis`, and the source comes second.
@@ -44,9 +44,9 @@ Finally, a type error can indicate that you have forgotten to pass a mandatory p
 ```
 At line ...:
 Error 5: this value has type
- [(?id : _, audio : _) -> _]
+  [(?id : _, audio : _) -> _]
 but it should be a subtype of the type of the value at ../libs/switches.liq, line 11, char 11-18
- [source(_)] (inferred at ../libs/list.liq, line 102, char 29)
+  [source(_)] (inferred at ../libs/list.liq, line 102, char 29)
 ```
 
 Indeed, `fallback` expects a source, but `source.mux.audio(x)` is still a function expecting the `audio` parameter.
@@ -157,8 +157,8 @@ There are two ways to address this:
 ```
 **** List of PLAYBACK Hardware Devices ****
 card 0: Intel [HDA Intel], device 0: STAC92xx Analog [STAC92xx Analog]
- Subdevices: 1/1
- Subdevice #0: subdevice #0
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
 ```
 
 In this case the card is device `0`, subdevice `0`, i.e. `hw:0,0`. Create a file
@@ -166,8 +166,8 @@ In this case the card is device `0`, subdevice `0`, i.e. `hw:0,0`. Create a file
 
 ```liquidsoap
 pcm.liquidsoap {
- type plug
- slave { pcm "hw:0,0" }
+        type plug
+        slave { pcm "hw:0,0" }
 }
 ```
 

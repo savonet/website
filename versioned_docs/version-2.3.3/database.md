@@ -27,17 +27,17 @@ our database to store metadata for files so that we create a table named
 
 ```liquidsoap title="sqlite.liq"
 db.table.create(
- "metadata",
- preserve=true,
- [
- (
- "filename",
- "STRING PRIMARY KEY"
- ),
- ("artist", "STRING"),
- ("title", "STRING"),
- ("year", "INT")
- ]
+  "metadata",
+  preserve=true,
+  [
+    (
+      "filename",
+      "STRING PRIMARY KEY"
+    ),
+    ("artist", "STRING"),
+    ("title", "STRING"),
+    ("year", "INT")
+  ]
 )
 
 ```
@@ -47,24 +47,24 @@ argument the table and a record containing the data for the row:
 
 ```liquidsoap title="sqlite.liq"
 db.insert(
- table="metadata",
- {
- artist="Naps",
- title=
- "Best life",
- year=2021,
- filename="naps.mp3"
- }
+  table="metadata",
+  {
+    artist="Naps",
+    title=
+      "Best life",
+    year=2021,
+    filename="naps.mp3"
+  }
 )
 db.insert(
- table="metadata",
- {
- artist="Orelsan",
- title=
- "L'odeur de l'essence",
- year=2021,
- filename="orelsan.mp3"
- }
+  table="metadata",
+  {
+    artist="Orelsan",
+    title=
+      "L'odeur de l'essence",
+    year=2021,
+    filename="orelsan.mp3"
+  }
 )
 
 ```
@@ -80,11 +80,11 @@ the files whose year is posterior to 2000, we can write
 
 ```liquidsoap title="sqlite.liq"
 l =
- db.select(
- table="metadata",
- where=
- "year >= 2000"
- )
+  db.select(
+    table="metadata",
+    where=
+      "year >= 2000"
+  )
 
 ```
 
@@ -94,11 +94,11 @@ In the case where you want to use strings in your queries, you should always use
 ```liquidsoap title="sqlite.liq"
 find_artist = "Brassens"
 l' =
- db.select(
- table="metadata",
- where=
- "artist = #{sqlite.escape(find_artist)}"
- )
+  db.select(
+    table="metadata",
+    where=
+      "artist = #{sqlite.escape(find_artist)}"
+  )
 
 ```
 
@@ -107,14 +107,14 @@ list of pairs strings consisting of
 
 - a string: the name of the column,
 - a nullable string: its value (this is nullable because the contents of a
- column can be NULL in databases).
+  column can be NULL in databases).
 
 We could thus extract the filenames from the above queries and use those in
 order to build a playlist as follows:
 
 ```liquidsoap title="sqlite.liq"
 files =
- list.map(fun (row) -> null.get(list.assoc("filename", row.to_list())), l)
+  list.map(fun (row) -> null.get(list.assoc("filename", row.to_list())), l)
 s = playlist.list(files)
 output(s)
 
@@ -141,10 +141,10 @@ written as
 
 ```liquidsoap title="sqlite.liq"
 def f(row) =
- let sqlite.row (r :
- {filename: string, artist: string, title: string, year: int}
- ) = row
- r.filename
+  let sqlite.row (r :
+    {filename: string, artist: string, title: string, year: int}
+  ) = row
+  r.filename
 end
 files = list.map(f, l)
 s = playlist.list(files)
@@ -156,33 +156,33 @@ Other useful methods include
 
 - `count` to count the number of rows satisfying a condition
 
- ```{.liquidsoap include="sqlite.liq" from="count-begin" to="count-end"}
+  ```{.liquidsoap include="sqlite.liq" from="count-begin" to="count-end"}
 
- ```
+  ```
 
 - `delete` to delete rows from a table
 
- ```{.liquidsoap include="sqlite.liq" from="play-begin" to="play-end"}
+  ```{.liquidsoap include="sqlite.liq" from="play-begin" to="play-end"}
 
- ```
+  ```
 
 - `table.drop` to delete tables from the database
 
- ```{.liquidsoap include="sqlite.liq" from="drop-begin" to="drop-end"}
+  ```{.liquidsoap include="sqlite.liq" from="drop-begin" to="drop-end"}
 
- ```
+  ```
 
 - `exec` to execute an arbitrary SQL query which does not return anything:
 
- ```{.liquidsoap include="sqlite.liq" from="exec-begin" to="exec-end"}
+  ```{.liquidsoap include="sqlite.liq" from="exec-begin" to="exec-end"}
 
- ```
+  ```
 
 - `query` to execute an arbitrary SQL query returning rows
 
- ```{.liquidsoap include="sqlite.liq" from="query-begin" to="query-end"}
+  ```{.liquidsoap include="sqlite.liq" from="query-begin" to="query-end"}
 
- ```
+  ```
 
 Finally, if your aim is to index file metadata, you might be interested in the
 `medialib.sqlite`{.liquidsoap} operator which is implemented in the standard

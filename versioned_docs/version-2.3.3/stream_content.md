@@ -91,10 +91,10 @@ For example, if you try to send an ALSA input to a SDL input using
 
 ```
 At line 1, char 22-23:
- this value has type
- source(audio=pcm('a))
- but it should be a subtype of
- source(video=canvas)
+  this value has type
+    source(audio=pcm('a))
+  but it should be a subtype of
+    source(video=canvas)
 ```
 
 It means that a source with a video channel was expected
@@ -114,16 +114,16 @@ s = single("file.mp4")
 
 # Output video here
 output.file(
- %ffmpeg(%video(codec="libx264"),
- "/path/to/video.flv",
- s
+  %ffmpeg(%video(codec="libx264"),
+  "/path/to/video.flv",
+  s
 )
 
 # Output audio here
 output.file(
- %ffmpeg(%audio(codec="aac"))
- "/path/to/video.aac",
- s
+  %ffmpeg(%audio(codec="aac"))
+  "/path/to/video.aac",
+  s
 )
 ```
 
@@ -137,16 +137,16 @@ s = single("file.mp4")
 
 # Output video here
 output.file(
- %ffmpeg(%video(codec="libx264"),
- "/path/to/video.flv",
- source.drop.audio(s)
+  %ffmpeg(%video(codec="libx264"),
+  "/path/to/video.flv",
+  source.drop.audio(s)
 )
 
 # Output audio here
 output.file(
- %ffmpeg(%audio(codec="aac"))
- "/path/to/video.aac",
- source.drop.video(s)
+  %ffmpeg(%audio(codec="aac"))
+  "/path/to/video.aac",
+  source.drop.video(s)
 )
 ```
 

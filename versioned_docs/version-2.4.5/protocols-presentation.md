@@ -62,14 +62,14 @@ Let’s say your files live on Amazon S3, and you want Liquidsoap to fetch them 
 
 ```liquidsoap
 def s3_protocol(~rlog, ~maxtime, arg) =
- extname = file.extension(leading_dot=false, dir_sep="/", arg)
- process.uri(extname=extname,
- "aws s3 cp s3:#{arg} $(output)")
+  extname = file.extension(leading_dot=false, dir_sep="/", arg)
+  process.uri(extname=extname,
+              "aws s3 cp s3:#{arg} $(output)")
 end
 
 protocol.add("s3", s3_protocol,
- doc="Fetch files from S3 using the AWS CLI",
- syntax="s3://bucket/path/to/file")
+             doc="Fetch files from S3 using the AWS CLI",
+             syntax="s3://bucket/path/to/file")
 ```
 
 Now a request like:
@@ -86,11 +86,11 @@ Protocols can also be dynamic. For instance, you might store file paths in a dat
 
 ```liquidsoap
 def db_lookup_protocol(~rlog, ~maxtime, arg) =
- string.trim(process.read("psql -t -c 'SELECT path FROM tracks WHERE id=#{int_of_string(arg)};'"))
+  string.trim(process.read("psql -t -c 'SELECT path FROM tracks WHERE id=#{int_of_string(arg)};'"))
 end
 
 protocol.add("db_lookup", db_lookup_protocol,
- doc="Fetch file path from database by track ID")
+             doc="Fetch file path from database by track ID")
 ```
 
 Now you can request:
@@ -107,13 +107,13 @@ Want to normalize audio before playing? Or apply a voice-over?
 
 ```liquidsoap
 def normalize_protocol(~rlog, ~maxtime, arg) =
- process.uri(extname="wav",
- uri=arg,
- "normalize-audio $(input) $(output)")
+  process.uri(extname="wav",
+              uri=arg,
+              "normalize-audio $(input) $(output)")
 end
 
 protocol.add("normalize", normalize_protocol,
- doc="Normalize audio levels before playback")
+             doc="Normalize audio levels before playback")
 ```
 
 You can chain protocols too:
@@ -139,9 +139,9 @@ voiceover:normalize:db_lookup:1234
 - Always **respect `~maxtime`** to avoid long-hanging processes.
 - Use `~rlog` generously for debugging:
 
- ```liquidsoap
- rlog("Downloading from S3: #{arg}")
- ```
+  ```liquidsoap
+  rlog("Downloading from S3: #{arg}")
+  ```
 
 - Keep your commands secure — if you interpolate `arg` into a shell command, validate or escape it.
 - Test each piece of the chain independently before combining them.

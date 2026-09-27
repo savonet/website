@@ -180,7 +180,7 @@ As follows:
 
 ```
 % liquidsoap --no-stdlib -i /path/to/script.liq
-x : int
+x     : int
 42
 No output defined, nothing to do.
 ```
@@ -209,7 +209,7 @@ Try this:
 
 ```liquidsoap
 def double(s)
- s ^ s
+  s ^ s
 end
 print(double("foo"))
 ```
@@ -224,9 +224,9 @@ A simple example:
 
 ```liquidsoap
 if "foo"=="bar" then
- print("This is madness.")
+  print("This is madness.")
 else
- print("Phew.")
+  print("Phew.")
 end
 ```
 
@@ -234,11 +234,11 @@ It can also be written as follows:
 
 ```liquidsoap
 print(
- if "foo"=="bar" then
- "This is madness."
- else
- "Phew."
- end)
+  if "foo"=="bar" then
+    "This is madness."
+  else
+    "Phew."
+  end)
 ```
 
 Now, define the variable `message` to be the correct message depending
@@ -257,8 +257,8 @@ Here is a function that prints the date and returns 42:
 
 ```liquidsoap
 def f()
- print(get_process_output("date"))
- 42
+  print(get_process_output("date"))
+  42
 end
 # Let's use it:
 print(f())

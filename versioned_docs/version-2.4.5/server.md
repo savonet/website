@@ -199,11 +199,11 @@ content:
 #!/bin/sh
 # We test if the file is a socket, readable and writable.
 if [ -S /path/to/socket ] && [ -w /path/to/socket ] && \
- [ -r /path/to/socket ]; then
- socat /path/to/socket -
+   [ -r /path/to/socket ]; then
+  socat /path/to/socket -
 else
 # If not, we exit..
- exit 1
+  exit 1
 fi
 ```
 
@@ -231,7 +231,7 @@ individual files in /usr/share/doc/*/copyright.
 
 Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
-Last login: Tue Oct 5 11:26:52 2010 from localhost
+Last login: Tue Oct  5 11:26:52 2010 from localhost
 help
 Available commands:
 (...)

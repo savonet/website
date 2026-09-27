@@ -70,17 +70,17 @@ The solution: add an **explicit type annotation** to your parse statement. The t
 
 ```liquidsoap
 let json.parse ({
- name,
- version,
- scripts = {
- test
- }
+  name,
+  version,
+  scripts = {
+    test
+  }
 } : {
- name: string,
- version: string,
- scripts: {
- test: string
- }
+  name: string,
+  version: string,
+  scripts: {
+    test: string
+  }
 }) = file.contents("/path/to/package.json")
 ```
 
@@ -92,11 +92,11 @@ Liquidsoap’s JSON parser uses a rich type system that maps onto JSON’s struc
 
 ### ** Ground Types** {#ground-types}
 
-| Type | Description | Example value |
+| Type     | Description                  | Example value     |
 | -------- | ---------------------------- | ----------------- |
-| `string` | A sequence of characters | `"hello"` |
-| `int` | An integer | `42` |
-| `float` | A number, including decimals | `3.14` or `123.0` |
+| `string` | A sequence of characters     | `"hello"`         |
+| `int`    | An integer                   | `42`              |
+| `float`  | A number, including decimals | `3.14` or `123.0` |
 
 Liquidsoap will coerce integers into floats if needed (e.g. `123` can be a `float`).
 
@@ -105,18 +105,18 @@ Liquidsoap will coerce integers into floats if needed (e.g. `123` can be a `floa
 Add `?` to make a type optional:
 
 ```liquidsoap
-test: string? # test is either a string or null
+test: string?  # test is either a string or null
 ```
 
 Useful when parsing data that may or may not include a field:
 
 ```liquidsoap
 let json.parse ({
- scripts
+  scripts
 } : {
- scripts: {
- test: string?
- }?
+  scripts: {
+    test: string?
+  }?
 }) = file.contents("package.json")
 ```
 
@@ -125,11 +125,11 @@ You can check for presence using:
 ```liquidsoap
 # Option 1: Explicit check
 test =
- if null.defined(scripts) then
- null.get(scripts.test)
- else
- null()
- end
+  if null.defined(scripts) then
+    null.get(scripts.test)
+  else
+    null()
+  end
 
 # Option 2: Fallback value
 test = (scripts ?? { test = null }).test
@@ -150,7 +150,7 @@ This parses a JSON array like `[1, 2.5, "hello"]`.
 Use `_` as a wildcard to ignore types you don’t care about:
 
 ```liquidsoap
-(_ * _ * float) # Only the third element must be a float
+(_ * _ * float)  # Only the third element must be a float
 ```
 
 ---
@@ -160,8 +160,8 @@ Use `_` as a wildcard to ignore types you don’t care about:
 To parse a JSON array of values of the same type, use brackets:
 
 ```liquidsoap
-[int] # list of integers
-[float?] # list of optional floats
+[int]     # list of integers
+[float?]  # list of optional floats
 ```
 
 Example:
@@ -232,10 +232,10 @@ Parsing errors raise a `error.json` exception:
 
 ```liquidsoap
 try
- let json.parse ({status, data = {track}} : {...}) = response
- # Do something with data
+  let json.parse ({status, data = {track}} : {...}) = response
+  # Do something with data
 catch err: [error.json] do
- # Handle the parse failure
+  # Handle the parse failure
 end
 ```
 
@@ -245,34 +245,34 @@ end
 
 ```liquidsoap
 data = '{
- "foo": 34.24,
- "gni gno": true,
- "nested": {
- "tuple": [123, 3.14, false],
- "list": [44.0, 55, 66.12],
- "nullable_list": [12.33, 23, "aabb"],
- "object_as_list": {
- "foo": 123,
- "gni": 456.0,
- "gno": 3.14
- },
- "arbitrary object key ": true
- }
+  "foo": 34.24,
+  "gni gno": true,
+  "nested": {
+    "tuple": [123, 3.14, false],
+    "list":  [44.0, 55, 66.12],
+    "nullable_list": [12.33, 23, "aabb"],
+    "object_as_list": {
+      "foo": 123,
+      "gni": 456.0,
+      "gno": 3.14
+    },
+    "arbitrary object key ✨": true
+  }
 }'
 
 let json.parse (x :
- {
- foo: float,
- "gni gno" as gni_gno: bool,
- nested: {
- tuple: (_ * float),
- list: [float],
- nullable_list: [int?],
- object_as_list: [(string * float)] as json.object,
- "arbitrary object key " as arbitrary_key: bool,
- not_present: bool?
- }
- }
+  {
+    foo: float,
+    "gni gno" as gni_gno: bool,
+    nested: {
+      tuple: (_ * float),
+      list: [float],
+      nullable_list: [int?],
+      object_as_list: [(string * float)] as json.object,
+      "arbitrary object key ✨" as arbitrary_key: bool,
+      not_present: bool?
+    }
+  }
 ) = data
 ```
 
@@ -309,12 +309,12 @@ can also use `json.value`:
 
 ```liquidsoap
 try
- # Send a number here:
- id = 1234
- res.json(json.value(id))
+  # Send a number here:
+  id = 1234
+  res.json(json.value(id))
 catch err do
- # Or a string in case of an error:
- res.json(json.value("Error while processing request: #{err}"))
+  # Or a string in case of an error:
+  res.json(json.value("Error while processing request: #{err}"))
 end
 ```
 

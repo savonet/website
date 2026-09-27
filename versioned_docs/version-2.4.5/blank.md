@@ -30,10 +30,10 @@ live = input.pulseaudio()
 interlude = single("/path/to/sorryfortheblank.ogg")
 
 # After 5 sec of blank the microphone stream is ignored, which causes the stream
-# to fallback to interlude. As soon as noise comes back to the microphone the
+# to fallback to interlude.  As soon as noise comes back to the microphone the
 # stream comes back to the live -- thanks to track_sensitive=false.
 stream =
- fallback(track_sensitive=false, [blank.strip(max_blank=5., live), interlude])
+  fallback(track_sensitive=false, [blank.strip(max_blank=5., live), interlude])
 
 # Put that stream to a local file
 output.file(%vorbis, "/tmp/hop.ogg", stream)
@@ -47,9 +47,9 @@ have `blank.detect`:
 
 ```liquidsoap title="blank-detect.liq"
 def handler() =
- process.run(
- "/path/to/your/script to do whatever you want"
- )
+  process.run(
+    "/path/to/your/script to do whatever you want"
+  )
 end
 s = blank.detect(s)
 s.on_blank(synchronous=false, handler)

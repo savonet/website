@@ -8,15 +8,15 @@ yaml-based syntax, i.e.:
 
 ```liquidsoap
 let yaml.parse ({
- name,
- version,
- scripts,
+  name,
+  version,
+  scripts,
 } : {
- name: string,
- version: string,
- scripts: {
- test: string?
- }?
+  name: string,
+  version: string,
+  scripts: {
+    test: string?
+  }?
 }) = file.contents("/path/to/file.yaml")
 ```
 

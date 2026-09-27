@@ -107,10 +107,10 @@ We are now going to send an audio stream, encoded as Ogg Vorbis, to an Icecast s
 
 ```liquidsoap
 liquidsoap \
- 'output.icecast(%vorbis,
- host = "localhost", port = 8000,
- password = "hackme", mount = "liq.ogg",
- mksafe(playlist("playlist.m3u")))'
+  'output.icecast(%vorbis,
+     host = "localhost", port = 8000,
+     password = "hackme", mount = "liq.ogg",
+     mksafe(playlist("playlist.m3u")))'
 ```
 
 The main difference with the previous is that we used `output.icecast` instead of `output`. The second difference is the use of the `mksafe` which turns your fallible playlist source into an infallible source.
@@ -119,14 +119,14 @@ If you want to use HLS instead for streaming, you can do:
 
 ```liquidsoap
 liquidsoap \
- 'output.file.hls(
- "/path/to/hls/directory",
- [("aac",
- %ffmpeg(
- format="mpegts",
- %audio(codec="aac", b="128k")
- ))],
- mksafe(playlist("playlist.m3u")))'
+  'output.file.hls(
+    "/path/to/hls/directory",
+    [("aac",
+      %ffmpeg(
+        format="mpegts",
+        %audio(codec="aac", b="128k")
+      ))],
+     mksafe(playlist("playlist.m3u")))'
 ```
 
 Once started, this will place all the files required for HLS stream into the local path `"/path/to/hls/directory"` which you can then server over HTTP.
@@ -138,7 +138,7 @@ Liquidsoap can use another stream as an audio source. This may be useful if you 
 
 ```liquidsoap
 liquidsoap \
- 'output(input.http("https://icecast.radiofrance.fr/fip-hifi.aac"))'
+  'output(input.http("https://icecast.radiofrance.fr/fip-hifi.aac"))'
 ```
 
 ### Input from the soundcard {#input-from-the-soundcard}
@@ -166,7 +166,7 @@ liquidsoap 'output(normalize(playlist("playlist_file")))'
 ```liquidsoap
 # ... same, but also add smart cross-fading
 liquidsoap 'output(crossfade(
- normalize(playlist("playlist_file"))))'
+              normalize(playlist("playlist_file"))))'
 ```
 
 ## Script files {#script-files}
@@ -226,12 +226,12 @@ radio = fallback(track_sensitive=false, [radio, security])
 
 # Stream it out
 output.icecast(
- %vorbis,
- host="localhost",
- port=8000,
- password="hackme",
- mount="basic-radio.ogg",
- radio
+  %vorbis,
+  host="localhost",
+  port=8000,
+  password="hackme",
+  mount="basic-radio.ogg",
+  radio
 )
 ```
 

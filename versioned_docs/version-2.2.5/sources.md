@@ -29,11 +29,11 @@ To clarify the picture let's study in more details an example:
 
 ```liquidsoap
 radio =
- output.icecast(
- %vorbis,mount="test.ogg",
- random(
- [ jingle ,
- fallback([ playlist1,playlist2,playlist3 ]) ]))
+  output.icecast(
+    %vorbis,mount="test.ogg",
+    random(
+      [ jingle ,
+        fallback([ playlist1,playlist2,playlist3 ]) ]))
 ```
 
 At every cycle of the [clock](./clocks.md), the output asks the `random` node for data,

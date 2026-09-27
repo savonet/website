@@ -19,8 +19,8 @@ An example is:
 source = single("audiofile.ogg")
 
 output.shoutcast(%mp3, host="shoutcast.example.org",
- port=8000, password="changeme",
- source)
+                     port=8000, password="changeme",
+                     source)
 ```
 
 As usual, `liquidsoap -h output.shoutcast` gives you the full list of options for this operator.
