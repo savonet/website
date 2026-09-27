@@ -1,6 +1,7 @@
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import fs from 'node:fs';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 const versions: string[] = JSON.parse(fs.readFileSync('./versions.json', 'utf8'));
 const lastVersion = versions[0];
@@ -129,6 +130,8 @@ const config: Config = {
 
   themeConfig: {
     image: 'assets/img/og-liquidsoap.png',
+    // palenight, the default, leaves keywords uncoloured; each colour mode gets its own theme.
+    prism: { theme: prismThemes.oneLight, darkTheme: prismThemes.oneDark },
     algolia: {
       appId: '933N0GMR62',
       // Search-only key. Public by design -- it ships to every visitor. The admin key

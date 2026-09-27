@@ -53,7 +53,7 @@ function registerLiquidsoap(Prism) {
             // `rest` is attached below, so interpolated expressions highlight as code.
           },
         },
-        escape: /\\[\s\S]/,
+        escape: { pattern: /\\[\s\S]/, alias: 'char' },
       },
     },
 
