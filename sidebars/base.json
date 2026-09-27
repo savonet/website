@@ -30,6 +30,7 @@
         { "type": "doc", "id": "sources", "label": "Sources" },
         { "type": "doc", "id": "requests", "label": "Requests" },
         { "type": "doc", "id": "clocks", "label": "Clocks" },
+        { "type": "doc", "id": "script_lifecycle", "label": "How scripts run" },
         { "type": "doc", "id": "composition", "label": "Source composition" },
         { "type": "doc", "id": "callbacks", "label": "Callbacks" },
         { "type": "doc", "id": "stream_content", "label": "Stream contents" },
@@ -62,6 +63,7 @@
         { "type": "doc", "id": "dynamic_sources", "label": "Dynamic sources" },
         { "type": "doc", "id": "playlist_parsers", "label": "Playlist parsers" },
         { "type": "doc", "id": "hls_output", "label": "HLS output" },
+        { "type": "doc", "id": "icecast", "label": "Icecast and Shoutcast" },
         { "type": "doc", "id": "shoutcast", "label": "Shoutcast output" },
         { "type": "doc", "id": "icecast_server", "label": "Icecast server" },
         { "type": "doc", "id": "icy_metadata", "label": "ICY metadata" },
@@ -85,6 +87,7 @@
         { "type": "doc", "id": "subtitles", "label": "Subtitles" },
         { "type": "doc", "id": "ladspa", "label": "LADSPA plugins" },
         { "type": "doc", "id": "stereotool", "label": "Stereotool" },
+        { "type": "doc", "id": "external_programs", "label": "External programs" },
         { "type": "doc", "id": "external_decoders", "label": "External decoders" },
         { "type": "doc", "id": "external_encoders", "label": "External encoders" },
         { "type": "doc", "id": "gstreamer_encoder", "label": "GStreamer encoder" }
@@ -118,6 +121,7 @@
       "items": [
         { "type": "doc", "id": "in_production", "label": "In production" },
         { "type": "doc", "id": "memory", "label": "Memory management" },
+        { "type": "doc", "id": "performance", "label": "Performance and monitoring" },
         { "type": "doc", "id": "profiling", "label": "Profiling" },
         { "type": "doc", "id": "prometheus", "label": "Prometheus metrics" }
       ]
