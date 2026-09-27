@@ -82,6 +82,7 @@ check('time predicate', has('if 10h then x end', 'time', '10h'));
 check('ref assign', has('r := 1', 'operator', ':='));
 check('coalesce', has('a ?? b', 'operator', '??'));
 check('spread', has('[...xs]', 'operator', '...'));
+check('spread is not a method', !has('[...xs]', 'method', 'xs'));
 check('arrow', has('fun (x) -> x', 'operator', '->'));
 // The composition syntax the landing page uses.
 check('method record', has('rotate([music.{weight = 3}])', 'function-call', 'rotate'));

@@ -106,7 +106,7 @@ function registerLiquidsoap(Prism) {
     },
 
     method: {
-      pattern: /(?<=\.)[a-zA-Z_]\w*/,
+      pattern: /(?<=(?:^|[^.])\.)[a-zA-Z_]\w*/,
       alias: 'property',
     },
 

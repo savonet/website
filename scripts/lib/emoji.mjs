@@ -19,20 +19,34 @@ const EMOJI = new RegExp(
   'gu'
 );
 
-/** Strip decorative emoji, then tidy the whitespace they leave behind. */
+/** Tidy the whitespace an emoji leaves behind on a prose line. */
+function tidy(line) {
+  return (
+    line
+      // "## ⚠️ Format" -> "## Format", "### Conflicts  {#id}" -> "### Conflicts {#id}"
+      .replace(/[ \t]{2,}/g, ' ')
+      .replace(/^(#{1,6}) +/, '$1 ')
+      .replace(/\|\s+\|/g, '| |')
+      .trimEnd()
+  );
+}
+
+/**
+ * Strip decorative emoji from prose lines. Fenced code is left untouched: collapsing its
+ * whitespace flattens indentation, and an emoji there can be part of the example.
+ */
 export function stripEmoji(md) {
+  let inFence = false;
   return md
-    .replace(EMOJI, '')
     .split('\n')
-    .map((line) =>
-      line
-        // "## ⚠️ Format" -> "## Format", "### Conflicts  {#id}" -> "### Conflicts {#id}"
-        .replace(/[ \t]{2,}/g, ' ')
-        .replace(/^(#{1,6}) +/, '$1 ')
-        // a heading or table cell that started with an emoji keeps a stray leading space
-        .replace(/^(#{1,6}) (?=[^\s])/, '$1 ')
-        .replace(/\|\s+\|/g, '| |')
-        .trimEnd()
-    )
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) {
+        inFence = !inFence;
+        return line;
+      }
+      if (inFence) return line;
+      const stripped = line.replace(EMOJI, '');
+      return stripped === line ? line : tidy(stripped);
+    })
     .join('\n');
 }

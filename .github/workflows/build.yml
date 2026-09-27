@@ -31,6 +31,8 @@ jobs:
 
       - run: npm run test:prism
 
+      - run: npm run test:sync
+
       - name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=6144
