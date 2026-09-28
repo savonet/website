@@ -17,6 +17,7 @@
         { "type": "doc", "id": "quick_start", "label": "Quickstart" },
         { "type": "doc", "id": "complete_case", "label": "A complete case" },
         { "type": "doc", "id": "help", "label": "Getting help" },
+        { "type": "doc", "id": "tooling", "label": "Developer tools" },
         { "type": "doc", "id": "faq", "label": "FAQ" },
         { "type": "doc", "id": "book", "label": "The Liquidsoap book" },
         { "type": "doc", "id": "presentations", "label": "Presentations" },
