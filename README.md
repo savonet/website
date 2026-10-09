@@ -67,7 +67,10 @@ The `version` file is what labels the version in the dropdown: `2.5.0` becomes
 npm run sync -- --version 2.4.6      # runs savonet/liquidsoap:v2.4.6 to generate the reference
 ```
 
-Then add it to `versions.json` (newest first) and commit `versioned_docs/`,
+Or run the "Add a released version" workflow, which does all of this and opens a pull
+request.
+
+By hand, add it to `versions.json` (newest first) and commit `versioned_docs/`,
 `versioned_sidebars/` and `static/doc-2.4.6/`.
 
 ## Navigation

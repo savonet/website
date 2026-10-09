@@ -1,0 +1,91 @@
+---
+title: "Documentation index"
+description: "If you downloaded a source tarball of liquidsoap, you may first read the build instructions."
+---
+**How to use**: Start with the [quickstart](./quick_start.md) and make sure you
+learn [how to find help](./help.md). Then it's as you like: go for another
+[general tutorial](#general), or a [specific example](#specific), pick a [basic
+notion](#core), or some examples from the [cookbook](./cookbook.md). If you've
+understood all you need, just browse the [reference](./reference/index.mdx) and compose
+your dream stream.
+
+If you downloaded a source tarball of liquidsoap, you may first read the
+[build instructions](./build.md).
+
+If you are migrating from a previous version, you might want to checkout
+[this page](./migrating.md).
+
+## General tutorials {#general-tutorials}
+
+- [The book](bool.html): The Liquidsoap book
+- [Video presentations](./presentations.md): some presentations we did about liquidsoap
+- [How to find help](./help.md) about operators, settings, server commands, etc.
+- [Frequently Asked Questions, Troubleshooting](./faq.md)
+- [Quickstart](./quick_start.md): where anyone should start.
+- [Complete case analysis](./complete_case.md): an example that is not a toy.
+- [Cookbook](./cookbook.md): contains lots of idiomatic examples.
+
+## Reference {#reference}
+
+- [Script language](./language.md): A more detailed presentation.
+- [Core API](./reference/index.mdx): The core liquidsoap API
+- [Extra API](reference-extra.html): Extra functions and libraries.
+- [Protocols](./protocols.md): List of protocols supported by liquidsoap.
+- [Settings](./settings.md): The list of available settings for liquidsoap.
+- [FFmpeg](./ffmpeg.md): FFmpeg support documentation.
+- [Encoding formats](./encoding_formats.md): The available formats for encoding outputs.
+- [Videos streams](./video.md): Use `liquidsoap` for video streams
+- [JSON import/export](./json.md): Importing and exporting language values in JSON.
+- [Playlist parsers](./playlist_parsers.md): Supported playlist formats.
+- [LADSPA plugins](./ladspa.md): Using LADSPA plugins.
+- [Database](./database.md): Support for SQL databases.
+
+## Core {#core}
+
+- Basic concepts: [sources](./sources.md), [clocks](./clocks.md) and [requests](./requests.md).
+- [Stream contents](./stream_content.md): what kind of streams are supported, and how.
+- [Script loading](./script_loading.md): load several scripts, learn about the script library.
+- [Execution phases](./phases.md)
+
+## Specific tutorials {#specific-tutorials}
+
+- [Blank detection](./blank.md)
+- [Customize metadata](./metadata.md)
+- [Dynamic source creation](./dynamic_sources.md): dynamically create sources using server requests.
+- [External decoders](./external_decoders.md): use an external program for decoding audio files.
+- [External encoders](./external_encoders.md): use an external audio encoding program.
+- [External streams](./external_streams.md): use an external program for streaming audio data.
+- [HLS output](./hls_output.md): output your stream as HTTP Live Stream.
+- [HTTP input](./http_input.md): relay external streams.
+- [Harbor input](./harbor.md): receive streams from icecast and shoutcast source clients.
+- [ICY metadata update](./icy_metadata.md): manipulate and configure metadata update in Icecast.
+- [Interaction with the Harbor](./harbor_http.md): interact with a running Liquidsoap using the Harbor server.
+- [Interaction with the server](./server.md) interact with a running Liquidsoap instance using the telnet server.
+- [Loudness Normalization](./loudness_normalization.md): normalize audio data using LUFS or ReplayGain.
+- [Profiling](./profiling.md): profiling your scripts.
+- [Prometheus reporting](./prometheus.md): metrics reporting via prometheus.
+- [Requests-based sources](./request_sources.md): create advanced sources using requests.
+- [Seek and cue support](./seek.md): seek and set cue-in and cue-out points in sources.
+- [Shoutcast output](./shoutcast.md): output to shoutcast.
+- [Smart crossfading](smartcrossfade.html): define custom crossfade transitions.
+- [Using in production](./in_production.md): integrate liquidsoap scripts in a production environment.
+
+## User scripts {#user-scripts}
+
+- [Beets](./beets.md): an example of a music database integration.
+- [Geekradio](./geekradio.md)
+- [RadioPi](./radiopi.md)
+- [Frequence3](./frequence3.md)
+- [Video with a single static image](./video-static.md)
+- [Split a CUE sheet](./split-cue.md)
+
+## Code snippets {#code-snippets}
+
+- [Code example index](scripts/index.html)
+
+## Behind the curtains {#behind-the-curtains}
+
+- [Some presentations and publications](../publications.html) explaining the theory underlying Liquidsoap
+- [OCaml libraries](../modules.html) used in Liquidsoap, that can be reused in other projects
+- [Documentation of some internals](../modules/liquidsoap/index.html) of Liquidsoap
+- [Documentation for previous versions](../previously.html)
