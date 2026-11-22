@@ -2,6 +2,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import fs from 'node:fs';
 import { themes as prismThemes } from 'prism-react-renderer';
+import referenceSections from './src/rehype/reference-sections.mjs';
 
 const versions: string[] = JSON.parse(fs.readFileSync('./versions.json', 'utf8'));
 const lastVersion = versions[0];
@@ -119,6 +120,7 @@ const config: Config = {
           includeCurrentVersion: hasDev,
           lastVersion,
           versions: versionConfig,
+          rehypePlugins: [referenceSections],
           ...(only ? { onlyIncludeVersions: only } : {}),
         },
         blog: false,

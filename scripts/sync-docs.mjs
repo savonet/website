@@ -288,6 +288,7 @@ function addFrontmatter(md, fallbackTitle, label) {
       const p = para.join(' ').trim();
       para = [];
       if (!p || /^[#>|\-*+]|^!\[|^\d+\./.test(p)) continue;
+      if (/^(Usage|Type|Arguments|Methods|Callbacks):$/.test(p)) continue; // reference section labels
       description = p
         .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
         .replace(/[`*_]/g, '')
@@ -357,7 +358,7 @@ function splitReference(md, name, outDir, anchorMap) {
         const line = lines[j].trim();
         if (!line) continue;
         if (/^#{1,6}\s/.test(line)) break;
-        if (line === 'Type:' || line === 'Arguments:' || line.startsWith('```')) break;
+        if (line === 'Usage:' || line === 'Type:' || line === 'Arguments:' || line.startsWith('```')) break;
         description = line.replace(/`/g, '');
         break;
       }
