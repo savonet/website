@@ -288,6 +288,7 @@ function addFrontmatter(md, fallbackTitle, label) {
       const p = para.join(' ').trim();
       para = [];
       if (!p || /^[#>|\-*+]|^!\[|^\d+\./.test(p)) continue;
+      if (/^(Usage|Type|Arguments|Methods|Callbacks):$/.test(p)) continue; // reference section labels
       description = p
         .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
         .replace(/[`*_]/g, '')

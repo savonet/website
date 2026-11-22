@@ -4,7 +4,6 @@
 //
 // A rehype plugin, not a remark one: on CommonMark pages Docusaurus runs rehype-raw
 // first, and every JSX node already in the tree when it runs costs a stitching pass.
-// Injected before it, the ~1000 nodes of a large page made compiling it 15x slower.
 
 const FOLDED = new Set([
   'Arguments',
